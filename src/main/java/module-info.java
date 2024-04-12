@@ -4,7 +4,8 @@ module com.example.filemanager {
 
 
     opens com.example.filemanager to javafx.fxml;
-    exports com.example.filemanager;
+    exports com.example.filemanager.logic;
+    exports com.example.filemanager.logic.sort_strategy;
     exports com.example.filemanager.ui;
     opens com.example.filemanager.ui to javafx.fxml;
 }
