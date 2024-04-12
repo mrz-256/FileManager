@@ -4,6 +4,9 @@ import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SortStrategy;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 
 public class Logic {
@@ -45,34 +48,50 @@ public class Logic {
 
     //region setters
     public static void setSortStrategy(SortStrategy sortStrategy) {
-        instance.sortStrategy = sortStrategy;
+        getInstance().sortStrategy = sortStrategy;
     }
 
     public static void showHidden(boolean show){
-        instance.showHidden = show;
+        getInstance().showHidden = show;
     }
 
     public static void setDirectory(File directory)
     {
-        instance.directory = directory;
+        getInstance().directory = directory;
     }
 
     public static void setCurrentResult(File[] files){
-        instance.currentResult = files;
+        getInstance().currentResult = files;
     }
 
     public static void setFilter(String filter){
-        instance.filter = filter;
+        getInstance().filter = filter;
     }
 
     public static void setWorkingFile(File file){
-        instance.workingFile = file;
+        getInstance().workingFile = file;
     }
     //endregion
 
+    /**
+     * A helper method used to copy file. Should only be used through commands.
+     * @param source source of the file
+     * @param destination the name to copy into
+     * @return success
+     */
+    public static boolean copyFile(File source, File destination){
+        try {
+            Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+
+
 
     //region getters
-
     /**
      * Returns string path to home directory on given machine
      * @return the path
