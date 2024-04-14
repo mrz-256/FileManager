@@ -1,31 +1,36 @@
 package com.example.filemanager.logic.commands;
 
-import com.example.filemanager.logic.Logic;
+import com.example.filemanager.logic.Context;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
 
-public class ListFilesCommand extends FileCommand{
-    /**
-     * Lists files from Logic::directory, result is in Logic::currentResult
-     */
+/**
+ * A command to list files in context directory based on context configuration
+ */
+public class ListFilesCommand extends FileCommand {
+
+    public ListFilesCommand(Context context) {
+        super(context);
+    }
+
     @Override
     public void execute() throws FileException {
-        CommandHistory.addCommand(this);
+        CommandHistory.addCommand(this, false);
+        context.clearResult();
 
-        if (Logic.getWorkingFiles().length == 0 || Logic.getWorkingFiles()[0] == null) return;
 
-        File[] files = Logic.getWorkingFiles()[0].listFiles(file ->{
+        File[] files = context.getDirectory().listFiles(file -> {
             return file.isFile()
-                    && (Logic.isShowHidden() || !file.isHidden())
-                    && file.getName().matches(".*" + Logic.getFilter() + ".*");
+                    && (context.getConfiguration().showHiddenFiles || !file.isHidden())
+                    && file.getName().matches(".*" + context.getConfiguration().filter + ".*");
         });
 
         if (files == null) return;
 
-        Logic.getSortStrategy().sort(files);
+        context.getConfiguration().sortStrategy.sort(files);
 
-        Logic.setCurrentResult(files);
+        context.addToResult(files);
     }
 
     @Override

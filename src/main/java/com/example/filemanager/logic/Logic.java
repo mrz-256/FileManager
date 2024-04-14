@@ -11,69 +11,9 @@ import java.nio.file.StandardCopyOption;
 
 
 public class Logic {
-    private static Logic instance;
-    /**
-     * The way to sort returned files and directories
-     */
-    private SortStrategy sortStrategy;
-    /**
-     * Flag of showing hidden files or not
-     */
-    private boolean showHidden;
-    /**
-     * Returned files must always contain this filter (matched as ".*{filter}.*")
-     */
-    private String filter;
-
-    /**
-     * The files gathered after the last listing operation, already sorted.
-     */
-    private File[] currentResult;
-    /**
-     * The file to perform an action on. Like delete, create etc.
-     */
-    private File[] workingFiles;
 
 
-    //region constructors
-    private Logic() {
-        sortStrategy = new NameStrategy();
-        showHidden = true;
-        filter = "";
-        currentResult = new File[0];
-        workingFiles = new File[0];
-    }
 
-    public static Logic getInstance() {
-        if (instance == null) {
-            instance = new Logic();
-        }
-
-        return instance;
-    }
-    //endregion
-
-    //region setters
-    public static void setSortStrategy(SortStrategy sortStrategy) {
-        getInstance().sortStrategy = sortStrategy;
-    }
-
-    public static void showHidden(boolean show) {
-        getInstance().showHidden = show;
-    }
-
-    public static void setCurrentResult(File[] files) {
-        getInstance().currentResult = files;
-    }
-
-    public static void setFilter(String filter) {
-        getInstance().filter = filter;
-    }
-
-    public static void setWorkingFile(File[] files) {
-        getInstance().workingFiles = files;
-    }
-    //endregion
 
     /**
      * A helper method used to copy file. Should only be used through commands.
@@ -137,28 +77,4 @@ public class Logic {
     public static String getHome() {
         return System.getProperty("user.home");
     }
-
-    public static SortStrategy getSortStrategy() {
-        return getInstance().sortStrategy;
-    }
-
-    public static boolean isShowHidden() {
-        return getInstance().showHidden;
-    }
-
-    public static File[] getCurrentResult() {
-        return getInstance().currentResult;
-    }
-
-    public static String getFilter() {
-        return getInstance().filter;
-    }
-
-    public static File[] getWorkingFiles() {
-        return getInstance().workingFiles;
-    }
-
-    //endregion
-
-
 }

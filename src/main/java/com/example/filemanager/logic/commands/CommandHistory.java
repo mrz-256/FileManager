@@ -28,11 +28,12 @@ public class CommandHistory {
     /**
      * Adds new command to history
      * @param command command to add
+     * @param undoable if the command can be undone
      */
-    public static void addCommand(FileCommand command){
+    public static void addCommand(FileCommand command, boolean undoable){
         addLog(command, false);
 
-        if (command instanceof DeleteFileCommand){
+        if (undoable){
             getInstance().executedCommands.push(command);
         }
 
