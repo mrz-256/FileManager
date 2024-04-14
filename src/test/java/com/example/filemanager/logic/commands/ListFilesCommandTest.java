@@ -1,26 +1,31 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Logic;
-import com.example.filemanager.logic.commands.ListFilesCommand;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ListFilesCommandTest {
 
     @Test
     void execute() {
         FileCommand com = new ListFilesCommand();
-        com.execute();
+        try {
+            com.execute();
+        } catch (com.example.filemanager.logic.exceptions.FileException e) {
+            throw new RuntimeException(e);
+        }
         File[] files = Logic.getCurrentResult();
         System.out.println("All files: "+Arrays.toString(files));
 
         Logic.showHidden(false);
 
-        com.execute();
+        try {
+            com.execute();
+        } catch (com.example.filemanager.logic.exceptions.FileException e) {
+            throw new RuntimeException(e);
+        }
         files = Logic.getCurrentResult();
         System.out.println("Excluding hidden files: "+Arrays.toString(files));
 
@@ -28,7 +33,11 @@ class ListFilesCommandTest {
         Logic.showHidden(true);
         Logic.setFilter("sh");
 
-        com.execute();
+        try {
+            com.execute();
+        } catch (com.example.filemanager.logic.exceptions.FileException e) {
+            throw new RuntimeException(e);
+        }
         files = Logic.getCurrentResult();
         System.out.println("Filtered files: "+Arrays.toString(files));
 
