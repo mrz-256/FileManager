@@ -1,44 +1,59 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Logic;
+import com.example.filemanager.logic.exceptions.DeleteFileException;
+import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
 
 public class DeleteFileCommand extends FileCommand {
-    private File save;
-    private File original;
-    private boolean saved;
+    private File[] save;
+    private File[] original;
 
     @Override
-    public void execute() {
+    public void execute() throws FileException {
         CommandHistory.addCommand(this);
 
+        StringBuilder error = new StringBuilder();
 
-        File file = Logic.getWorkingFile();
 
-        // creates a copy in tmp/ which is deleted on the exit of the program
+        File[] files = Logic.getWorkingFiles();
+        save = new File[files.length];
+        original = files.clone();
+
+        for (int i = 0; i < files.length; i++) {
+            saveFile(files[i], i);
+
+            if (!files[i].delete()){
+                error.append("Failed deleting file | ").append(files[i].getName()).append("\n");
+            }
+        }
+
+        if (!error.isEmpty()){
+            throw new DeleteFileException(error.toString());
+        }
+    }
+
+    private void saveFile(File file, int position){
         try {
-            save = File.createTempFile(file.getName(), null);
-        } catch (IOException ignored) {
-        }
-        saved = Logic.copyFile(file, save);
-        if (saved) {
-            save.deleteOnExit();
-        }
+            File tmp = File.createTempFile(file.getName(), null);
+            boolean success =  Logic.copyFile(file, tmp);
 
-        file = Logic.getWorkingFile();
-        file.delete();
-        original = Logic.getWorkingFile();
+            if (success){
+                tmp.deleteOnExit();
+                save[position] = tmp;
+                original[position] = file;
+            }
+        } catch (Exception ignored){}
     }
 
     @Override
     public void undo() {
-        if (saved){
-            Logic.copyFile(save, original);
-            saved = false;
+        for (int i = 0; i < save.length; i++) {
+            if (save[i] != null && original[i] != null)
+                Logic.copyFile(save[i], original[i]);
         }
+
     }
 
     @Override
