@@ -11,6 +11,7 @@ class ListFilesCommandTest {
     @Test
     void execute() {
         FileCommand com = new ListFilesCommand();
+        Logic.setWorkingFile(new File[]{new File(Logic.getHome())});
         try {
             com.execute();
         } catch (com.example.filemanager.logic.exceptions.FileException e) {

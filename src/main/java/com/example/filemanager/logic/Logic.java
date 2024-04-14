@@ -8,16 +8,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.SimpleTimeZone;
 
 
 public class Logic {
     private static Logic instance;
-
-    /**
-     * The current open directory
-     */
-    private File directory;
     /**
      * The way to sort returned files and directories
      */
@@ -43,12 +37,11 @@ public class Logic {
 
     //region constructors
     private Logic() {
-        directory = new File(getHome());
         sortStrategy = new NameStrategy();
         showHidden = true;
         filter = "";
-        currentResult = null;
-        workingFiles = null;
+        currentResult = new File[0];
+        workingFiles = new File[0];
     }
 
     public static Logic getInstance() {
@@ -67,10 +60,6 @@ public class Logic {
 
     public static void showHidden(boolean show) {
         getInstance().showHidden = show;
-    }
-
-    public static void setDirectory(File directory) {
-        getInstance().directory = directory;
     }
 
     public static void setCurrentResult(File[] files) {
@@ -147,10 +136,6 @@ public class Logic {
      */
     public static String getHome() {
         return System.getProperty("user.home");
-    }
-
-    public static File getDirectory() {
-        return getInstance().directory;
     }
 
     public static SortStrategy getSortStrategy() {

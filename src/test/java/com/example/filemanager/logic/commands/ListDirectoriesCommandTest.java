@@ -10,6 +10,7 @@ class ListDirectoriesCommandTest {
 
     @Test
     void execute() {
+        Logic.setWorkingFile(new File[]{new File(Logic.getHome())});
         try {
             new ListDirectoriesCommand().execute();
         } catch (com.example.filemanager.logic.exceptions.FileException e) {

@@ -13,8 +13,9 @@ public class ListFilesCommand extends FileCommand{
     public void execute() throws FileException {
         CommandHistory.addCommand(this);
 
+        if (Logic.getWorkingFiles().length == 0 || Logic.getWorkingFiles()[0] == null) return;
 
-        File[] files = Logic.getDirectory().listFiles(file ->{
+        File[] files = Logic.getWorkingFiles()[0].listFiles(file ->{
             return file.isFile()
                     && (Logic.isShowHidden() || !file.isHidden())
                     && file.getName().matches(".*" + Logic.getFilter() + ".*");
