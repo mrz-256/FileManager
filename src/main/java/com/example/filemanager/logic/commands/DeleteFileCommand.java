@@ -25,6 +25,8 @@ public class DeleteFileCommand extends FileCommand {
         saved = Logic.copyFile(file, save);
         if (saved) {
             save.deleteOnExit();
+            // only makes sense if there's something to undo
+            Logic.pushToExecutedCommands(this);
         }
 
         file = instance.getWorkingFile();
@@ -36,6 +38,7 @@ public class DeleteFileCommand extends FileCommand {
     public void undo() {
         if (saved){
             Logic.copyFile(save, original);
+            saved = false;
         }
     }
 

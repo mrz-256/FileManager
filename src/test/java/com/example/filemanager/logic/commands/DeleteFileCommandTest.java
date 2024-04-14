@@ -23,7 +23,7 @@ class DeleteFileCommandTest {
 
         assertFalse(f.exists());
 
-        com.undo();
+        Logic.undoLastCommand();
 
         assertTrue(f.exists());
     }
