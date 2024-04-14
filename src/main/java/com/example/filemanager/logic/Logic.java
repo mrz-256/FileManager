@@ -1,5 +1,6 @@
 package com.example.filemanager.logic;
 
+import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.DeleteFileCommand;
 import com.example.filemanager.logic.commands.FileCommand;
 import com.example.filemanager.logic.sort_strategy.NameStrategy;
@@ -40,7 +41,6 @@ public class Logic {
      * The file to perform an action on. Like delete, create etc.
      */
     private File workingFile;
-    private Stack<FileCommand> executedCommands;
 
 
     //region constructors
@@ -51,7 +51,6 @@ public class Logic {
         currentResult = null;
         filter = "";
         workingFile = null;
-        executedCommands = new Stack<>();
     }
 
     public static Logic getInstance() {
@@ -106,18 +105,11 @@ public class Logic {
     }
 
     /**
-     * Undoes last executed command from executedCommands stack.
+     * Undoes last executed command.
      */
-    public static void undoLastCommand(){
-        if (getInstance().executedCommands.empty()) return;
-
-        getInstance().executedCommands.pop().undo();
+    public static void undoLastCommand() {
+        CommandHistory.undoLast();
     }
-
-    public static void pushToExecutedCommands(FileCommand command){
-        getInstance().executedCommands.push(command);
-    }
-
 
     //region getters
 
@@ -130,28 +122,28 @@ public class Logic {
         return System.getProperty("user.home");
     }
 
-    public File getDirectory() {
-        return directory;
+    public static File getDirectory() {
+        return getInstance().directory;
     }
 
-    public SortStrategy getSortStrategy() {
-        return sortStrategy;
+    public static SortStrategy getSortStrategy() {
+        return getInstance().sortStrategy;
     }
 
-    public boolean isShowHidden() {
-        return showHidden;
+    public static boolean isShowHidden() {
+        return getInstance().showHidden;
     }
 
-    public File[] getCurrentResult() {
-        return currentResult;
+    public static File[] getCurrentResult() {
+        return getInstance().currentResult;
     }
 
-    public String getFilter() {
-        return filter;
+    public static String getFilter() {
+        return getInstance().filter;
     }
 
-    public File getWorkingFile() {
-        return workingFile;
+    public static File getWorkingFile() {
+        return getInstance().workingFile;
     }
 
     //endregion

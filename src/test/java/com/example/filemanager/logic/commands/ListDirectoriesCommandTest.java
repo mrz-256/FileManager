@@ -13,13 +13,13 @@ class ListDirectoriesCommandTest {
     @Test
     void execute() {
         new ListDirectoriesCommand().execute();
-        File[] files = Logic.getInstance().getCurrentResult();
+        File[] files = Logic.getCurrentResult();
         System.out.println("All directories: "+ Arrays.toString(files));
 
         Logic.showHidden(false);
 
         new ListDirectoriesCommand().execute();
-        files = Logic.getInstance().getCurrentResult();
+        files = Logic.getCurrentResult();
         System.out.println("Excluding hidden directories: "+Arrays.toString(files));
     }
 }

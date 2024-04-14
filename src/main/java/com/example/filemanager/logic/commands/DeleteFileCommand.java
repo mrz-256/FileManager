@@ -13,9 +13,10 @@ public class DeleteFileCommand extends FileCommand {
 
     @Override
     public void execute() {
-        Logic instance = Logic.getInstance();
+        CommandHistory.addCommand(this);
 
-        File file = instance.getWorkingFile();
+
+        File file = Logic.getWorkingFile();
 
         // creates a copy in tmp/ which is deleted on the exit of the program
         try {
@@ -25,13 +26,11 @@ public class DeleteFileCommand extends FileCommand {
         saved = Logic.copyFile(file, save);
         if (saved) {
             save.deleteOnExit();
-            // only makes sense if there's something to undo
-            Logic.pushToExecutedCommands(this);
         }
 
-        file = instance.getWorkingFile();
+        file = Logic.getWorkingFile();
         file.delete();
-        original = instance.getWorkingFile();
+        original = Logic.getWorkingFile();
     }
 
     @Override

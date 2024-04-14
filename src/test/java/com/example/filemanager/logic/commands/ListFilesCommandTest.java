@@ -15,13 +15,13 @@ class ListFilesCommandTest {
     void execute() {
         FileCommand com = new ListFilesCommand();
         com.execute();
-        File[] files = Logic.getInstance().getCurrentResult();
+        File[] files = Logic.getCurrentResult();
         System.out.println("All files: "+Arrays.toString(files));
 
         Logic.showHidden(false);
 
         com.execute();
-        files = Logic.getInstance().getCurrentResult();
+        files = Logic.getCurrentResult();
         System.out.println("Excluding hidden files: "+Arrays.toString(files));
 
 
@@ -29,7 +29,7 @@ class ListFilesCommandTest {
         Logic.setFilter("sh");
 
         com.execute();
-        files = Logic.getInstance().getCurrentResult();
+        files = Logic.getCurrentResult();
         System.out.println("Filtered files: "+Arrays.toString(files));
 
     }

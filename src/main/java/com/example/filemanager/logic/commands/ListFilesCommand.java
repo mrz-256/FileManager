@@ -10,17 +10,18 @@ public class ListFilesCommand extends FileCommand{
      */
     @Override
     public void execute() {
-        Logic instance = Logic.getInstance();
+        CommandHistory.addCommand(this);
 
-        File[] files = instance.getDirectory().listFiles(file ->{
+
+        File[] files = Logic.getDirectory().listFiles(file ->{
             return file.isFile()
-                    && (instance.isShowHidden() || !file.isHidden())
-                    && file.getName().matches(".*" + instance.getFilter() + ".*");
+                    && (Logic.isShowHidden() || !file.isHidden())
+                    && file.getName().matches(".*" + Logic.getFilter() + ".*");
         });
 
         if (files == null) return;
 
-        instance.getSortStrategy().sort(files);
+        Logic.getSortStrategy().sort(files);
 
         Logic.setCurrentResult(files);
     }
