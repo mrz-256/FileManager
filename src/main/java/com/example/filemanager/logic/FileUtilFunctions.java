@@ -1,6 +1,5 @@
 package com.example.filemanager.logic;
 
-import com.example.filemanager.logic.commands.CommandHistory;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.nio.file.StandardCopyOption;
 /**
  * A class made for static helper functions and such
  */
-public class Logic {
+public class FileUtilFunctions {
 
 
     /**
@@ -59,18 +58,17 @@ public class Logic {
     }
 
     /**
-     * Undoes last executed command.
-     */
-    public static void undoLastCommand() {
-        CommandHistory.undoLast();
-    }
-
-    /**
      * Returns string path to home directory on given machine
      *
      * @return the path
      */
-    public static String getHome() {
+    public static String getHomePath() {
         return System.getProperty("user.home");
     }
+
+    /**
+     * Returns directory of the system home
+     * @return the directory of "user.home" on given system
+     */
+    public static File getHomeDirectory(){return new File(getHomePath());}
 }

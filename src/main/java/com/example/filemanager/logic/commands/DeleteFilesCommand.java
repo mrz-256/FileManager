@@ -1,7 +1,7 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Context;
-import com.example.filemanager.logic.Logic;
+import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.exceptions.DeleteFileException;
 import com.example.filemanager.logic.exceptions.FileException;
 
@@ -48,7 +48,7 @@ public class DeleteFilesCommand extends FileCommand {
         try {
             File tmp = File.createTempFile(file.getName(), null);
 
-            if (Logic.copyFile(file, tmp)){
+            if (FileUtilFunctions.copyFile(file, tmp)){
                 tmp.deleteOnExit();
                 save.add(tmp);
                 original.add(file);
@@ -60,7 +60,7 @@ public class DeleteFilesCommand extends FileCommand {
     public void undo() {
         for (int i = 0; i < save.size(); i++) {
             if (save.get(i) != null && original.get(i) != null){
-                Logic.copyFile(save.get(i), original.get(i));
+                FileUtilFunctions.copyFile(save.get(i), original.get(i));
             }
         }
     }

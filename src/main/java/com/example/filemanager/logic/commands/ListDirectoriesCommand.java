@@ -1,7 +1,6 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Context;
-import com.example.filemanager.logic.Logic;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;

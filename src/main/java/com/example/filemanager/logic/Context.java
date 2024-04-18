@@ -11,6 +11,7 @@ import java.util.Arrays;
 public class Context {
     private final Configuration configuration;
     private File directory;
+    private final ArrayList<File> pathHistory;
     private ArrayList<File> working;
     private ArrayList<File> result;
 
@@ -21,10 +22,11 @@ public class Context {
         this.directory = directory;
         working = new ArrayList<>();
         result = new ArrayList<>();
+        pathHistory = new ArrayList<>();
     }
 
     public static Context defaultContext(){
-        return new Context(new File(Logic.getHome()));
+        return new Context(FileUtilFunctions.getHomeDirectory());
     }
 
     //region adding to params
@@ -76,6 +78,8 @@ public class Context {
     }
 
     public void setDirectory(File directory) {
+        pathHistory.add(0, this.directory);
+        if (pathHistory.size() > 10) pathHistory.remove(10);
         this.directory = directory;
     }
 

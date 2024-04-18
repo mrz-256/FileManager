@@ -6,14 +6,14 @@ import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LogicTest {
+class FileUtilFunctionsTest {
 
     @Test
     void inventUniqueName() {
         File A = new File("src/test/java/com/example/filemanager/logic/commands/test-file.txt");
-        assertEquals("test-file(2).txt", Logic.inventUniqueName(A).getName());
+        assertEquals("test-file(2).txt", FileUtilFunctions.inventUniqueName(A).getName());
 
         File B = new File("src/test/java/com/example/filemanager/logic/commands/.hidden-test-file");
-        System.out.println(Logic.inventUniqueName(B));
+        System.out.println(FileUtilFunctions.inventUniqueName(B));
     }
 }

@@ -1,7 +1,7 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Context;
-import com.example.filemanager.logic.Logic;
+import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.exceptions.PasteFilesException;
 
@@ -34,10 +34,10 @@ public class PasteFilesCommand extends FileCommand{
         for (var file : context.getWorking()) {
             if (file == null) continue;
 
-            File new_file = Logic.inventUniqueName(new File(context.getDirectory(), file.getName()));
+            File new_file = FileUtilFunctions.inventUniqueName(new File(context.getDirectory(), file.getName()));
             copies.add(new_file);
 
-            if (!Logic.copyFile(file, new_file)){
+            if (!FileUtilFunctions.copyFile(file, new_file)){
                 error.append("Failed copying file | ").append(file).append('\n');
             }
         }

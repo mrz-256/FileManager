@@ -1,7 +1,6 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Context;
-import com.example.filemanager.logic.Logic;
 import com.example.filemanager.logic.exceptions.FileException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ class DeleteFilesCommandTest {
 
         assertFalse(context.getWorkingAt(0).exists());
 
-        Logic.undoLastCommand();
+        CommandHistory.undoLast();
 
         assertTrue(context.getWorkingAt(0).exists());
     }
