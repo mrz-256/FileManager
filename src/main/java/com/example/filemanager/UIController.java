@@ -1,4 +1,4 @@
-package com.example.filemanager.ui;
+package com.example.filemanager;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

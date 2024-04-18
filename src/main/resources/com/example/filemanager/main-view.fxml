@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox id="root_vbox" maxWidth="1200.0" prefHeight="675.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.filemanager.UIController">
+    <children>
+        <ToolBar id="button_bar" prefHeight="40.0" prefWidth="1200.0">
+            <items>
+                <Button id="back-button" mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../../../icons/icon_3.png" />
+                        </ImageView>
+                    </graphic>
+               <tooltip>
+                  <Tooltip text="back"/>
+               </tooltip>
+                </Button>
+                <Button id="forward-button" mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../../../icons/icon_2.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button id="show-as-boxes" mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../../../icons/icon_0.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button id="show-as-list" mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../../../icons/icon_1.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button id="close-tab-button" mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../../../icons/icon_4.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button id="split-tab-button" mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../../../icons/icon_5.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button id="search-button" mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../../../icons/icon_6.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <SplitMenuButton alignment="CENTER_RIGHT" mnemonicParsing="false" popupSide="LEFT" prefHeight="11.0" prefWidth="93.0" text="Settings" textAlignment="RIGHT">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Action 1" />
+                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                </SplitMenuButton>
+            </items>
+        </ToolBar>
+        <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0">
+            <children>
+                <ScrollPane id="global_files_scrollpane" prefHeight="625.0" prefWidth="200.0">
+                    <content>
+                        <VBox prefHeight="625.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Places" />
+                                <VBox id="places_vbox" prefHeight="200.0" prefWidth="200.0" />
+                                <Label text="Recent" />
+                                <VBox id="global_files_scrollpane" prefHeight="200.0" prefWidth="100.0" />
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+                <SplitPane id="tabs_splitpane" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            </children>
+        </HBox>
+    </children>
+</VBox>
