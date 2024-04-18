@@ -14,9 +14,9 @@
                             <Image url="@../../../icons/icon_3.png" />
                         </ImageView>
                     </graphic>
-               <tooltip>
-                  <Tooltip text="back"/>
-               </tooltip>
+                    <tooltip>
+                        <Tooltip text="back" />
+                    </tooltip>
                 </Button>
                 <Button id="forward-button" mnemonicParsing="false">
                     <graphic>
@@ -24,6 +24,9 @@
                             <Image url="@../../../icons/icon_2.png" />
                         </ImageView>
                     </graphic>
+                    <tooltip>
+                        <Tooltip text="forward" />
+                    </tooltip>
                 </Button>
                 <Button id="show-as-boxes" mnemonicParsing="false">
                     <graphic>
@@ -31,6 +34,9 @@
                             <Image url="@../../../icons/icon_0.png" />
                         </ImageView>
                     </graphic>
+                    <tooltip>
+                        <Tooltip text="display files as boxes" />
+                    </tooltip>
                 </Button>
                 <Button id="show-as-list" mnemonicParsing="false">
                     <graphic>
@@ -38,13 +44,9 @@
                             <Image url="@../../../icons/icon_1.png" />
                         </ImageView>
                     </graphic>
-                </Button>
-                <Button id="close-tab-button" mnemonicParsing="false">
-                    <graphic>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../../../icons/icon_4.png" />
-                        </ImageView>
-                    </graphic>
+                    <tooltip>
+                        <Tooltip text="display boxes as list" />
+                    </tooltip>
                 </Button>
                 <Button id="split-tab-button" mnemonicParsing="false">
                     <graphic>
@@ -52,6 +54,9 @@
                             <Image url="@../../../icons/icon_5.png" />
                         </ImageView>
                     </graphic>
+                    <tooltip>
+                        <Tooltip text="split/unsplit tab" />
+                    </tooltip>
                 </Button>
                 <Button id="search-button" mnemonicParsing="false">
                     <graphic>
@@ -59,6 +64,19 @@
                             <Image url="@../../../icons/icon_6.png" />
                         </ImageView>
                     </graphic>
+                    <tooltip>
+                        <Tooltip text="search for files" />
+                    </tooltip>
+                </Button>
+                <Button id="filter-button" mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../../../icons/icon_8.png" />
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="filter shown files" />
+                    </tooltip>
                 </Button>
                 <SplitMenuButton alignment="CENTER_RIGHT" mnemonicParsing="false" popupSide="LEFT" prefHeight="11.0" prefWidth="93.0" text="Settings" textAlignment="RIGHT">
                     <items>
@@ -82,7 +100,10 @@
                         </VBox>
                     </content>
                 </ScrollPane>
-                <SplitPane id="tabs_splitpane" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+                    <tabs>
+                    </tabs>
+                </TabPane>
             </children>
         </HBox>
     </children>
