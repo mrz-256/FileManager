@@ -27,7 +27,7 @@ public class NewDirectoryCommand extends FileCommand{
         try {
             if (!directory.mkdir()) throw new Exception("not created");
         } catch (Exception e) {
-            throw new NewFileException("Failed creating file (" + e.getMessage() + ") | " + directory);
+            throw new NewFileException("Failed creating directory (" + e.getMessage() + ") | " + directory);
         }
     }
 

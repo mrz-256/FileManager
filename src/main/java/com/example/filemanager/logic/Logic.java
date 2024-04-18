@@ -1,18 +1,16 @@
 package com.example.filemanager.logic;
 
 import com.example.filemanager.logic.commands.CommandHistory;
-import com.example.filemanager.logic.sort_strategy.NameStrategy;
-import com.example.filemanager.logic.sort_strategy.SortStrategy;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-
+/**
+ * A class made for static helper functions and such
+ */
 public class Logic {
-
-
 
 
     /**
@@ -66,8 +64,6 @@ public class Logic {
     public static void undoLastCommand() {
         CommandHistory.undoLast();
     }
-
-    //region getters
 
     /**
      * Returns string path to home directory on given machine
