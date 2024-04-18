@@ -2,13 +2,16 @@ package com.example.filemanager;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.VBox;
 
 public class UIController {
     @FXML
-    private Label welcomeText;
-
+    private VBox places;
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
+    private VBox recent;
+    @FXML
+    private TabPane tabPane;
+
+
 }

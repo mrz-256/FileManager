@@ -87,24 +87,30 @@
             </items>
         </ToolBar>
         <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0">
-            <children>
-                <ScrollPane id="global_files_scrollpane" prefHeight="625.0" prefWidth="200.0">
-                    <content>
-                        <VBox prefHeight="625.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                            <children>
-                                <Label text="Places" />
-                                <VBox id="places_vbox" prefHeight="200.0" prefWidth="200.0" />
-                                <Label text="Recent" />
-                                <VBox id="global_files_scrollpane" prefHeight="200.0" prefWidth="100.0" />
-                            </children>
-                        </VBox>
-                    </content>
-                </ScrollPane>
-                <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
-                    <tabs>
-                    </tabs>
-                </TabPane>
-            </children>
+            <ScrollPane id="global_files_scrollpane" prefHeight="625.0" prefWidth="200.0">
+                <VBox prefHeight="Infinity" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                    <Label text="Places" />
+                    <VBox id="places_vbox" fx:id="places" prefHeight="200.0" prefWidth="200.0" />
+                    <Label text="Recent" />
+                    <VBox id="global_files_scrollpane" fx:id="recent" prefHeight="200.0" prefWidth="100.0" />
+                </VBox>
+            </ScrollPane>
+            <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS" HBox.hgrow="ALWAYS">
+            <tabs>
+               <Tab text="home">
+                 <content>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                           <SplitPane dividerPositions="0.29797979797979796" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                             <items>
+                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="100.0" minWidth="100.0" prefHeight="160.0" prefWidth="100.0" />
+                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+                             </items>
+                           </SplitPane>
+                        </children></AnchorPane>
+                 </content>
+               </Tab>
+            </tabs></TabPane>
         </HBox>
     </children>
 </VBox>
