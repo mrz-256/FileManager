@@ -57,6 +57,6 @@ public class PasteFilesCommand extends FileCommand{
 
     @Override
     public String getID() {
-        return "paste_files_command";
+        return "paste_files";
     }
 }

@@ -67,6 +67,6 @@ public class DeleteFilesCommand extends FileCommand {
 
     @Override
     public String getID() {
-        return "delete_file_command";
+        return "delete_file";
     }
 }

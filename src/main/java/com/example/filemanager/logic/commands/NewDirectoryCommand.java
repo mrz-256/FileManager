@@ -40,6 +40,6 @@ public class NewDirectoryCommand extends FileCommand{
 
     @Override
     public String getID() {
-        return null;
+        return "new_directory";
     }
 }

@@ -35,6 +35,6 @@ public class ListAllCommand extends FileCommand{
 
     @Override
     public String getID() {
-        return "list_all_command";
+        return "list_all";
     }
 }

@@ -41,6 +41,6 @@ public class NewFileCommand extends FileCommand{
 
     @Override
     public String getID() {
-        return "new_file_command";
+        return "new_file";
     }
 }

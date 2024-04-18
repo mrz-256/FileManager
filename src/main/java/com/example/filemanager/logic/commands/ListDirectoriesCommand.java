@@ -41,7 +41,7 @@ public class ListDirectoriesCommand extends FileCommand {
 
     @Override
     public String getID() {
-        return "list_directories_command";
+        return "list_directories";
     }
 }
 

@@ -40,6 +40,6 @@ public class ListFilesCommand extends FileCommand {
 
     @Override
     public String getID() {
-        return "list_files_command";
+        return "list_files";
     }
 }
