@@ -11,11 +11,11 @@ import java.util.ArrayList;
  * A class representing a single tab withing file manager.
  * CommandHistory is a singleton common for all tabs.
  */
-public class Tab {
+public class LogicalTab {
     private final Context context;
     private final ArrayList<File> filesToList;
 
-    public Tab(File directory) {
+    public LogicalTab(File directory) {
         context = new Context(directory);
         filesToList = new ArrayList<>();
     }
