@@ -4,6 +4,7 @@ package com.example.filemanager.logic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * Stores the context and configuration to use for commands
@@ -11,7 +12,6 @@ import java.util.Arrays;
 public class Context {
     private final LogicalConfiguration logicalConfiguration;
     private File directory;
-    private final ArrayList<File> pathHistory;
     private ArrayList<File> working;
     private ArrayList<File> result;
 
@@ -22,7 +22,6 @@ public class Context {
         this.directory = directory;
         working = new ArrayList<>();
         result = new ArrayList<>();
-        pathHistory = new ArrayList<>();
     }
 
     public static Context defaultContext(){
@@ -78,8 +77,6 @@ public class Context {
     }
 
     public void setDirectory(File directory) {
-        pathHistory.add(0, this.directory);
-        if (pathHistory.size() > 10) pathHistory.remove(10);
         this.directory = directory;
     }
 

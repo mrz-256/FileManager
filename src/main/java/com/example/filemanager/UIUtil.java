@@ -52,7 +52,6 @@ public class UIUtil {
         tabPane.widthProperty().addListener((observableValue, number, newNumber) -> {
             UIUtil.updateAllTabs();
         });
-
         instance = this;
     }
 

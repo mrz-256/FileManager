@@ -3,13 +3,11 @@ package com.example.filemanager.ui.display_strategy;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
-import javafx.application.HostServices;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GridStrategy implements DisplayStrategy {
@@ -86,11 +84,12 @@ public class GridStrategy implements DisplayStrategy {
                         logicalTab.setDirectory(file);
                         tab.setText(file.getName());
                         UIUtil.updateAllTabs();
-
-
                     } catch (FileException e) {
                         System.out.println("TODO: GRID STRATEGY ERROR " + e.getMessage());
                     }
+                }
+                else {
+                    // todo: execute file
                 }
             }
         });

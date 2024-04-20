@@ -8,6 +8,7 @@ import javafx.scene.control.Tab;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 /**
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 public class LogicalTab {
     private final Context context;
     private final ArrayList<File> filesToList;
+    private final LinkedList<File> pathHistory;
+
     private final Tab tab;
     private DisplayStrategy displayStrategy;
     private int zoom;
@@ -27,6 +30,7 @@ public class LogicalTab {
         this.context = new Context(directory);
         this.filesToList = new ArrayList<>();
         this.tab = tab;
+        this.pathHistory = new LinkedList<>();
         this.displayStrategy = new GridStrategy();
         this.zoom = 100;
     }
@@ -44,9 +48,32 @@ public class LogicalTab {
             throw new FileException("File is not a directory.", directory);
         }
 
+        pathHistory.add(context.getDirectory());
         context.setDirectory(directory);
         updateListedFiles();
     }
+
+    /**
+     * Moves to the last open directory from pathHistory
+     */
+    public void moveBack(){
+        if (!pathHistory.isEmpty()){
+            context.setDirectory(pathHistory.getFirst());
+            pathHistory.addLast(pathHistory.pop());
+        }
+    }
+
+    /**
+     * Reverses moveBack()
+     */
+    public void moveForth(){
+        if (!pathHistory.isEmpty()){
+            context.setDirectory(pathHistory.getLast());
+            pathHistory.add(pathHistory.getFirst());
+        }
+    }
+
+
 
     /**
      * Updates list of listed files.
