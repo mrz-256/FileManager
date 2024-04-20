@@ -9,7 +9,7 @@ import java.io.File;
 /**
  * A data structure to hold both splits of a split tab, in most cases only holds one tab.
  */
-public class SplittableTab {
+public class LogicalDoubleTab {
     /**
      * Main tab
      */
@@ -27,7 +27,7 @@ public class SplittableTab {
     private static final int DEFAULT_ICON_SIZE = 64;
 
 
-    public SplittableTab(Tab tab, File directory) {
+    public LogicalDoubleTab(Tab tab, File directory) {
         this.tab = tab;
         mainLogicalTab = new LogicalTab(directory);
         displayStrategy = new GridStrategy();

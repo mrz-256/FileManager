@@ -2,9 +2,7 @@ package com.example.filemanager.ui.display_strategy;
 
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
-import com.example.filemanager.logic.SplittableTab;
 import com.example.filemanager.logic.exceptions.FileException;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

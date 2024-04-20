@@ -1,6 +1,6 @@
 package com.example.filemanager;
 
-import com.example.filemanager.logic.SplittableTab;
+import com.example.filemanager.logic.LogicalDoubleTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
@@ -18,7 +18,7 @@ public class UIUtil {
     /**
      * List of all Logical tabs in app
      */
-    private static LinkedList<SplittableTab> tabs;
+    private static LinkedList<LogicalDoubleTab> tabs;
 
     /**
      * Initializes tabs linkedlist
@@ -51,7 +51,7 @@ public class UIUtil {
 
             tabPane.getTabs().add(tab);
 
-            SplittableTab logicalTab = new SplittableTab(tab, file);
+            LogicalDoubleTab logicalTab = new LogicalDoubleTab(tab, file);
             tabs.add(logicalTab);
 
         } catch (IOException e) {
