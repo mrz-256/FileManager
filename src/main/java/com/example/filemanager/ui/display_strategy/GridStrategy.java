@@ -1,5 +1,6 @@
 package com.example.filemanager.ui.display_strategy;
 
+import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
@@ -83,7 +84,7 @@ public class GridStrategy implements DisplayStrategy {
                     try {
                         logicalTab.setDirectory(file);
                         tab.setText(file.getName());
-                        UIUtil.updateAllTabs();
+                        UIController.updateAllTabs();
                     } catch (FileException e) {
                         System.out.println("TODO: GRID STRATEGY ERROR " + e.getMessage());
                     }
