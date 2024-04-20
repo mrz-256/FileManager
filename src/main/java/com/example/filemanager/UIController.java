@@ -4,6 +4,7 @@ import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -60,6 +61,19 @@ public class UIController {
         }
     }
 
+    @FXML
+    public void onBackClicked() {
+        int selectedTabIndex = tabPane.getSelectionModel().getSelectedIndex();
+        tabs.get(selectedTabIndex).moveBack();
 
+        tabs.get(selectedTabIndex).updateTab((int) tabPane.getWidth());
+    }
 
+    @FXML
+    public void onForthClicked() {
+        int selectedTabIndex = tabPane.getSelectionModel().getSelectedIndex();
+        tabs.get(selectedTabIndex).moveForth();
+
+        tabs.get(selectedTabIndex).updateTab((int) tabPane.getWidth());
+    }
 }

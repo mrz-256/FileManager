@@ -8,7 +8,7 @@
     <children>
         <ToolBar id="button_bar" prefHeight="40.0" prefWidth="1200.0">
             <items>
-                <Button id="back-button" mnemonicParsing="false">
+                <Button id="back-button" mnemonicParsing="false" onMouseClicked="#onBackClicked">
                     <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../../../icons/button_icons/icon_3.png" />
@@ -18,7 +18,7 @@
                         <Tooltip text="back" />
                     </tooltip>
                 </Button>
-                <Button id="forward-button" mnemonicParsing="false">
+                <Button id="forward-button" mnemonicParsing="false" onMouseClicked="#onForthClicked">
                     <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../../../icons/button_icons/icon_2.png" />
