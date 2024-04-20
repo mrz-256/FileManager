@@ -17,5 +17,8 @@ public class UIController {
     void initialize(){
         UIUtil.init();
         UIUtil.createNewTab(tabPane, FileUtilFunctions.getHomeDirectory());
+        tabPane.widthProperty().addListener((observableValue, number, newNumber) -> {
+            UIUtil.updateAllTabs(newNumber.intValue());
+        });
     }
 }

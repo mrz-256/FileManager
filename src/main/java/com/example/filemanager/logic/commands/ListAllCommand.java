@@ -16,13 +16,12 @@ public class ListAllCommand extends FileCommand{
         CommandHistory.addCommand(this, false);
         context.clearResult();
 
-        FileCommand filesCommand = new ListFilesCommand(context);
-        filesCommand.execute();
-
-        ArrayList<File> result = new ArrayList<>(context.getResult());
-
         FileCommand directoriesCommand = new ListDirectoriesCommand(context);
         directoriesCommand.execute();
+        ArrayList<File> result = new ArrayList<>(context.getResult());
+
+        FileCommand filesCommand = new ListFilesCommand(context);
+        filesCommand.execute();
         result.addAll(context.getResult());
 
         context.setResult(result);

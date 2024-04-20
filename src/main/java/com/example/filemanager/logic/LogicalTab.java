@@ -53,7 +53,8 @@ public class LogicalTab {
      * Gives list of files visible in this Tab by given configuration of context.
      * @return the files to list
      */
-    public ArrayList<File> getFilesToList() {
+    public ArrayList<File> getFilesToList() throws FileException {
+        updateListedFiles();
         return filesToList;
     }
 

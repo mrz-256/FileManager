@@ -1,12 +1,14 @@
 package com.example.filemanager.ui.display_strategy;
 
-import javafx.scene.control.SplitPane;
+import com.example.filemanager.logic.LogicalTab;
 import javafx.scene.control.Tab;
 
-import java.io.File;
-
+/**
+ * A strategy to display icons in tab
+ */
 public interface DisplayStrategy {
 
-    void display(SplitPane tab, File[] files);
+    void display(Tab tab, LogicalTab logicalTab, int icon_size, int width);
+
 
 }

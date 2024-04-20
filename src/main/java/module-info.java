@@ -8,5 +8,6 @@ module com.example.filemanager {
     exports com.example.filemanager.logic.sort_strategy;
     exports com.example.filemanager.logic.commands;
     exports com.example.filemanager.logic.exceptions;
+    exports com.example.filemanager.ui.display_strategy;
     exports com.example.filemanager;
 }

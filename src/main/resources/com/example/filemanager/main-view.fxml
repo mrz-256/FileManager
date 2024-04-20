@@ -87,7 +87,7 @@
             </items>
         </ToolBar>
         <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0" VBox.vgrow="ALWAYS">
-         <VBox fillWidth="false" maxWidth="200.0" VBox.vgrow="ALWAYS">
+         <VBox fillWidth="false" maxWidth="200.0" minWidth="150" VBox.vgrow="ALWAYS">
             <children>
                     <Label text="Places" />
                     <VBox id="places_vbox" fx:id="places" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
