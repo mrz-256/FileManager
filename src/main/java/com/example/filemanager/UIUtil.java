@@ -1,4 +1,4 @@
-package com.example.filemanager.ui;
+package com.example.filemanager;
 
 import com.example.filemanager.logic.SplittableTab;
 import javafx.fxml.FXMLLoader;

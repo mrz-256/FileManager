@@ -1,7 +1,6 @@
-package com.example.filemanager.ui;
+package com.example.filemanager;
 
 import com.example.filemanager.logic.FileUtilFunctions;
-import com.example.filemanager.ui.UIUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;

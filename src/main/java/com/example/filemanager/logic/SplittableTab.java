@@ -1,5 +1,6 @@
 package com.example.filemanager.logic;
 
+import com.example.filemanager.UIConfiguration;
 import javafx.scene.control.Tab;
 
 import java.io.File;
@@ -20,6 +21,8 @@ public class SplittableTab {
      * The javaFX tab linked to LogicalTabs of this class.
      */
     private Tab tab;
+
+    private UIConfiguration configuration;
 
     public SplittableTab(Tab tab, File directory) {
         this.tab = tab;
