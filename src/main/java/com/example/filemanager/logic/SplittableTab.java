@@ -1,11 +1,13 @@
 package com.example.filemanager.logic;
 
+import javafx.scene.control.Tab;
+
 import java.io.File;
 
 /**
  * A data structure to hold both splits of a split tab, in most cases only holds one tab.
  */
-public class LogicalSplittableTab {
+public class SplittableTab {
     /**
      * Main tab
      */
@@ -14,12 +16,21 @@ public class LogicalSplittableTab {
      * A duplicate of main tab, can be null.
      */
     private LogicalTab secondaryLogicalTab;
+    /**
+     * The javaFX tab linked to LogicalTabs of this class.
+     */
+    private Tab tab;
 
-
-    public LogicalSplittableTab(File directory) {
+    public SplittableTab(Tab tab, File directory) {
+        this.tab = tab;
         mainLogicalTab = new LogicalTab(directory);
         secondaryLogicalTab = null;
     }
+
+    public void updateTab(){
+
+    }
+
 
     public void split(){
         secondaryLogicalTab = mainLogicalTab;

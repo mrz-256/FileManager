@@ -86,25 +86,24 @@
                 </SplitMenuButton>
             </items>
         </ToolBar>
-        <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0">
-            <ScrollPane id="global_files_scrollpane" prefHeight="625.0" prefWidth="200.0">
-                <VBox prefHeight="Infinity" prefWidth="200.0" HBox.hgrow="ALWAYS">
+        <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0" VBox.vgrow="ALWAYS">
+         <VBox fillWidth="false" maxWidth="200.0" VBox.vgrow="ALWAYS">
+            <children>
                     <Label text="Places" />
-                    <VBox id="places_vbox" fx:id="places" prefHeight="200.0" prefWidth="200.0" />
+                    <VBox id="places_vbox" fx:id="places" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
                     <Label text="Recent" />
-                    <VBox id="global_files_scrollpane" fx:id="recent" prefHeight="200.0" prefWidth="100.0" />
-                </VBox>
-            </ScrollPane>
-            <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS" HBox.hgrow="ALWAYS">
+                    <VBox id="global_files_scrollpane" fx:id="recent" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
+            </children>
+         </VBox>
+            <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="ALL_TABS" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
             <tabs>
                <Tab text="home">
                  <content>
-                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                         <children>
-                           <SplitPane dividerPositions="0.29797979797979796" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <SplitPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
                              <items>
-                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="100.0" minWidth="100.0" prefHeight="160.0" prefWidth="100.0" />
-                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="100.0" minWidth="100.0" VBox.vgrow="ALWAYS" />
                              </items>
                            </SplitPane>
                         </children></AnchorPane>

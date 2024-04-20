@@ -1,5 +1,6 @@
 package com.example.filemanager;
 
+import com.example.filemanager.logic.FileUtilFunctions;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
@@ -13,5 +14,9 @@ public class UIController {
     @FXML
     private TabPane tabPane;
 
-
+    @FXML
+    void initialize(){
+        UIUtil.init();
+        UIUtil.createNewTab(tabPane, FileUtilFunctions.getHomeDirectory());
+    }
 }
