@@ -2,6 +2,9 @@ package com.example.filemanager.logic;
 
 import com.example.filemanager.logic.commands.*;
 import com.example.filemanager.logic.exceptions.FileException;
+import com.example.filemanager.ui.display_strategy.DisplayStrategy;
+import com.example.filemanager.ui.display_strategy.GridStrategy;
+import javafx.scene.control.Tab;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,10 +17,18 @@ import java.util.ArrayList;
 public class LogicalTab {
     private final Context context;
     private final ArrayList<File> filesToList;
+    private final Tab tab;
+    private DisplayStrategy displayStrategy;
+    private int zoom;
+    private static final int DEFAULT_ICON_SIZE = 100;
 
-    public LogicalTab(File directory) {
-        context = new Context(directory);
-        filesToList = new ArrayList<>();
+
+    public LogicalTab(Tab tab, File directory) {
+        this.context = new Context(directory);
+        this.filesToList = new ArrayList<>();
+        this.tab = tab;
+        this.displayStrategy = new GridStrategy();
+        this.zoom = 100;
     }
 
     /**
@@ -47,6 +58,13 @@ public class LogicalTab {
 
         filesToList.clear();
         filesToList.addAll(context.getResult());
+    }
+
+    public void updateTab(int width) {
+        displayStrategy.display(
+                tab, this,
+                DEFAULT_ICON_SIZE * zoom / 100, width
+        );
     }
 
     /**
@@ -79,5 +97,13 @@ public class LogicalTab {
 
     public Context getContext() {
         return context;
+    }
+
+    public void setDisplayStrategy(DisplayStrategy displayStrategy) {
+        this.displayStrategy = displayStrategy;
+    }
+
+    public void setZoom(int zoom) {
+        this.zoom = zoom;
     }
 }

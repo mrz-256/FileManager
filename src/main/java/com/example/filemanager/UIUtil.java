@@ -1,13 +1,18 @@
 package com.example.filemanager;
 
-import com.example.filemanager.logic.LogicalDoubleTab;
+import com.example.filemanager.logic.FileUtilFunctions;
+import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
+import javafx.collections.ListChangeListener;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -16,25 +21,51 @@ import java.util.LinkedList;
  * A class that holds all tabs and helper static methods for work with App
  */
 public class UIUtil {
+    @FXML
+    private VBox places;
+    @FXML
+    private VBox recent;
+    /**
+     * TabPane holding all javaFX tabs
+     */
+    @FXML
+    private TabPane tabPane;
+
+    /**
+     * Singleton instance
+     */
+    private static UIUtil instance;
+
     /**
      * List of all Logical tabs in app
      */
-    private static LinkedList<LogicalDoubleTab> tabs;
+    private static LinkedList<LogicalTab> tabs;
 
     /**
      * Initializes tabs linkedlist
      */
-    public static void init() {
+    @FXML
+    void initialize(){
         tabs = new LinkedList<>();
+
+        createNewTab(tabPane, new File(FileUtilFunctions.getHomeDirectory(), "Pictures"));
+        tabPane.widthProperty().addListener((observableValue, number, newNumber) -> {
+            UIUtil.updateAllTabs();
+        });
+
+        instance = this;
+    }
+
+    public static UIUtil getInstance() {
+        return instance;
     }
 
     /**
-     * Updates all tabs with given width
-     * @param width the new width of the TabPane holding all tabs.
+     * Updates all tabs with tabPane width
      */
-    public static void updateAllTabs(int width){
+    public static void updateAllTabs(){
         for(var tab : tabs){
-            tab.updateTab(width);
+            tab.updateTab((int) getInstance().tabPane.getWidth());
         }
     }
 
@@ -52,7 +83,7 @@ public class UIUtil {
 
             tabPane.getTabs().add(tab);
 
-            LogicalDoubleTab logicalTab = new LogicalDoubleTab(tab, file);
+            var logicalTab = new LogicalTab(tab, file);
             tabs.add(logicalTab);
 
         } catch (IOException e) {
@@ -77,6 +108,7 @@ public class UIUtil {
                     UIUtil.class.getResource("/icons/file_icons/icon_directory.png").toExternalForm()
             );
         }
+
         if (file.isHidden()){
             return new ImageView(
                     UIUtil.class.getResource("/icons/file_icons/icon_hidden.png").toExternalForm()
@@ -87,7 +119,12 @@ public class UIUtil {
         String extension = filename.replaceFirst(".*\\.(.*)", "$1");
 
         //// image can be used as an icon
-        if (extension.equals("png") || extension.equals("jpg") || extension.equals("gif") || extension.equals("bmp")) {
+        if (extension.equals("png")
+                || extension.equals("jpg")
+                || extension.equals("gif")
+                || extension.equals("bmp")
+                || extension.equals("jpeg")
+        ) {
             return new ImageView(new Image(file.toURI().toString(), size, size, true, true));
         }
 
@@ -97,6 +134,7 @@ public class UIUtil {
             return new ImageView(resource.toExternalForm());
         }
 
+        // default 'unknown' (?) icon
         return new ImageView(
                 UIUtil.class.getResource("/icons/file_icons/icon_unknown.png").toExternalForm()
         );

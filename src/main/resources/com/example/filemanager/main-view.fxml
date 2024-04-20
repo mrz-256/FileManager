@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox id="root_vbox" maxWidth="1200.0" prefHeight="675.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.filemanager.UIController">
+<VBox id="root_vbox" maxWidth="1200.0" prefHeight="675.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.filemanager.UIUtil">
     <children>
         <ToolBar id="button_bar" prefHeight="40.0" prefWidth="1200.0">
             <items>
