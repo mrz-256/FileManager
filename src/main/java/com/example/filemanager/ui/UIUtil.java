@@ -1,4 +1,4 @@
-package com.example.filemanager;
+package com.example.filemanager.ui;
 
 import com.example.filemanager.logic.SplittableTab;
 import javafx.fxml.FXMLLoader;
@@ -7,8 +7,6 @@ import javafx.scene.control.TabPane;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public class UIUtil {
@@ -34,8 +32,6 @@ public class UIUtil {
         } catch (IOException e) {
             System.out.println("TODO: FAILED TAB CREATION - " + e.getMessage());
         }
-
     }
-
 
 }

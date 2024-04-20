@@ -25,6 +25,8 @@ public class SplittableTab {
         this.tab = tab;
         mainLogicalTab = new LogicalTab(directory);
         secondaryLogicalTab = null;
+
+
     }
 
     public void updateTab(){

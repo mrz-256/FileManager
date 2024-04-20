@@ -75,4 +75,8 @@ public class LogicalTab {
             case "paste_files" -> new PasteFilesCommand(context).execute();
         }
     }
+
+    public Context getContext() {
+        return context;
+    }
 }

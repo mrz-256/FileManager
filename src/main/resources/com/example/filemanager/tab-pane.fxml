@@ -12,7 +12,7 @@
             <children>
                 <SplitPane prefHeight="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
                     <items>
-                        <AnchorPane  minHeight="100.0" minWidth="100.0" VBox.vgrow="ALWAYS" />
+                        <GridPane minHeight="100.0" minWidth="100.0" VBox.vgrow="ALWAYS" />
                     </items>
                 </SplitPane>
             </children></AnchorPane>

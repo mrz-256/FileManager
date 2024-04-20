@@ -9,7 +9,7 @@ import java.util.Arrays;
  * Stores the context and configuration to use for commands
  */
 public class Context {
-    private final Configuration configuration;
+    private final LogicalConfiguration logicalConfiguration;
     private File directory;
     private final ArrayList<File> pathHistory;
     private ArrayList<File> working;
@@ -17,7 +17,7 @@ public class Context {
 
 
     public Context(File directory) {
-        configuration = Configuration.defaultConfiguration();
+        logicalConfiguration = LogicalConfiguration.defaultConfiguration();
 
         this.directory = directory;
         working = new ArrayList<>();
@@ -69,8 +69,8 @@ public class Context {
         return result.get(index);
     }
 
-    public Configuration getConfiguration() {
-        return configuration;
+    public LogicalConfiguration getConfiguration() {
+        return logicalConfiguration;
     }
 
     public File getDirectory() {
