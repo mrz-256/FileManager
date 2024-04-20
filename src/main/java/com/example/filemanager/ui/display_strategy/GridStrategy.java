@@ -3,7 +3,9 @@ package com.example.filemanager.ui.display_strategy;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -16,16 +18,21 @@ public class GridStrategy implements DisplayStrategy {
 
     @Override
     public void display(Tab tab, LogicalTab logicalTab, int icon_size, int width) {
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-        GridPane pane = new GridPane();
+        if (width == 0) return;
 
         int default_gap = 10;
         int hcells = width / (icon_size + default_gap);
         double gap = (width - (hcells*icon_size)) / ((double)hcells);
+
+        if (hcells == 0) return;
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setMinSize(icon_size, icon_size);
+        GridPane pane = new GridPane();
+
         pane.setHgap(gap);
         pane.setVgap(gap);
 
@@ -59,13 +66,14 @@ public class GridStrategy implements DisplayStrategy {
         button.setMinSize(size, size);
         button.setTextAlignment(TextAlignment.CENTER);
         button.setTooltip(new Tooltip(file.getName()));
+        button.setStyle("-fx-background-color: transparent;");
 
         try {
-            ImageView imageView = new ImageView();
-            Image image = UIUtil.loadImageIcon(file, size);
+            //ImageView imageView = new ImageView();
+            //Image image = UIUtil.loadImageIcon(file, size);
 
-            imageView.setImage(image);
-            button.setGraphic(imageView);
+            //imageView.setImage(image);
+            button.setGraphic(UIUtil.loadImageIcon(file, size / 4 * 3));
         } catch (FileException ignore) {
             // icon will be plain button
         }

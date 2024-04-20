@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,38 +69,36 @@ public class UIUtil {
      * @return newly created icon
      * @throws FileException when file doesn't exist
      */
-    public static Image loadImageIcon(File file, int size) throws FileException {
+    public static ImageView loadImageIcon(File file, int size) throws FileException {
         if (!file.exists()) throw new FileException("File doesn't exist - can't create icon", file);
-/*
+
         if (file.isDirectory()){
-            return new Image(
-                    new File("icons/file_icons/icon_hidden.png").toURI().toString(),
-                    size, size, true, true
+            return new ImageView(
+                    UIUtil.class.getResource("/icons/file_icons/icon_directory.png").toExternalForm()
             );
         }
-
         if (file.isHidden()){
-            return new Image(
-                    new File("icons/file_icons/icon_hidden.png").toURI().toString(),
-                    size, size, true, true
+            return new ImageView(
+                    UIUtil.class.getResource("/icons/file_icons/icon_hidden.png").toExternalForm()
             );
         }
 
         String filename = file.getName();
         String extension = filename.replaceFirst(".*\\.(.*)", "$1");
 
-        // image can be used as an icon
+        //// image can be used as an icon
         if (extension.equals("png") || extension.equals("jpg") || extension.equals("gif") || extension.equals("bmp")) {
-            return new Image(file.getAbsolutePath(), size, size, true, true);
+            return new ImageView(new Image(file.toURI().toString(), size, size, true, true));
         }
 
         // there is an icon for given extension
-        File icon = new File("icons/file_icons/icon_" + extension + ".png");
-        if (icon.exists()) return new Image(icon.getAbsolutePath(), size, size, true, true);
-*/
-        return new Image(
-                new File("icons/file_icons/icon_hidden.png").toURI().toString(),
-                size, size, true, true
+        var resource = UIUtil.class.getResource("/icons/file_icons/icon_"+extension+".png");
+        if (resource != null){
+            return new ImageView(resource.toExternalForm());
+        }
+
+        return new ImageView(
+                UIUtil.class.getResource("/icons/file_icons/icon_unknown.png").toExternalForm()
         );
     }
 

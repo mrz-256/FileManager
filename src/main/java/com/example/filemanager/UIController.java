@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
+
 public class UIController {
     @FXML
     private VBox places;
@@ -16,7 +18,7 @@ public class UIController {
     @FXML
     void initialize(){
         UIUtil.init();
-        UIUtil.createNewTab(tabPane, FileUtilFunctions.getHomeDirectory());
+        UIUtil.createNewTab(tabPane, new File(FileUtilFunctions.getHomeDirectory(), "Pictures"));
         tabPane.widthProperty().addListener((observableValue, number, newNumber) -> {
             UIUtil.updateAllTabs(newNumber.intValue());
         });
