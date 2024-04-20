@@ -78,11 +78,26 @@
                         <Tooltip text="filter shown files" />
                     </tooltip>
                 </Button>
-                <SplitMenuButton alignment="CENTER_RIGHT" mnemonicParsing="false" popupSide="LEFT" prefHeight="11.0" prefWidth="93.0" text="Settings" textAlignment="RIGHT">
+                <SplitMenuButton contentDisplay="TEXT_ONLY" mnemonicParsing="false" popupSide="RIGHT" prefHeight="11.0" prefWidth="93.0" text="Settings" textAlignment="RIGHT">
+               <graphic>
+                  <Label text="Settings" />
+               </graphic>
+               <items>
+                  <CheckMenuItem mnemonicParsing="false" text="show hidden files" />
+                  <Menu mnemonicParsing="false" text="new file">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                        <MenuItem mnemonicParsing="false" text="new directory" />
+                      <MenuItem mnemonicParsing="false" text="new file" />
                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="sort files by">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="name" />
+                        <MenuItem mnemonicParsing="false" text="size" />
+                        <MenuItem mnemonicParsing="false" text="last modified" />
+                    </items>
+                  </Menu>
+               </items>
                 </SplitMenuButton>
             </items>
         </ToolBar>
