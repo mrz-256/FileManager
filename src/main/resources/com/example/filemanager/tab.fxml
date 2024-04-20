@@ -7,14 +7,9 @@
 <?import javafx.scene.layout.*?>
 
 <Tab text="untitled_tab">
-    <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-            <children>
-                <SplitPane prefHeight="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
-                    <items>
-                        <GridPane minHeight="100.0" minWidth="100.0" VBox.vgrow="ALWAYS" />
-                    </items>
-                </SplitPane>
-            </children></AnchorPane>
-    </content>
+    <SplitPane prefHeight="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
+        <items>
+            <GridPane minHeight="100.0" minWidth="100.0" VBox.vgrow="ALWAYS"/>
+        </items>
+    </SplitPane>
 </Tab>
