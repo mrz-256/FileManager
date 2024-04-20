@@ -35,19 +35,33 @@ public class LogicalDoubleTab {
         zoom = 100;
     }
 
-    public void updateTab(int width){
+    /**
+     * Updates both tabs
+     *
+     * @param width the width of the tabPane holding the doubletab
+     */
+    public void updateTab(int width) {
         displayStrategy.display(
                 tab, mainLogicalTab,
                 DEFAULT_ICON_SIZE * zoom / 100, width
         );
+        if (secondaryLogicalTab != null) {
+            displayStrategy.display(tab, secondaryLogicalTab,
+                    DEFAULT_ICON_SIZE * zoom / 100, width);
+        }
     }
 
-
-    public void split(){
+    /**
+     * Splits double tab from one tab to two
+     */
+    public void split() {
         secondaryLogicalTab = mainLogicalTab;
     }
 
-    public void close(){
+    /**
+     * Closes secondary tab (the split)
+     */
+    public void close() {
         secondaryLogicalTab = null;
     }
 
