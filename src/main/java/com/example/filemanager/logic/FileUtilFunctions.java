@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 
 /**
  * A class made for static helper functions and such
@@ -32,17 +33,18 @@ public class FileUtilFunctions {
      * Returns a new file with name which doesn't exist yet.
      * Example: test-file.txt -> test-file(1).txt
      * If test-file(1).txt already exists, it will be test-file(2).txt and so on.
+     *
      * @param file the file name to turn into something unique
      * @return a new File with unique name similar to original
      */
-    public static File inventUniqueName(File file){
+    public static File inventUniqueName(File file) {
         // It's possible the name with incremented name already exists too, so recursion is necessary.
 
         // file already has unique name
         if (!file.exists()) return file;
 
         // file doesn't have counter
-        if (!file.getName().matches("^.*\\(\\d+\\)\\..+")){
+        if (!file.getName().matches("^.*\\(\\d+\\)\\..+")) {
             String new_name = file.getName().replaceAll("^(.*)(\\..+)$", "$1(1)$2");
             return inventUniqueName(new File(file.getParent() + "/" + new_name));
         }
@@ -52,7 +54,7 @@ public class FileUtilFunctions {
 
         // create new name with incremented counter
         num = String.valueOf(Integer.parseInt(num) + 1);
-        String new_name = file.getName().replaceAll("^(.*)\\(\\d+\\)(\\..+)$", "$1("+num+")$2");
+        String new_name = file.getName().replaceAll("^(.*)\\(\\d+\\)(\\..+)$", "$1(" + num + ")$2");
 
         return inventUniqueName(new File(file.getParent() + "/" + new_name));
     }
@@ -68,7 +70,39 @@ public class FileUtilFunctions {
 
     /**
      * Returns directory of the system home
+     *
      * @return the directory of "user.home" on given system
      */
-    public static File getHomeDirectory(){return new File(getHomePath());}
+    public static File getHomeDirectory() {
+        return new File(getHomePath());
+    }
+
+
+    /**
+     * Transform numerical size in bytes into minimal string representation
+     *
+     * @param byteSize the size in bytes
+     * @return the optimal string representation
+     */
+    public static String getOptimalSizeFormat(long byteSize) {
+        String[] units = {"", "K", "M", "G", "T", "P"};
+        int unit_index = 0;
+        double size = byteSize;
+        while (size > 1024) {
+            size /= 1024;
+            unit_index++;
+        }
+        size = Math.floor(size * 100) / 100;
+        return size + units[unit_index] + "B";
+    }
+
+    /**
+     * Writes epoch time as a string date
+     * @param epochTime milliseconds since epoch
+     * @return yyyy/mm/dd formatted date
+     */
+    public static String getSimplifiedDate(long epochTime){
+        LocalDate date = LocalDate.ofEpochDay(epochTime / 1000 / 60 / 60 / 24);
+        return date.toString();
+    }
 }
