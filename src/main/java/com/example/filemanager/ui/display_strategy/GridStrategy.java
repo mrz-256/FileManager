@@ -84,7 +84,7 @@ public class GridStrategy implements DisplayStrategy {
                     try {
                         logicalTab.setDirectory(file);
                         tab.setText(file.getName());
-                        UIController.updateAllTabs();
+                        UIController.updateCurrentTab();
                     } catch (FileException e) {
                         System.out.println("TODO: GRID STRATEGY ERROR " + e.getMessage());
                     }
