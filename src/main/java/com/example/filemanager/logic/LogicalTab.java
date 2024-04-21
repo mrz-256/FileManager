@@ -9,6 +9,7 @@ import javafx.scene.control.Tab;
 import java.io.File;
 import java.lang.module.Configuration;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 /**
@@ -26,7 +27,7 @@ public class LogicalTab {
     private static final int DEFAULT_ICON_SIZE = 100;
 
 
-    public LogicalTab(Tab tab, File directory) {
+    public LogicalTab(Tab tab, File directory, LinkedList<LogicalTab> parentList) {
         this.context = new Context(directory);
         this.filesToList = new ArrayList<>();
         this.tab = tab;
@@ -35,6 +36,8 @@ public class LogicalTab {
         this.zoom = 100;
 
         pathHistory.add(directory);
+
+        tab.setOnClosed( (x) -> {parentList.remove(this);});
     }
 
     //region moving directory
@@ -118,7 +121,6 @@ public class LogicalTab {
     }
 
     //region getters
-
     /**
      * @return the context of logical tab
      */
@@ -133,6 +135,9 @@ public class LogicalTab {
         return context.getConfiguration();
     }
 
+    public File getDirectory(){
+        return context.getDirectory();
+    }
     //endregion
 
     //region setters

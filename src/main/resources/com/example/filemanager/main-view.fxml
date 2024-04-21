@@ -39,14 +39,14 @@
                         <Tooltip text="display boxes as list" />
                     </tooltip>
                 </Button>
-                <Button id="split-tab-button" mnemonicParsing="false">
+                <Button id="new-tab-button" mnemonicParsing="false" onMouseClicked="#onNewTabClicked">
                     <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../../../icons/button_icons/icon_5.png" />
                         </ImageView>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="split/unsplit tab" />
+                        <Tooltip text="new tab" />
                     </tooltip>
                 </Button>
                 <Button id="search-button" mnemonicParsing="false">
@@ -108,7 +108,7 @@
                     <VBox id="global_files_scrollpane" fx:id="recent" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
             </children>
          </VBox>
-            <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="ALL_TABS" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" onMouseClicked="#onTabPaneUpdate">
             <tabs>
 
             </tabs></TabPane>

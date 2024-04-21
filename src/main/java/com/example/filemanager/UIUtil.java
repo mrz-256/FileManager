@@ -20,6 +20,7 @@ import java.util.LinkedList;
 public class UIUtil {
     /**
      * Creates a new tab with open directory `file`
+     * Also creates the corresponding Logical tab
      * @param tabPane the tabPane holding the newly created tab
      * @param file directory open in given tab
      */
@@ -32,7 +33,7 @@ public class UIUtil {
 
             tabPane.getTabs().add(tab);
 
-            var logicalTab = new LogicalTab(tab, file);
+            var logicalTab = new LogicalTab(tab, file, tabs);
             tabs.add(logicalTab);
 
         } catch (IOException e) {

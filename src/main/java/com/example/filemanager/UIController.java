@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -50,7 +51,7 @@ public class UIController {
      * Initializes tabs linkedlist
      */
     @FXML
-    void initialize(){
+    void initialize() {
         tabs = new LinkedList<>();
 
         UIUtil.createNewTab(tabPane, tabs, FileUtilFunctions.getHomeDirectory());
@@ -65,8 +66,8 @@ public class UIController {
     /**
      * Updates all tabs
      */
-    public static void updateAllTabs(){
-        for(var tab : tabs){
+    public static void updateAllTabs() {
+        for (var tab : tabs) {
             tab.updateTab((int) getInstance().tabPane.getWidth());
         }
     }
@@ -74,7 +75,7 @@ public class UIController {
     /**
      * Updates selected(current) tab
      */
-    public static void updateCurrentTab(){
+    public static void updateCurrentTab() {
         getInstance().getCurrentLogicalTab().updateTab((int) getInstance().tabPane.getWidth());
     }
 
@@ -85,16 +86,17 @@ public class UIController {
 
     /**
      * Returns the index of the selected tab in the tabPane
+     *
      * @return the index
      */
-    public int getCurrentTabIndex(){
+    public int getCurrentTabIndex() {
         return tabPane.getSelectionModel().getSelectedIndex();
     }
 
     /**
      * @return the currently selected logical tab
      */
-    public LogicalTab getCurrentLogicalTab(){
+    public LogicalTab getCurrentLogicalTab() {
         return tabs.get(getCurrentTabIndex());
     }
 
@@ -106,13 +108,13 @@ public class UIController {
     }
 
     @FXML
-    public void onShowHiddenClicked( ) {
+    public void onShowHiddenClicked() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().showHiddenFiles = showHiddenCheckbox.isSelected();
         tab.updateTab((int) tabPane.getWidth());
     }
 
-
+    //region sorting methods
     @FXML
     public void onSortFilesByName() {
         var tab = getCurrentLogicalTab();
@@ -133,4 +135,23 @@ public class UIController {
         tab.getConfiguration().sortStrategy = new LastModifiedStrategy();
         tab.updateTab((int) tabPane.getWidth());
     }
+    //endregion
+
+    //region new tab
+    @FXML
+    public void onNewTabClicked() {
+        UIUtil.createNewTab(tabPane, tabs, getCurrentLogicalTab().getDirectory());
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+        updateAllTabs();
+    }
+
+    public void onTabPaneUpdate() {
+        if (tabPane.getTabs().size() == 1) {
+            tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        }
+        updateAllTabs();
+    }
+    //endregion
+
+
 }
