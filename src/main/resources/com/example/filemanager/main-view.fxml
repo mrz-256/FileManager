@@ -100,7 +100,11 @@
                      <Font size="21.0" />
                   </font></Label>
                     <VBox id="places_vbox" fx:id="places" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
-                    <Label text="Recent" />
+               <Label layoutX="10.0" layoutY="10.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-background-color: transparent;" text="Recent">
+                  <font>
+                     <Font size="21.0" />
+                  </font>
+               </Label>
                     <VBox id="global_files_scrollpane" fx:id="recent" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
             </children>
          </VBox>

@@ -89,6 +89,12 @@ public class UIUtil {
         );
     }
 
+
+    /**
+     * A function which fills the 'Places' list of important directories with fields like Documents, Downloads
+     * and such with.
+     * @param pane the VBox list of the files to fill
+     */
     public static void fillPlacesList(VBox pane){
         String[] names = {"", "Pictures", "Documents", "Downloads", "Music", "Videos", "Trash"};
 
@@ -101,6 +107,12 @@ public class UIUtil {
 
     }
 
+    /**
+     * A helper function of the fillPlacesList() function.
+     * Adds a button leading to given directory to the list
+     * @param pane the list of the files to fill
+     * @param file the file to add
+     */
     private static void addFileToPlacesList(VBox pane, File file){
         Button button = new Button();
         button.setStyle(
