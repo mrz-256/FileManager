@@ -8,7 +8,6 @@ import javafx.scene.control.Tab;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 
 /**
@@ -18,7 +17,7 @@ import java.util.LinkedList;
 public class LogicalTab {
     private final Context context;
     private final ArrayList<File> filesToList;
-    private final LinkedList<File> pathHistory;
+    private final PathHistory pathHistory;
 
     private final Tab tab;
     private DisplayStrategy displayStrategy;
@@ -30,9 +29,11 @@ public class LogicalTab {
         this.context = new Context(directory);
         this.filesToList = new ArrayList<>();
         this.tab = tab;
-        this.pathHistory = new LinkedList<>();
+        this.pathHistory = new PathHistory();
         this.displayStrategy = new GridStrategy();
         this.zoom = 100;
+
+        pathHistory.add(directory);
     }
 
     /**
@@ -48,7 +49,8 @@ public class LogicalTab {
             throw new FileException("File is not a directory.", directory);
         }
 
-        pathHistory.add(context.getDirectory());
+        pathHistory.add(directory);
+        System.out.println(pathHistory);
         context.setDirectory(directory);
         updateListedFiles();
     }
@@ -57,20 +59,20 @@ public class LogicalTab {
      * Moves to the last open directory from pathHistory
      */
     public void moveBack(){
-        if (!pathHistory.isEmpty()){
-            context.setDirectory(pathHistory.getFirst());
-            pathHistory.addLast(pathHistory.pop());
+        if (pathHistory.hasBack()){
+            context.setDirectory(pathHistory.getBack());
         }
+        System.out.println(pathHistory);
     }
 
     /**
      * Reverses moveBack()
      */
     public void moveForth(){
-        if (!pathHistory.isEmpty()){
-            context.setDirectory(pathHistory.getLast());
-            pathHistory.add(pathHistory.getFirst());
+        if (pathHistory.hasForth()){
+            context.setDirectory(pathHistory.getForth());
         }
+        System.out.println(pathHistory);
     }
 
 
@@ -88,6 +90,7 @@ public class LogicalTab {
     }
 
     public void updateTab(int width) {
+        tab.setText(context.getDirectory().getAbsolutePath());
         displayStrategy.display(
                 tab, this,
                 DEFAULT_ICON_SIZE * zoom / 100, width

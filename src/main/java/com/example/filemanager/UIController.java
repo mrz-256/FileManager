@@ -40,7 +40,7 @@ public class UIController {
     void initialize(){
         tabs = new LinkedList<>();
 
-        UIUtil.createNewTab(tabPane, tabs, new File(FileUtilFunctions.getHomeDirectory(), "Pictures"));
+        UIUtil.createNewTab(tabPane, tabs, FileUtilFunctions.getHomeDirectory());
         tabPane.widthProperty().addListener((observableValue, number, newNumber) -> {
             UIController.updateAllTabs();
         });
