@@ -9,11 +9,9 @@ import java.util.Stack;
  */
 public class PathHistory {
     private final Stack<File> back;
-    private final Stack<File> forth;
 
     public PathHistory() {
         back = new Stack<>();
-        forth = new Stack<>();
     }
 
     /**
@@ -22,7 +20,6 @@ public class PathHistory {
      */
     public void add(File file){
         back.push(file);
-        forth.clear();
     }
 
     /**
@@ -37,33 +34,6 @@ public class PathHistory {
      * @return the last visited file from history
      */
     public File getBack(){
-        var file = back.pop();
-        forth.push(file);
-        return file;
-    }
-
-    /**
-     * @return if it's possible to move forward
-     */
-    public boolean hasForth(){
-        return !forth.isEmpty();
-    }
-
-    /**
-     * For safety call hasForth() before calling.
-     * @return the last file user backed from.
-     */
-    public File getForth(){
-        var file = forth.pop();
-        back.push(file);
-        return file;
-    }
-
-    @Override
-    public String toString() {
-        return "PathHistory{" +
-                "back=" + back +
-                ", forth=" + forth +
-                '}';
+        return back.pop();
     }
 }

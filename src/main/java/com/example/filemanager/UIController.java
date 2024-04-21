@@ -2,7 +2,11 @@ package com.example.filemanager;
 
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 
@@ -13,6 +17,8 @@ import java.util.LinkedList;
  * A class that holds all tabs and helper static methods for work with App
  */
 public class UIController {
+    @FXML
+    private CheckMenuItem showHiddenCheckbox;
     @FXML
     private VBox places;
     @FXML
@@ -33,6 +39,11 @@ public class UIController {
      */
     private static LinkedList<LogicalTab> tabs;
 
+
+    public static UIController getInstance() {
+        return instance;
+    }
+
     /**
      * Initializes tabs linkedlist
      */
@@ -47,10 +58,6 @@ public class UIController {
         instance = this;
     }
 
-    public static UIController getInstance() {
-        return instance;
-    }
-
     /**
      * Updates all tabs with tabPane width
      */
@@ -60,19 +67,35 @@ public class UIController {
         }
     }
 
+    /**
+     * Returns the index of the selected tab in the tabPane
+     * @return the index
+     */
+    public int getSelectedTabIndex(){
+        return tabPane.getSelectionModel().getSelectedIndex();
+    }
+
+    /**
+     * @return the currently selected logical tab
+     */
+    public LogicalTab getSelectedLogicalTab(){
+        return tabs.get(getSelectedTabIndex());
+    }
+
     @FXML
     public void onBackClicked() {
-        int selectedTabIndex = tabPane.getSelectionModel().getSelectedIndex();
-        tabs.get(selectedTabIndex).moveBack();
-
-        tabs.get(selectedTabIndex).updateTab((int) tabPane.getWidth());
+        var tab = getSelectedLogicalTab();
+        tab.moveBack();
+        tab.updateTab((int) tabPane.getWidth());
     }
 
     @FXML
-    public void onForthClicked() {
-        int selectedTabIndex = tabPane.getSelectionModel().getSelectedIndex();
-        tabs.get(selectedTabIndex).moveForth();
-
-        tabs.get(selectedTabIndex).updateTab((int) tabPane.getWidth());
+    public void onShowHiddenClicked( ) {
+        System.out.println(showHiddenCheckbox.isSelected());
+        var tab = getSelectedLogicalTab();
+        tab.getConfiguration().showHiddenFiles = showHiddenCheckbox.isSelected();
+        tab.updateTab((int) tabPane.getWidth());
     }
+
+
 }

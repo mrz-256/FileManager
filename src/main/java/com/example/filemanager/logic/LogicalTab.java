@@ -7,6 +7,7 @@ import com.example.filemanager.ui.display_strategy.GridStrategy;
 import javafx.scene.control.Tab;
 
 import java.io.File;
+import java.lang.module.Configuration;
 import java.util.ArrayList;
 
 
@@ -36,6 +37,7 @@ public class LogicalTab {
         pathHistory.add(directory);
     }
 
+    //region moving directory
     /**
      * Sets current directory of this Tab.
      * @param directory the directory to use
@@ -49,7 +51,7 @@ public class LogicalTab {
             throw new FileException("File is not a directory.", directory);
         }
 
-        pathHistory.add(directory);
+        pathHistory.add(context.getDirectory());
         context.setDirectory(directory);
         updateListedFiles();
     }
@@ -62,18 +64,9 @@ public class LogicalTab {
             context.setDirectory(pathHistory.getBack());
         }
     }
+    //endregion
 
-    /**
-     * Reverses moveBack()
-     */
-    public void moveForth(){
-        if (pathHistory.hasForth()){
-            context.setDirectory(pathHistory.getForth());
-        }
-    }
-
-
-
+    //region file contents
     /**
      * Updates list of listed files.
      * @throws FileException when files can't be listed
@@ -86,21 +79,23 @@ public class LogicalTab {
         filesToList.addAll(context.getResult());
     }
 
+    /**
+     * Gives list of files visible in this Tab by given configuration of context.
+     * Already calls for updateListedFiles().
+     * @return the files to list
+     */
+    public ArrayList<File> getFilesToList() throws FileException {
+        updateListedFiles();
+        return filesToList;
+    }
+    //endregion
+
     public void updateTab(int width) {
         tab.setText(context.getDirectory().getAbsolutePath());
         displayStrategy.display(
                 tab, this,
                 DEFAULT_ICON_SIZE * zoom / 100, width
         );
-    }
-
-    /**
-     * Gives list of files visible in this Tab by given configuration of context.
-     * @return the files to list
-     */
-    public ArrayList<File> getFilesToList() throws FileException {
-        updateListedFiles();
-        return filesToList;
     }
 
     /**
@@ -122,10 +117,25 @@ public class LogicalTab {
         }
     }
 
+    //region getters
+
+    /**
+     * @return the context of logical tab
+     */
     public Context getContext() {
         return context;
     }
 
+    /**
+     * @return the configuration of logical tab
+     */
+    public LogicalConfiguration getConfiguration(){
+        return context.getConfiguration();
+    }
+
+    //endregion
+
+    //region setters
     public void setDisplayStrategy(DisplayStrategy displayStrategy) {
         this.displayStrategy = displayStrategy;
     }
@@ -133,4 +143,5 @@ public class LogicalTab {
     public void setZoom(int zoom) {
         this.zoom = zoom;
     }
+    //endregion
 }

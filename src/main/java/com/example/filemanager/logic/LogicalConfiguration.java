@@ -19,6 +19,6 @@ public class LogicalConfiguration {
     }
 
     public static LogicalConfiguration defaultConfiguration(){
-        return new LogicalConfiguration(new NameStrategy(), true, "");
+        return new LogicalConfiguration(new NameStrategy(), false, "");
     }
 }
