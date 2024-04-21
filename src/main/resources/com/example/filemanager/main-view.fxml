@@ -83,9 +83,9 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="sort files by">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="name" />
-                        <MenuItem mnemonicParsing="false" text="size" />
-                        <MenuItem mnemonicParsing="false" text="last modified" />
+                      <MenuItem mnemonicParsing="false" text="name" onAction="#onSortFilesByName" />
+                        <MenuItem mnemonicParsing="false" text="size" onAction="#onSortFilesBySize" />
+                        <MenuItem mnemonicParsing="false" text="last modified" onAction="#onSortFilesByLastModification"/>
                     </items>
                   </Menu>
                </items>

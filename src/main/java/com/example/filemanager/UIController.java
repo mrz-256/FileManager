@@ -3,6 +3,10 @@ package com.example.filemanager;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
+import com.example.filemanager.logic.sort_strategy.LastModifiedStrategy;
+import com.example.filemanager.logic.sort_strategy.NameStrategy;
+import com.example.filemanager.logic.sort_strategy.SizeStrategy;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.TabPane;
@@ -109,5 +113,24 @@ public class UIController {
     }
 
 
+    @FXML
+    public void onSortFilesByName() {
+        var tab = getCurrentLogicalTab();
+        tab.getConfiguration().sortStrategy = new NameStrategy();
+        tab.updateTab((int) tabPane.getWidth());
+    }
 
+    @FXML
+    public void onSortFilesBySize() {
+        var tab = getCurrentLogicalTab();
+        tab.getConfiguration().sortStrategy = new SizeStrategy();
+        tab.updateTab((int) tabPane.getWidth());
+    }
+
+    @FXML
+    public void onSortFilesByLastModification() {
+        var tab = getCurrentLogicalTab();
+        tab.getConfiguration().sortStrategy = new LastModifiedStrategy();
+        tab.updateTab((int) tabPane.getWidth());
+    }
 }
