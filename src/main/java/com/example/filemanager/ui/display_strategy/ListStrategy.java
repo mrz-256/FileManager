@@ -1,5 +1,6 @@
 package com.example.filemanager.ui.display_strategy;
 
+
 import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
@@ -11,23 +12,16 @@ import javafx.scene.layout.GridPane;
 import java.io.File;
 import java.util.ArrayList;
 
-public class GridStrategy implements DisplayStrategy {
+public class ListStrategy implements DisplayStrategy {
 
     @Override
     public void display(Tab tab, LogicalTab logicalTab, int icon_size, int width) {
         if (width == 0) return;
 
-        int default_gap = 10;
-        int hcells = width / (icon_size + default_gap);
-        double gap = (width - (hcells * icon_size)) / ((double) hcells);
-
-        if (hcells == 0) return;
-
 
         ScrollPane scrollPane = (ScrollPane) tab.getContent();
         GridPane pane = (GridPane) scrollPane.getContent();
-        pane.setHgap(gap);
-        pane.setVgap(gap);
+        pane.setVgap(10);
 
         scrollPane.setMinSize(icon_size, icon_size);
         pane.getChildren().clear();
@@ -38,25 +32,27 @@ public class GridStrategy implements DisplayStrategy {
             files = logicalTab.getFilesToList();
         } catch (FileException e) {
             // todo:
-            System.out.println("TODO: GRID STRATEGY ERROR " + e.getMessage());
+            System.out.println("TODO: LIST STRATEGY ERROR " + e.getMessage());
             return;
         }
 
-        int position = 0;
-        for (var file : files) {
+        pane.addRow(0, new Label("name"), new Label("size"), new Label("last modification"));
+
+        for (int row=1; row < files.size(); row++) {
+            var file = files.get(row);
+
             Button button = UIUtil.createIconButton(
                     file, icon_size,
                     "-fx-background-color: transparent;" +
-                    "-fx-content-display: top;" +
-                    "-fx-border-color: rgba(128,128,128,0.13);"
+                            "-fx-content-display: top;" +
+                            "-fx-border-color: rgba(128,128,128,0.13);"
             );
             UIUtil.setOnFileClickFunction(button, logicalTab, file);
 
-            pane.add(button, position % hcells, position / hcells);
-            position++;
+
+            pane.addRow(row, button, new Label(file.length() + " B"), new Label(file.lastModified() + ""));
         }
 
     }
-
 
 }

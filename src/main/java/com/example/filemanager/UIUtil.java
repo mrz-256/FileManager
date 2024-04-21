@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -21,8 +22,9 @@ public class UIUtil {
     /**
      * Creates a new tab with open directory `file`
      * Also creates the corresponding Logical tab
+     *
      * @param tabPane the tabPane holding the newly created tab
-     * @param file directory open in given tab
+     * @param file    directory open in given tab
      */
     public static void createNewTab(TabPane tabPane, LinkedList<LogicalTab> tabs, File file) {
 
@@ -42,9 +44,61 @@ public class UIUtil {
         }
     }
 
+
+    /**
+     * A function which fills the 'Places' list of important directories with fields like Documents, Downloads
+     * and such with.
+     *
+     * @param pane the VBox list of the files to fill
+     */
+    public static void fillPlacesList(VBox pane) {
+        String[] names = {"", "Pictures", "Documents", "Downloads", "Music", "Videos", "Trash"};
+
+        for (var name : names) {
+            var file = new File(FileUtilFunctions.getHomeDirectory(), name);
+            if (file.exists() && file.isDirectory()) {
+                addFileToPlacesList(pane, file);
+            }
+        }
+
+    }
+
+    /**
+     * A helper function of the fillPlacesList() function.
+     * Adds a button leading to given directory to the list
+     *
+     * @param pane the list of the files to fill
+     * @param file the file to add
+     */
+    private static void addFileToPlacesList(VBox pane, File file) {
+        Button button = new Button();
+        button.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-content-display: top;" +
+                        "-fx-border-color: rgba(128,128,128,0.13);"
+        );
+        button.setText(file.getName());
+        button.setPrefWidth(200);
+        button.setAlignment(Pos.CENTER_LEFT);
+
+        button.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                try {
+                    UIController.setDirectoryInCurrentTab(file);
+                } catch (FileException e) {
+                    // todo
+                    System.out.println("TODO: UI UTIL ADD FILE TO PLACES ERROR " + e.getMessage());
+                }
+            }
+        });
+
+        pane.getChildren().add(button);
+    }
+
     /**
      * Used to load icon of a file.
      * Loads either the image if the filetype is png, jpg, bmp or a file icon in other cases.
+     *
      * @param file the file to make an icon for
      * @param size the size of created icon
      * @return newly created icon
@@ -53,13 +107,13 @@ public class UIUtil {
     public static ImageView loadImageIcon(File file, int size) throws FileException {
         if (!file.exists()) throw new FileException("File doesn't exist - can't create icon", file);
 
-        if (file.isDirectory()){
+        if (file.isDirectory()) {
             return new ImageView(
                     UIController.class.getResource("/icons/file_icons/icon_directory.png").toExternalForm()
             );
         }
 
-        if (file.isHidden()){
+        if (file.isHidden()) {
             return new ImageView(
                     UIController.class.getResource("/icons/file_icons/icon_hidden.png").toExternalForm()
             );
@@ -79,8 +133,8 @@ public class UIUtil {
         }
 
         // there is an icon for given extension
-        var resource = UIController.class.getResource("/icons/file_icons/icon_"+extension+".png");
-        if (resource != null){
+        var resource = UIController.class.getResource("/icons/file_icons/icon_" + extension + ".png");
+        if (resource != null) {
             return new ImageView(resource.toExternalForm());
         }
 
@@ -90,52 +144,54 @@ public class UIUtil {
         );
     }
 
-
     /**
-     * A function which fills the 'Places' list of important directories with fields like Documents, Downloads
-     * and such with.
-     * @param pane the VBox list of the files to fill
+     * Creates an icon button for a file icon.
+     *
+     * @param file     the file to make an icon button from
+     * @param size     the size of the icon button
+     * @param styleCSS style of the icon button
+     * @return newly created icon button
      */
-    public static void fillPlacesList(VBox pane){
-        String[] names = {"", "Pictures", "Documents", "Downloads", "Music", "Videos", "Trash"};
+    public static Button createIconButton(File file, int size, String styleCSS) {
+        Button button = new Button();
+        button.setPrefSize(size, size);
+        button.setMinSize(size, size);
 
-        for(var name : names){
-            var file = new File(FileUtilFunctions.getHomeDirectory(), name);
-            if (file.exists() && file.isDirectory()){
-                addFileToPlacesList(pane, file);
-            }
+        button.setText(file.getName());
+        button.setTooltip(new Tooltip(file.getName()));
+
+        button.setStyle(styleCSS);
+
+        try {
+            button.setGraphic(UIUtil.loadImageIcon(file, size / 5 * 3));
+        } catch (FileException ignore) {
+            // icon will be plain button with no icon
         }
 
+        return button;
     }
 
     /**
-     * A helper function of the fillPlacesList() function.
-     * Adds a button leading to given directory to the list
-     * @param pane the list of the files to fill
-     * @param file the file to add
+     * Sets the onClick function so that it moves tab to given file if it's a directory or execute it if it's a file
+     *
+     * @param button     the button to bind the function to
+     * @param logicalTab the logical tab of given tab
+     * @param file       the file to use for action
      */
-    private static void addFileToPlacesList(VBox pane, File file){
-        Button button = new Button();
-        button.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-content-display: top;" +
-                        "-fx-border-color: rgba(128,128,128,0.13);"
-        );
-        button.setText(file.getName());
-        button.setPrefWidth(200);
-        button.setAlignment(Pos.CENTER_LEFT);
-
+    public static void setOnFileClickFunction(Button button, LogicalTab logicalTab, File file) {
         button.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                if (file.isDirectory()) {
                     try {
-                        UIController.setDirectoryInCurrentTab(file);
+                        logicalTab.setDirectory(file);
+                        UIController.updateCurrentTab();
                     } catch (FileException e) {
-                        // todo
-                        System.out.println("TODO: UI UTIL ADD FILE TO PLACES ERROR " + e.getMessage());
+                        System.out.println("TODO: GRID STRATEGY ERROR " + e.getMessage());
                     }
+                } else {
+                    // todo: execute file
+                }
             }
         });
-
-        pane.getChildren().add(button);
     }
 }
