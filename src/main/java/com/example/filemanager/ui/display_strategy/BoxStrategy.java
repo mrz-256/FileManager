@@ -1,17 +1,15 @@
 package com.example.filemanager.ui.display_strategy;
 
-import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class GridStrategy implements DisplayStrategy {
+public class BoxStrategy implements DisplayStrategy {
 
     @Override
     public void display(Tab tab, LogicalTab logicalTab, int icon_size, int width) {

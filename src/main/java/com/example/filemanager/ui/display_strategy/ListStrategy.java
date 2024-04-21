@@ -1,12 +1,10 @@
 package com.example.filemanager.ui.display_strategy;
 
 
-import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 
 import java.io.File;
@@ -22,6 +20,7 @@ public class ListStrategy implements DisplayStrategy {
         ScrollPane scrollPane = (ScrollPane) tab.getContent();
         GridPane pane = (GridPane) scrollPane.getContent();
         pane.setVgap(10);
+        pane.setHgap(20);
 
         scrollPane.setMinSize(icon_size, icon_size);
         pane.getChildren().clear();
@@ -50,7 +49,7 @@ public class ListStrategy implements DisplayStrategy {
             UIUtil.setOnFileClickFunction(button, logicalTab, file);
 
 
-            pane.addRow(row, button, new Label(file.length() + " B"), new Label(file.lastModified() + ""));
+            pane.addRow(row, button, new Label(file.length()/1024 + " kB"), new Label(file.lastModified() + ""));
         }
 
     }

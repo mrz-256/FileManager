@@ -3,11 +3,10 @@ package com.example.filemanager.logic;
 import com.example.filemanager.logic.commands.*;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.ui.display_strategy.DisplayStrategy;
-import com.example.filemanager.ui.display_strategy.GridStrategy;
+import com.example.filemanager.ui.display_strategy.BoxStrategy;
 import javafx.scene.control.Tab;
 
 import java.io.File;
-import java.lang.module.Configuration;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -32,7 +31,7 @@ public class LogicalTab {
         this.filesToList = new ArrayList<>();
         this.tab = tab;
         this.pathHistory = new PathHistory();
-        this.displayStrategy = new GridStrategy();
+        this.displayStrategy = new BoxStrategy();
         this.zoom = 100;
 
         pathHistory.add(directory);

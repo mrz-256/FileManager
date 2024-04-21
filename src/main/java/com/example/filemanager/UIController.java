@@ -6,11 +6,11 @@ import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.sort_strategy.LastModifiedStrategy;
 import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SizeStrategy;
-import javafx.event.ActionEvent;
+import com.example.filemanager.ui.display_strategy.BoxStrategy;
+import com.example.filemanager.ui.display_strategy.ListStrategy;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.TabPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -150,6 +150,14 @@ public class UIController {
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         }
         updateAllTabs();
+    }
+
+    public void onShowAsList() {
+        getCurrentLogicalTab().setDisplayStrategy(new ListStrategy());
+    }
+
+    public void onShowAsBoxes() {
+        getCurrentLogicalTab().setDisplayStrategy(new BoxStrategy());
     }
     //endregion
 

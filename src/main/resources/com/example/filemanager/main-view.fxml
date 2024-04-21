@@ -19,7 +19,7 @@
                         <Tooltip text="back" />
                     </tooltip>
                 </Button>
-                <Button id="show-as-boxes" mnemonicParsing="false">
+                <Button id="show-as-boxes" mnemonicParsing="false" onMouseClicked="#onShowAsBoxes">
                     <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../../../icons/button_icons/icon_0.png" />
@@ -29,7 +29,7 @@
                         <Tooltip text="display files as boxes" />
                     </tooltip>
                 </Button>
-                <Button id="show-as-list" mnemonicParsing="false">
+                <Button id="show-as-list" mnemonicParsing="false" onMouseClicked="#onShowAsList">
                     <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../../../icons/button_icons/icon_1.png" />
