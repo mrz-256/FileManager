@@ -50,7 +50,6 @@ public class LogicalTab {
         }
 
         pathHistory.add(directory);
-        System.out.println(pathHistory);
         context.setDirectory(directory);
         updateListedFiles();
     }
@@ -62,7 +61,6 @@ public class LogicalTab {
         if (pathHistory.hasBack()){
             context.setDirectory(pathHistory.getBack());
         }
-        System.out.println(pathHistory);
     }
 
     /**
@@ -72,7 +70,6 @@ public class LogicalTab {
         if (pathHistory.hasForth()){
             context.setDirectory(pathHistory.getForth());
         }
-        System.out.println(pathHistory);
     }
 
 
