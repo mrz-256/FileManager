@@ -11,7 +11,7 @@ public class FileManagerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(FileManagerApplication.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1200, 675);
+        Scene scene = new Scene(fxmlLoader.load(), 700, 675);
         stage.setTitle("File Manager");
         stage.setScene(scene);
         stage.show();

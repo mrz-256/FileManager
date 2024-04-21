@@ -154,10 +154,12 @@ public class UIController {
 
     public void onShowAsList() {
         getCurrentLogicalTab().setDisplayStrategy(new ListStrategy());
+        updateCurrentTab();
     }
 
     public void onShowAsBoxes() {
         getCurrentLogicalTab().setDisplayStrategy(new BoxStrategy());
+        updateCurrentTab();
     }
     //endregion
 

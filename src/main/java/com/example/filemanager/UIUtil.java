@@ -152,18 +152,17 @@ public class UIUtil {
      * @param styleCSS style of the icon button
      * @return newly created icon button
      */
-    public static Button createIconButton(File file, int size, String styleCSS) {
+    public static Button createIconButton(File file, int size, String styleCSS, double iconToButtonRation) {
         Button button = new Button();
         button.setPrefSize(size, size);
         button.setMinSize(size, size);
 
-        button.setText(file.getName());
         button.setTooltip(new Tooltip(file.getName()));
 
         button.setStyle(styleCSS);
 
         try {
-            button.setGraphic(UIUtil.loadImageIcon(file, size / 5 * 3));
+            button.setGraphic(UIUtil.loadImageIcon(file, (int)(size * iconToButtonRation)));
         } catch (FileException ignore) {
             // icon will be plain button with no icon
         }

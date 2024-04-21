@@ -28,6 +28,7 @@ public class BoxStrategy implements DisplayStrategy {
         pane.setVgap(gap);
 
         scrollPane.setMinSize(icon_size, icon_size);
+        pane.getColumnConstraints().clear();
         pane.getChildren().clear();
 
         ArrayList<File> files;
@@ -46,8 +47,10 @@ public class BoxStrategy implements DisplayStrategy {
                     file, icon_size,
                     "-fx-background-color: transparent;" +
                     "-fx-content-display: top;" +
-                    "-fx-border-color: rgba(128,128,128,0.13);"
+                    "-fx-border-color: rgba(128,128,128,0.13);",
+                    3/5f
             );
+            button.setText(file.getName());
             UIUtil.setOnFileClickFunction(button, logicalTab, file);
 
             pane.add(button, position % hcells, position / hcells);
