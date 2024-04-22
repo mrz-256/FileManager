@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox id="root_vbox" maxWidth="1200.0" prefHeight="675.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.filemanager.UIController">
+<VBox id="root_vbox" maxWidth="700.0" prefHeight="675.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.filemanager.UIController">
     <children>
-        <ToolBar id="button_bar" prefHeight="40.0" prefWidth="1200.0">
+        <ToolBar id="button_bar" prefHeight="40.0" prefWidth="700.0">
             <items>
                 <Button id="back-button" mnemonicParsing="false" onMouseClicked="#onBackClicked">
                     <graphic>
@@ -79,7 +79,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <TextField fx:id="searchTextField" promptText="search.." />
-                  <ChoiceBox fx:id="searchChoiceBox" prefWidth="150.0" value="search from here" onAction="#onSearchChoice">
+                  <ChoiceBox fx:id="searchChoiceBox" onAction="#onSearchChoice" prefWidth="150.0" value="search from here">
                    <items>
                        <FXCollections fx:factory="observableArrayList">
                            <String fx:value="search from here" />
