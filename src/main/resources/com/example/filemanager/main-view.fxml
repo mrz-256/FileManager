@@ -95,7 +95,7 @@
       </TitledPane>
       <TitledPane fx:id="filterTitledPane" animated="false" expanded="false" text="filter">
          <content>
-            <TextField fx:id="filterSearchField" promptText="regex filter.." />
+            <TextField fx:id="filterSearchField" onAction="#onFilterUpdated" promptText="regex filter.." />
          </content>
       </TitledPane>
         <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0" VBox.vgrow="ALWAYS">

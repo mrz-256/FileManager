@@ -8,6 +8,7 @@ import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SizeStrategy;
 import com.example.filemanager.ui.display_strategy.BoxStrategy;
 import com.example.filemanager.ui.display_strategy.ListStrategy;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.TilePane;
@@ -114,19 +115,23 @@ public class UIController {
         return tabs.get(getCurrentTabIndex());
     }
 
+    //region back button
     @FXML
     public void onBackClicked() {
         var tab = getCurrentLogicalTab();
         tab.moveBack();
         tab.updateTab((int) tabPane.getWidth());
     }
+    //endregion
 
+    //region show hidden files
     @FXML
     public void onShowHiddenClicked() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().showHiddenFiles = showHiddenCheckbox.isSelected();
         tab.updateTab((int) tabPane.getWidth());
     }
+    //endregion
 
     //region sorting methods
     @FXML
@@ -165,17 +170,27 @@ public class UIController {
         }
         updateAllTabs();
     }
+    //endregion
 
+    //region show list/box
+    @FXML
     public void onShowAsList() {
         getCurrentLogicalTab().setDisplayStrategy(new ListStrategy());
         updateCurrentTab();
     }
-
+    @FXML
     public void onShowAsBoxes() {
         getCurrentLogicalTab().setDisplayStrategy(new BoxStrategy());
         updateCurrentTab();
     }
     //endregion
 
+    //region filter
+    @FXML
+    public void onFilterUpdated(ActionEvent actionEvent) {
+        getCurrentLogicalTab().getConfiguration().filter = filterSearchField.getText();
+        updateCurrentTab();
+    }
+    //region filter
 
 }
