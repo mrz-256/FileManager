@@ -1,10 +1,8 @@
 package com.example.filemanager.logic.commands;
 
-import com.example.filemanager.logic.Context;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.exceptions.DeleteFileException;
-import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
 package com.example.filemanager.logic.commands;
 
-import com.example.filemanager.logic.Context;
 import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.exceptions.FileException;
 
