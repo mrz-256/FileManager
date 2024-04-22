@@ -125,6 +125,8 @@ public class LogicalTab {
                 var found = new SearchCommand().execute(directory, configuration, params);
                 if (found != null && !found.isEmpty()){
                     listedFiles = found;
+                } else {
+                    listedFiles.clear();
                 }
             }
         }

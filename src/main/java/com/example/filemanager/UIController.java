@@ -210,9 +210,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         try {
             tab.executeCommand("search", new File(value));
-        } catch (FileException ignored) {
-            //todo
-        }
+        } catch (FileException ignored) {} // doesn't matter - nothing happens
 
         tab.updateTabDisplay((int) tabPane.getWidth());
         tab.setTitle("search for \"" + value + "\"");
