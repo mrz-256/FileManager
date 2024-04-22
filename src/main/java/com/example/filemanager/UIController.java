@@ -9,8 +9,8 @@ import com.example.filemanager.logic.sort_strategy.SizeStrategy;
 import com.example.filemanager.ui.display_strategy.BoxStrategy;
 import com.example.filemanager.ui.display_strategy.ListStrategy;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -22,15 +22,29 @@ import java.util.LinkedList;
 public class UIController {
     @FXML
     private CheckMenuItem showHiddenCheckbox;
+
+    @FXML
+    private TabPane tabPane;
     @FXML
     private VBox places;
     @FXML
     private VBox recent;
-    /**
-     * TabPane holding all javaFX tabs
-     */
+
     @FXML
-    private TabPane tabPane;
+    private TitledPane searchPane;
+    @FXML
+    public TextField searchTextField;
+    @FXML
+    public ChoiceBox<String> searchChoiceBox;
+    @FXML
+    public Button searchConfirmButton;
+    @FXML
+    public Button searchCloseButton;
+
+    @FXML
+    public TitledPane filtetTitledPane;
+    @FXML
+    public TextField filterSearchField;
 
     /**
      * Singleton instance

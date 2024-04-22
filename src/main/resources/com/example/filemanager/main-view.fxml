@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -49,26 +51,6 @@
                         <Tooltip text="new tab" />
                     </tooltip>
                 </Button>
-                <Button id="search-button" mnemonicParsing="false">
-                    <graphic>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../../../icons/button_icons/icon_6.png" />
-                        </ImageView>
-                    </graphic>
-                    <tooltip>
-                        <Tooltip text="search for files" />
-                    </tooltip>
-                </Button>
-                <Button id="filter-button" mnemonicParsing="false">
-                    <graphic>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../../../icons/button_icons/icon_8.png" />
-                        </ImageView>
-                    </graphic>
-                    <tooltip>
-                        <Tooltip text="filter shown files" />
-                    </tooltip>
-                </Button>
                 <SplitMenuButton contentDisplay="TEXT_ONLY" mnemonicParsing="false" popupSide="RIGHT" prefHeight="11.0" prefWidth="93.0" text="Settings" textAlignment="RIGHT">
                <graphic>
                   <Label text="Settings" />
@@ -83,15 +65,39 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="sort files by">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="name" onAction="#onSortFilesByName" />
-                        <MenuItem mnemonicParsing="false" text="size" onAction="#onSortFilesBySize" />
-                        <MenuItem mnemonicParsing="false" text="last modified" onAction="#onSortFilesByLastModification"/>
+                      <MenuItem mnemonicParsing="false" onAction="#onSortFilesByName" text="name" />
+                        <MenuItem mnemonicParsing="false" onAction="#onSortFilesBySize" text="size" />
+                        <MenuItem mnemonicParsing="false" onAction="#onSortFilesByLastModification" text="last modified" />
                     </items>
                   </Menu>
                </items>
                 </SplitMenuButton>
             </items>
         </ToolBar>
+      <TitledPane fx:id="searchPane" animated="false" expanded="false" text="search">
+         <content>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="searchTextField" promptText="search.." />
+                  <ChoiceBox fx:id="searchChoiceBox" prefWidth="150.0" value="search from here">
+                   <items>
+                       <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="search from here" />
+                           <String fx:value="search from home" />
+                       </FXCollections>
+                   </items>
+                   </ChoiceBox>
+                  <Button fx:id="searchConfirmButton" mnemonicParsing="false" text="search" />
+                  <Button fx:id="searchCloseButton" mnemonicParsing="false" text="close" />
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+      <TitledPane fx:id="filterTitledPane" animated="false" expanded="false" text="filter">
+         <content>
+            <TextField fx:id="filterSearchField" promptText="regex filter.." />
+         </content>
+      </TitledPane>
         <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0" VBox.vgrow="ALWAYS">
          <VBox fillWidth="false" maxWidth="200.0" minWidth="150" VBox.vgrow="ALWAYS">
             <children>
@@ -108,7 +114,7 @@
                     <VBox id="global_files_scrollpane" fx:id="recent" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
             </children>
          </VBox>
-            <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" onMouseClicked="#onTabPaneUpdate">
+            <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onTabPaneUpdate" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
             <tabs>
 
             </tabs></TabPane>
