@@ -215,6 +215,7 @@ public class UIController {
         }
 
         tab.updateTabDisplay((int) tabPane.getWidth());
+        tab.setTitle("search for \"" + value + "\"");
     }
 
     @FXML

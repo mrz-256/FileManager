@@ -157,7 +157,7 @@ public class UIUtil {
         button.setPrefSize(size, size);
         button.setMinSize(size, size);
 
-        button.setTooltip(new Tooltip(file.getName()));
+        button.setTooltip(new Tooltip(file.getAbsolutePath()));
 
         button.setStyle(styleCSS);
 
