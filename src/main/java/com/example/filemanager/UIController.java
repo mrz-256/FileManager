@@ -1,6 +1,7 @@
 package com.example.filemanager;
 
 import com.example.filemanager.logic.FileUtilFunctions;
+import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.sort_strategy.LastModifiedStrategy;
@@ -8,6 +9,7 @@ import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SizeStrategy;
 import com.example.filemanager.ui.display_strategy.BoxStrategy;
 import com.example.filemanager.ui.display_strategy.ListStrategy;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -184,6 +186,7 @@ public class UIController {
         getCurrentLogicalTab().setDisplayStrategy(new ListStrategy());
         updateCurrentTab();
     }
+
     @FXML
     public void onShowAsBoxes() {
         getCurrentLogicalTab().setDisplayStrategy(new BoxStrategy());
@@ -212,8 +215,6 @@ public class UIController {
         }
 
         tab.updateTabDisplay((int) tabPane.getWidth());
-
-
     }
 
     @FXML
@@ -224,4 +225,11 @@ public class UIController {
         tab.updateTabDisplay((int) tabPane.getWidth());
     }
 
+    public void onSearchChoice() {
+        var tab = getCurrentLogicalTab();
+
+        tab.getConfiguration().searchStart = (searchChoiceBox.getValue().equals("start from here"))
+                ? LogicalConfiguration.SearchStart.SEARCH_FROM_HERE
+                : LogicalConfiguration.SearchStart.SEARCH_FROM_HOME;
+    }
 }

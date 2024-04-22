@@ -79,7 +79,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <TextField fx:id="searchTextField" promptText="search.." />
-                  <ChoiceBox fx:id="searchChoiceBox" prefWidth="150.0" value="search from here">
+                  <ChoiceBox fx:id="searchChoiceBox" prefWidth="150.0" value="search from here" onAction="#onSearchChoice">
                    <items>
                        <FXCollections fx:factory="observableArrayList">
                            <String fx:value="search from here" />
