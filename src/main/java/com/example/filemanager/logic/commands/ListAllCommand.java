@@ -28,11 +28,6 @@ public class ListAllCommand extends FileCommand{
     }
 
     @Override
-    public void undo() {
-        // nothing to undo here
-    }
-
-    @Override
     public String getID() {
         return "list_all";
     }

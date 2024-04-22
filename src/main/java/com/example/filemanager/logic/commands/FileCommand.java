@@ -21,7 +21,7 @@ public abstract class FileCommand {
     /**
      * Method to undo given command
      */
-    public abstract void undo();
+    public void undo(){}
 
     /**
      * Method to get string name of command

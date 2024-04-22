@@ -34,11 +34,6 @@ public class ListDirectoriesCommand extends FileCommand {
     }
 
     @Override
-    public void undo() {
-        // nothing to undo here
-    }
-
-    @Override
     public String getID() {
         return "list_directories";
     }
