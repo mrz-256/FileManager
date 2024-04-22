@@ -33,13 +33,8 @@ public class BoxStrategy implements DisplayStrategy {
 
         ArrayList<File> files;
 
-        try {
-            files = logicalTab.getFilesToList();
-        } catch (FileException e) {
-            // todo:
-            System.out.println("TODO: GRID STRATEGY ERROR " + e.getMessage());
-            return;
-        }
+
+        files = logicalTab.getFilesToList();
 
         int position = 0;
         for (var file : files) {

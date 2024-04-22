@@ -6,7 +6,6 @@ import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -23,6 +22,7 @@ public class SearchCommand extends FileCommand{
 
         File toFind = context.getWorkingAt(0);
         File start = context.getDirectory();
+
         if (context.getConfiguration().searchStart == LogicalConfiguration.SearchStart.SEARCH_FROM_HOME){
             start = FileUtilFunctions.getHomeDirectory();
         }
@@ -31,13 +31,9 @@ public class SearchCommand extends FileCommand{
         Queue<File> que = new LinkedList<>();
         que.add(start);
 
+
         while (!que.isEmpty()){
             var current = que.poll();
-
-            // add matching file
-            if (current.getName().matches(".*" + toFind.getName() + ".*")){
-                context.addToResult(current);
-            }
 
             // continue search deeper
             if (current.isDirectory()){
@@ -46,6 +42,13 @@ public class SearchCommand extends FileCommand{
 
                 que.addAll(List.of(files));
             }
+
+            // add matching file
+            else if (current.getName().matches(".*" + toFind.getName() + ".*")){
+                context.addToResult(current);
+                System.out.println("MATCHED!");
+            }
+
         }
     }
 

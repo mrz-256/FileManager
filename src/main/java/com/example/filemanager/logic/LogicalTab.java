@@ -86,13 +86,12 @@ public class LogicalTab {
      * Already calls for updateListedFiles().
      * @return the files to list
      */
-    public ArrayList<File> getFilesToList() throws FileException {
-        updateListedFiles();
-        return filesToList;
+    public ArrayList<File> getFilesToList() {
+        return context.getResult();
     }
     //endregion
 
-    public void updateTab(int width) {
+    public void updateTabDisplay(int width) {
         tab.setText(context.getDirectory().getAbsolutePath());
         displayStrategy.display(
                 tab, this,
@@ -116,6 +115,7 @@ public class LogicalTab {
             case "new_directory" -> new NewDirectoryCommand(context).execute();
             case "delete_files" -> new DeleteFilesCommand(context).execute();
             case "paste_files" -> new PasteFilesCommand(context).execute();
+            case "search" -> new SearchCommand(context).execute();
         }
     }
 

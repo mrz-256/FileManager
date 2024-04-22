@@ -8,10 +8,8 @@ import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SizeStrategy;
 import com.example.filemanager.ui.display_strategy.BoxStrategy;
 import com.example.filemanager.ui.display_strategy.ListStrategy;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -83,7 +81,12 @@ public class UIController {
      */
     public static void updateAllTabs() {
         for (var tab : tabs) {
-            tab.updateTab((int) getInstance().tabPane.getWidth());
+            try {
+                tab.updateListedFiles();
+            } catch (FileException e) {
+                //todo
+            }
+            tab.updateTabDisplay((int) getInstance().tabPane.getWidth());
         }
     }
 
@@ -91,7 +94,13 @@ public class UIController {
      * Updates selected(current) tab
      */
     public static void updateCurrentTab() {
-        getInstance().getCurrentLogicalTab().updateTab((int) getInstance().tabPane.getWidth());
+        var tab = getInstance().getCurrentLogicalTab();
+        try {
+            tab.updateListedFiles();
+        } catch (FileException e) {
+            //todo
+        }
+        tab.updateTabDisplay((int) getInstance().tabPane.getWidth());
     }
 
     public static void setDirectoryInCurrentTab(File directory) throws FileException {
@@ -119,8 +128,13 @@ public class UIController {
     @FXML
     public void onBackClicked() {
         var tab = getCurrentLogicalTab();
+        try {
+            tab.updateListedFiles();
+        } catch (FileException e) {
+            //todo
+        }
         tab.moveBack();
-        tab.updateTab((int) tabPane.getWidth());
+        tab.updateTabDisplay((int) tabPane.getWidth());
     }
     //endregion
 
@@ -129,7 +143,12 @@ public class UIController {
     public void onShowHiddenClicked() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().showHiddenFiles = showHiddenCheckbox.isSelected();
-        tab.updateTab((int) tabPane.getWidth());
+        try {
+            tab.updateListedFiles();
+        } catch (FileException e) {
+            //todo
+        }
+        tab.updateTabDisplay((int) tabPane.getWidth());
     }
     //endregion
 
@@ -138,21 +157,36 @@ public class UIController {
     public void onSortFilesByName() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new NameStrategy();
-        tab.updateTab((int) tabPane.getWidth());
+        try {
+            tab.updateListedFiles();
+        } catch (FileException e) {
+            //todo
+        }
+        tab.updateTabDisplay((int) tabPane.getWidth());
     }
 
     @FXML
     public void onSortFilesBySize() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new SizeStrategy();
-        tab.updateTab((int) tabPane.getWidth());
+        try {
+            tab.updateListedFiles();
+        } catch (FileException e) {
+            //todo
+        }
+        tab.updateTabDisplay((int) tabPane.getWidth());
     }
 
     @FXML
     public void onSortFilesByLastModification() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new LastModifiedStrategy();
-        tab.updateTab((int) tabPane.getWidth());
+        try {
+            tab.updateListedFiles();
+        } catch (FileException e) {
+            //todo
+        }
+        tab.updateTabDisplay((int) tabPane.getWidth());
     }
     //endregion
 
@@ -195,12 +229,31 @@ public class UIController {
 
     @FXML
     public void onSearchConfirm() {
+        String value = searchTextField.getText();
+        if (value == null || value.matches("^\\s*$")) return;
+
+        var tab = getCurrentLogicalTab();
+        try {
+            tab.executeCommand("search", new File(value));
+        } catch (FileException ignored) {
+            //todo
+        }
+
+        tab.updateTabDisplay((int) tabPane.getWidth());
+
 
     }
 
     @FXML
     public void onSearchClear() {
-
+        searchTextField.clear();
+        var tab = getCurrentLogicalTab();
+        try {
+            tab.updateListedFiles();
+        } catch (FileException ignored) {
+            //todo
+        }
+        tab.updateTabDisplay((int) tabPane.getWidth());
     }
 
 }

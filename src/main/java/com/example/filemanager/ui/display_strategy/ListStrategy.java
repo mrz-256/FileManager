@@ -29,13 +29,8 @@ public class ListStrategy implements DisplayStrategy {
 
         ArrayList<File> files;
 
-        try {
-            files = logicalTab.getFilesToList();
-        } catch (FileException e) {
-            // todo:
-            System.out.println("TODO: LIST STRATEGY ERROR " + e.getMessage());
-            return;
-        }
+
+        files = logicalTab.getFilesToList();
 
         pane.addRow(0, new Label(), new Label("name"), new Label("size"), new Label("last modification"));
         pane.getColumnConstraints().clear();
