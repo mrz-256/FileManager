@@ -40,10 +40,10 @@ public class UIController {
     @FXML
     public Button searchConfirmButton;
     @FXML
-    public Button searchCloseButton;
+    public Button searchClearButton;
 
     @FXML
-    public TitledPane filtetTitledPane;
+    public TitledPane filterTitledPane;
     @FXML
     public TextField filterSearchField;
 
@@ -187,10 +187,20 @@ public class UIController {
 
     //region filter
     @FXML
-    public void onFilterUpdated(ActionEvent actionEvent) {
+    public void onFilterUpdated() {
         getCurrentLogicalTab().getConfiguration().filter = filterSearchField.getText();
         updateCurrentTab();
     }
-    //region filter
+    //endregion
+
+    @FXML
+    public void onSearchConfirm() {
+
+    }
+
+    @FXML
+    public void onSearchClear() {
+
+    }
 
 }

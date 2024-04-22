@@ -87,8 +87,8 @@
                        </FXCollections>
                    </items>
                    </ChoiceBox>
-                  <Button fx:id="searchConfirmButton" mnemonicParsing="false" text="search" />
-                  <Button fx:id="searchCloseButton" mnemonicParsing="false" text="close" />
+                  <Button fx:id="searchConfirmButton" mnemonicParsing="false" onAction="#onSearchConfirm" text="search" />
+                  <Button fx:id="searchClearButton" mnemonicParsing="false" onAction="#onSearchClear" text="clear" />
                </children>
             </HBox>
          </content>
