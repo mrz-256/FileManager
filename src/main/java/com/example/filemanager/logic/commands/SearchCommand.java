@@ -46,7 +46,6 @@ public class SearchCommand extends FileCommand{
             // add matching file
             else if (current.getName().matches(".*" + toFind.getName() + ".*")){
                 context.addToResult(current);
-                System.out.println("MATCHED!");
             }
 
         }

@@ -17,7 +17,6 @@ import java.util.LinkedList;
  */
 public class LogicalTab {
     private final Context context;
-    private final ArrayList<File> filesToList;
     private final PathHistory pathHistory;
 
     private final Tab tab;
@@ -28,7 +27,6 @@ public class LogicalTab {
 
     public LogicalTab(Tab tab, File directory, LinkedList<LogicalTab> parentList) {
         this.context = new Context(directory);
-        this.filesToList = new ArrayList<>();
         this.tab = tab;
         this.pathHistory = new PathHistory();
         this.displayStrategy = new BoxStrategy();
@@ -76,9 +74,6 @@ public class LogicalTab {
     public void updateListedFiles() throws FileException {
         FileCommand command = new ListAllCommand(context);
         command.execute();
-
-        filesToList.clear();
-        filesToList.addAll(context.getResult());
     }
 
     /**
