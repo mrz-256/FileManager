@@ -16,8 +16,10 @@ import java.util.LinkedList;
  * CommandHistory is a singleton common for all tabs.
  */
 public class LogicalTab {
-    private final Context context;
+    private File directory;
+    private final LogicalConfiguration configuration;
     private final PathHistory pathHistory;
+    private ArrayList<File> listedFiles;
 
     private final Tab tab;
     private DisplayStrategy displayStrategy;
@@ -26,7 +28,10 @@ public class LogicalTab {
 
 
     public LogicalTab(Tab tab, File directory, LinkedList<LogicalTab> parentList) {
-        this.context = new Context(directory);
+        this.directory = directory;
+        this.configuration = LogicalConfiguration.defaultConfiguration();
+        this.listedFiles = new ArrayList<>();
+
         this.tab = tab;
         this.pathHistory = new PathHistory();
         this.displayStrategy = new BoxStrategy();
@@ -51,8 +56,8 @@ public class LogicalTab {
             throw new FileException("File is not a directory.", directory);
         }
 
-        pathHistory.add(context.getDirectory());
-        context.setDirectory(directory);
+        pathHistory.add(directory);
+        this.directory = directory;
         updateListedFiles();
     }
 
@@ -61,7 +66,7 @@ public class LogicalTab {
      */
     public void moveBack(){
         if (pathHistory.hasBack()){
-            context.setDirectory(pathHistory.getBack());
+            directory = pathHistory.getBack();
         }
     }
     //endregion
@@ -69,11 +74,14 @@ public class LogicalTab {
     //region file contents
     /**
      * Updates list of listed files.
-     * @throws FileException when files can't be listed
      */
-    public void updateListedFiles() throws FileException {
-        FileCommand command = new ListAllCommand(context);
-        command.execute();
+    public void updateListedFiles() {
+        ListAllCommand command = new ListAllCommand();
+        try {
+            listedFiles = command.execute(directory, configuration, null);
+        } catch (FileException ignored) {
+            // ListAllCommand never throws exceptions
+        }
     }
 
     /**
@@ -81,13 +89,18 @@ public class LogicalTab {
      * Already calls for updateListedFiles().
      * @return the files to list
      */
-    public ArrayList<File> getFilesToList() {
-        return context.getResult();
+    public ArrayList<File> getListedFiles() {
+        return listedFiles;
     }
     //endregion
 
     public void updateTabDisplay(int width) {
-        tab.setText(context.getDirectory().getAbsolutePath());
+        tab.setText(directory.getAbsolutePath());
+
+        if (listedFiles.size() > 512){
+            listedFiles = (ArrayList<File>) listedFiles.subList(0, 512);
+        }
+
         displayStrategy.display(
                 tab, this,
                 DEFAULT_ICON_SIZE * zoom / 100, width
@@ -98,39 +111,35 @@ public class LogicalTab {
      * Executes text representation of a command on parameters params within this context.
      * @param command command to execute.
      * @param params optional params to use
-     * @throws FileException when command can not be executed.
+     * @throws FileException when command fails
      */
     public void executeCommand(String command, File... params) throws FileException {
-        context.clearWorking();
-        context.addToWorking(params);
 
         switch (command.toLowerCase()) {
             case "undo" -> CommandHistory.undoLast();
-            case "new_file" -> new NewFileCommand(context).execute();
-            case "new_directory" -> new NewDirectoryCommand(context).execute();
-            case "delete_files" -> new DeleteFilesCommand(context).execute();
-            case "paste_files" -> new PasteFilesCommand(context).execute();
-            case "search" -> new SearchCommand(context).execute();
+            case "new_file" -> new NewFileCommand().execute(directory, configuration, params);
+            case "new_directory" -> new NewDirectoryCommand().execute(directory, configuration, params);
+            case "delete_files" -> new DeleteFilesCommand().execute(directory, configuration, params);
+            case "paste_files" -> new PasteFilesCommand().execute(directory, configuration, params);
+            case "search" -> {
+                var found = new SearchCommand().execute(directory, configuration, params);
+                if (found != null && !found.isEmpty()){
+                    listedFiles = found;
+                }
+            }
         }
     }
 
     //region getters
     /**
-     * @return the context of logical tab
-     */
-    public Context getContext() {
-        return context;
-    }
-
-    /**
      * @return the configuration of logical tab
      */
     public LogicalConfiguration getConfiguration(){
-        return context.getConfiguration();
+        return configuration;
     }
 
     public File getDirectory(){
-        return context.getDirectory();
+        return directory;
     }
     //endregion
 

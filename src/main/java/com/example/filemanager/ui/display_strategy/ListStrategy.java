@@ -4,7 +4,6 @@ package com.example.filemanager.ui.display_strategy;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
-import com.example.filemanager.logic.exceptions.FileException;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -30,7 +29,7 @@ public class ListStrategy implements DisplayStrategy {
         ArrayList<File> files;
 
 
-        files = logicalTab.getFilesToList();
+        files = logicalTab.getListedFiles();
 
         pane.addRow(0, new Label(), new Label("name"), new Label("size"), new Label("last modification"));
         pane.getColumnConstraints().clear();

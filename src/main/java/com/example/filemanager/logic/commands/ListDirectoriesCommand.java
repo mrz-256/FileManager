@@ -1,36 +1,40 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Context;
+import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A command to list directories in context directory based on context configuration
  */
 public class ListDirectoriesCommand extends FileCommand {
 
-    public ListDirectoriesCommand(Context context) {
-        super(context);
-    }
-
+    /**
+     * Lists all directories in current directory
+     * @return list of directories
+     * @throws FileException never
+     */
     @Override
-    public void execute() throws FileException {
+    public ArrayList<File> execute(
+            File directory, LogicalConfiguration configuration, File[] working
+    ) throws FileException {
         CommandHistory.addCommand(this, false);
-        context.clearResult();
 
 
-        File[] directories = context.getDirectory().listFiles(file -> {
+        File[] directories = directory.listFiles(file -> {
             return file.isDirectory()
-                    && (context.getConfiguration().showHiddenFiles || !file.isHidden())
-                    && file.getName().matches(".*" + context.getConfiguration().filter + ".*");
+                    && (configuration.showHiddenFiles || !file.isHidden())
+                    && file.getName().matches(".*" + configuration.filter + ".*");
         });
+        if (directories == null || directories.length == 0) return null;
 
-        if (directories == null) return;
+        configuration.sortStrategy.sort(directories);
 
-        context.getConfiguration().sortStrategy.sort(directories);
-
-        context.addToResult(directories);
+        return new ArrayList<>(List.of(directories));
     }
 
     @Override

@@ -1,36 +1,40 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Context;
+import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A command to list files in context directory based on context configuration
  */
 public class ListFilesCommand extends FileCommand {
 
-    public ListFilesCommand(Context context) {
-        super(context);
-    }
-
+    /**
+     * Lists all files in directory
+     * @return list of the files
+     * @throws FileException never
+     */
     @Override
-    public void execute() throws FileException {
+    public ArrayList<File> execute(
+            File directory, LogicalConfiguration configuration, File[] working
+    )  throws FileException {
         CommandHistory.addCommand(this, false);
-        context.clearResult();
 
-
-        File[] files = context.getDirectory().listFiles(file -> {
+        File[] files = directory.listFiles(file -> {
             return file.isFile()
-                    && (context.getConfiguration().showHiddenFiles || !file.isHidden())
-                    && file.getName().matches(".*" + context.getConfiguration().filter + ".*");
+                    && (configuration.showHiddenFiles || !file.isHidden())
+                    && file.getName().matches(".*" + configuration.filter + ".*");
         });
 
-        if (files == null) return;
+        if (files == null || files.length == 0) return null;
 
-        context.getConfiguration().sortStrategy.sort(files);
+        configuration.sortStrategy.sort(files);
 
-        context.addToResult(files);
+        return new ArrayList<>(List.of(files));
     }
 
     @Override

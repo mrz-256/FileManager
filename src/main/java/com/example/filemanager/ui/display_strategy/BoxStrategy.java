@@ -2,7 +2,6 @@ package com.example.filemanager.ui.display_strategy;
 
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
-import com.example.filemanager.logic.exceptions.FileException;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
@@ -34,7 +33,7 @@ public class BoxStrategy implements DisplayStrategy {
         ArrayList<File> files;
 
 
-        files = logicalTab.getFilesToList();
+        files = logicalTab.getListedFiles();
 
         int position = 0;
         for (var file : files) {

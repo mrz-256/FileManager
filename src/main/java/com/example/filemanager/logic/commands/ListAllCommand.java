@@ -1,30 +1,39 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Context;
+import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class ListAllCommand extends FileCommand{
-    public ListAllCommand(Context context) {
-        super(context);
-    }
+public class ListAllCommand extends FileCommand {
 
+    /**
+     * Lists all files in current directory
+     * @return found files
+     * @throws FileException never
+     */
     @Override
-    public void execute() throws FileException {
+    public ArrayList<File> execute(
+            File directory, LogicalConfiguration configuration, File[] working
+    ) throws FileException{
         CommandHistory.addCommand(this, false);
-        context.clearResult();
+        var result = new ArrayList<File>();
 
-        FileCommand directoriesCommand = new ListDirectoriesCommand(context);
-        directoriesCommand.execute();
-        ArrayList<File> result = new ArrayList<>(context.getResult());
+        var directoriesCommand = new ListDirectoriesCommand();
+        var directories = directoriesCommand.execute(directory,configuration,null);
+        if (directories != null){
+            result.addAll(directories);
+        }
 
-        FileCommand filesCommand = new ListFilesCommand(context);
-        filesCommand.execute();
-        result.addAll(context.getResult());
+        var filesCommand = new ListFilesCommand();
+        var files = filesCommand.execute(directory, configuration, null);
+        if (files != null){
+            result.addAll(files);
+        }
 
-        context.setResult(result);
+        return result;
     }
 
     @Override

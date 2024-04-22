@@ -1,41 +1,53 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.Context;
+import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.exceptions.NewFileException;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * A command to create the first file in context working (working[0])
  */
 public class NewFileCommand extends FileCommand{
-    private File file;
+    private File creation;
 
-    public NewFileCommand(Context context) {
-        super(context);
-    }
 
+    /**
+     * Creates the file first file in working
+     * @return null
+     * @throws FileException when file already exists or creation fails
+     */
     @Override
-    public void execute() throws FileException {
+    public ArrayList<File> execute(
+            File directory, LogicalConfiguration configuration, File[] working
+    ) throws FileException {
         CommandHistory.addCommand(this, true);
 
-        file = context.getWorkingAt(0);
+        if (working == null || working.length == 0) return null;
 
-        if (file.exists()) return;
+        creation = working[0];
+
+        if (creation.exists()) throw new NewFileException("File already exists", creation);
 
         try {
-            if (!file.createNewFile()) throw new Exception("not created");
+            if (!creation.createNewFile()) throw new Exception("not created");
         } catch (Exception e) {
-            throw new NewFileException("Failed creating file (" + e.getMessage() + ") | " + file);
+            throw new NewFileException("Failed creating file (" + e.getMessage() + ")", creation);
         }
 
+        return null;
     }
 
+    /**
+     * Deletes created file
+     */
     @Override
     public void undo() {
-        if (file.exists()){
-            file.delete();
+        if (creation.exists()){
+            creation.delete();
         }
     }
 

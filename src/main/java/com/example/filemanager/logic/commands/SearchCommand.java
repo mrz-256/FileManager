@@ -6,24 +6,32 @@ import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 public class SearchCommand extends FileCommand{
-    public SearchCommand(Context context) {
-        super(context);
-    }
 
+    /**
+     * Searches for all files in depth either from current directory or from home directory depending on `configuration`.
+     * Files that are added must have a name matching ```".*" + working[0].getName() + ".*"``` pattern
+     * @return list of all found files
+     * @throws FileException never
+     */
     @Override
-    public void execute() throws FileException {
+    public ArrayList<File> execute(
+            File directory, LogicalConfiguration configuration, File[] working
+    )throws FileException {
         CommandHistory.addCommand(this, false);
-        context.clearResult();
+        var result = new ArrayList<File>();
 
-        File toFind = context.getWorkingAt(0);
-        File start = context.getDirectory();
+        if (working == null || working.length == 0) return null;
 
-        if (context.getConfiguration().searchStart == LogicalConfiguration.SearchStart.SEARCH_FROM_HOME){
+        File toFind = working[0];
+        File start = directory;
+
+        if (configuration.searchStart == LogicalConfiguration.SearchStart.SEARCH_FROM_HOME){
             start = FileUtilFunctions.getHomeDirectory();
         }
 
@@ -32,7 +40,7 @@ public class SearchCommand extends FileCommand{
         que.add(start);
 
 
-        while (!que.isEmpty()){
+        while (!que.isEmpty() && result.size() < 512){
             var current = que.poll();
 
             // continue search deeper
@@ -45,10 +53,11 @@ public class SearchCommand extends FileCommand{
 
             // add matching file
             else if (current.getName().matches(".*" + toFind.getName() + ".*")){
-                context.addToResult(current);
+                result.add(current);
             }
-
         }
+
+        return result;
     }
 
     @Override

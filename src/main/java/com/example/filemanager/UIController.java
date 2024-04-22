@@ -81,11 +81,7 @@ public class UIController {
      */
     public static void updateAllTabs() {
         for (var tab : tabs) {
-            try {
-                tab.updateListedFiles();
-            } catch (FileException e) {
-                //todo
-            }
+            tab.updateListedFiles();
             tab.updateTabDisplay((int) getInstance().tabPane.getWidth());
         }
     }
@@ -95,11 +91,7 @@ public class UIController {
      */
     public static void updateCurrentTab() {
         var tab = getInstance().getCurrentLogicalTab();
-        try {
-            tab.updateListedFiles();
-        } catch (FileException e) {
-            //todo
-        }
+        tab.updateListedFiles();
         tab.updateTabDisplay((int) getInstance().tabPane.getWidth());
     }
 
@@ -128,11 +120,7 @@ public class UIController {
     @FXML
     public void onBackClicked() {
         var tab = getCurrentLogicalTab();
-        try {
-            tab.updateListedFiles();
-        } catch (FileException e) {
-            //todo
-        }
+        tab.updateListedFiles();
         tab.moveBack();
         tab.updateTabDisplay((int) tabPane.getWidth());
     }
@@ -143,11 +131,7 @@ public class UIController {
     public void onShowHiddenClicked() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().showHiddenFiles = showHiddenCheckbox.isSelected();
-        try {
-            tab.updateListedFiles();
-        } catch (FileException e) {
-            //todo
-        }
+        tab.updateListedFiles();
         tab.updateTabDisplay((int) tabPane.getWidth());
     }
     //endregion
@@ -157,11 +141,7 @@ public class UIController {
     public void onSortFilesByName() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new NameStrategy();
-        try {
-            tab.updateListedFiles();
-        } catch (FileException e) {
-            //todo
-        }
+        tab.updateListedFiles();
         tab.updateTabDisplay((int) tabPane.getWidth());
     }
 
@@ -169,11 +149,7 @@ public class UIController {
     public void onSortFilesBySize() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new SizeStrategy();
-        try {
-            tab.updateListedFiles();
-        } catch (FileException e) {
-            //todo
-        }
+        tab.updateListedFiles();
         tab.updateTabDisplay((int) tabPane.getWidth());
     }
 
@@ -181,11 +157,7 @@ public class UIController {
     public void onSortFilesByLastModification() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new LastModifiedStrategy();
-        try {
-            tab.updateListedFiles();
-        } catch (FileException e) {
-            //todo
-        }
+        tab.updateListedFiles();
         tab.updateTabDisplay((int) tabPane.getWidth());
     }
     //endregion
@@ -248,11 +220,7 @@ public class UIController {
     public void onSearchClear() {
         searchTextField.clear();
         var tab = getCurrentLogicalTab();
-        try {
-            tab.updateListedFiles();
-        } catch (FileException ignored) {
-            //todo
-        }
+        tab.updateListedFiles();
         tab.updateTabDisplay((int) tabPane.getWidth());
     }
 
