@@ -120,8 +120,8 @@ public class UIController {
     @FXML
     public void onBackClicked() {
         var tab = getCurrentLogicalTab();
-        tab.updateListedFiles();
         tab.moveBack();
+        tab.updateListedFiles();
         tab.updateTabDisplay((int) tabPane.getWidth());
     }
     //endregion

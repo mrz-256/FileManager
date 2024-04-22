@@ -37,7 +37,7 @@ public class LogicalTab {
         this.displayStrategy = new BoxStrategy();
         this.zoom = 100;
 
-        pathHistory.add(directory);
+        //pathHistory.add(directory);
 
         tab.setOnClosed( (x) -> {parentList.remove(this);});
     }
@@ -56,7 +56,7 @@ public class LogicalTab {
             throw new FileException("File is not a directory.", directory);
         }
 
-        pathHistory.add(directory);
+        pathHistory.add(this.directory);
         this.directory = directory;
         updateListedFiles();
     }
