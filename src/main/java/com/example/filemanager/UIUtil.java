@@ -191,35 +191,5 @@ public class UIUtil {
     }
 
 
-    /**
-     * Creates an info window to show parameters and a description of a file
-     *
-     * @param logicalTab the tab containing the file
-     * @param file       the file of the window
-     * @return created stage of a window
-     */
-    public static Stage createInfoWindow(LogicalTab logicalTab, File file) {
-        var content = new ListView<String>();
-        Scene scene = new Scene(content);
-        Stage stage = new Stage();
-        stage.setTitle("info");
-        stage.setScene(scene);
-        stage.setAlwaysOnTop(true);
-
-        // ->>
-
-        stage.focusedProperty().addListener(observable -> {
-            if (!stage.isFocused()) stage.close();
-        });
-
-        // kind of dirty
-        logicalTab.getTab().getTabPane().getScene().getWindow().setOnCloseRequest((x) -> {
-            stage.close();
-        });
-
-
-        return stage;
-    }
-
 
 }

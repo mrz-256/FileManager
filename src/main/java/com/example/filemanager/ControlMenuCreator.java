@@ -2,7 +2,6 @@ package com.example.filemanager;
 
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -28,12 +27,12 @@ public class ControlMenuCreator {
         var delete = new MenuItem("delete");
         var duplicate = new MenuItem("duplicate");
         var rename = new MenuItem("rename");
-        var parameters = new MenuItem("parameters");
+        var properties = new MenuItem("properties");
 
         menu.getItems().addAll(
                 copy, copyPath,
                 new SeparatorMenuItem(), cut, delete, duplicate, rename,
-                new SeparatorMenuItem(), parameters
+                new SeparatorMenuItem(), properties
         );
 
         //region action copy
@@ -94,7 +93,7 @@ public class ControlMenuCreator {
             // todo: this requires popup window
         });
 
-        parameters.setOnAction((x) -> {
+        properties.setOnAction((x) -> {
             // todo: this requires popup window
         });
 
