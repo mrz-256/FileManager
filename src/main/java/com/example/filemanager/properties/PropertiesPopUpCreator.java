@@ -26,13 +26,14 @@ public class PropertiesPopUpCreator {
             stage.close();
         });
 
-        fillPropertiesPopUp(contents, logicalTab, file);
+        fillPropertiesPopUp(contents, file);
 
         return stage;
     }
 
-    private static void fillPropertiesPopUp(TabPane contents, LogicalTab logicalTab, File file) {
+    private static void fillPropertiesPopUp(TabPane contents, File file) {
         PropertiesAddGeneral.addGeneralTab(contents, file);
+        PropertiesAddChecksum.addChecksumTab(contents, file);
     }
 
 

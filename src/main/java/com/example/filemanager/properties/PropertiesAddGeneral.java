@@ -16,6 +16,12 @@ import java.util.Objects;
 
 public class PropertiesAddGeneral {
 
+    /**
+     * Adds a tab with general information to the properties popup.
+     *
+     * @param pane the tabpane
+     * @param file the file whose properties are being checked
+     */
     static void addGeneralTab(TabPane pane, File file) {
         var contents = new GridPane();
         var tab = new Tab();
