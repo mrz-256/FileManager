@@ -15,10 +15,10 @@ import java.util.List;
 public class ControlMenuCreator {
 
 
-    public static void addContextMenuToButton(Button button, LogicalTab logicalTab, File file) {
+    public static ContextMenu createControlContextMenu(LogicalTab logicalTab, File file) {
         var menu = new ContextMenu();
         fillControlMenu(menu, logicalTab, file);
-        button.setContextMenu(menu);
+        return menu;
     }
 
     private static void fillControlMenu(ContextMenu menu, LogicalTab logicalTab, File file) {

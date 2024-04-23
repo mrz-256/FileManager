@@ -184,7 +184,8 @@ public class UIUtil {
                     // todo: execute file
                 }
             } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                ControlMenuCreator.addContextMenuToButton(button, logicalTab, file);
+                var menu =  ControlMenuCreator.createControlContextMenu(logicalTab, file);
+                button.setContextMenu(menu);
             }
         });
     }
