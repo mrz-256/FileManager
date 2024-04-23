@@ -99,12 +99,6 @@ public class UIUtil {
     public static ImageView loadImageIcon(File file, int size) throws FileException {
         if (!file.exists()) throw new FileException("File doesn't exist - can't create icon", file);
 
-        if (file.isHidden()) {
-            return new ImageView(
-                    UIController.class.getResource("/icons/file_icons/icon_hidden.png").toExternalForm()
-            );
-        }
-
         String type = FileUtilFunctions.getFileType(file);
 
         //// image can be used as an icon
