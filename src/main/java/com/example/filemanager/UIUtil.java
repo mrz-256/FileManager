@@ -1,6 +1,5 @@
 package com.example.filemanager;
 
-import com.example.filemanager.logic.ControlMenuCreator;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
