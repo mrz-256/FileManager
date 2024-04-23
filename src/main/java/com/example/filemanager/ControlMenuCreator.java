@@ -94,7 +94,8 @@ public class ControlMenuCreator {
         });
 
         properties.setOnAction((x) -> {
-            // todo: this requires popup window
+            var popup = PropertiesPopUpCreator.createPropertiesPopUp(logicalTab, file);
+            popup.show();
         });
 
     }
