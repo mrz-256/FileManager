@@ -2,6 +2,7 @@ package com.example.filemanager;
 
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
+import com.example.filemanager.properties.PropertiesPopUpCreator;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;

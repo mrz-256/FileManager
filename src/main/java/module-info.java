@@ -11,4 +11,6 @@ module com.example.filemanager {
     exports com.example.filemanager.logic.exceptions;
     exports com.example.filemanager.ui.display_strategy;
     exports com.example.filemanager;
+    exports com.example.filemanager.properties;
+    opens com.example.filemanager.properties to javafx.fxml;
 }

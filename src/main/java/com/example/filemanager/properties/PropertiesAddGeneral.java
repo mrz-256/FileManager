@@ -1,50 +1,22 @@
-package com.example.filemanager;
+package com.example.filemanager.properties;
 
 import com.example.filemanager.logic.FileUtilFunctions;
-import com.example.filemanager.logic.LogicalTab;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.util.Objects;
 
-public class PropertiesPopUpCreator {
+public class PropertiesAddGeneral {
 
-    public static Stage createPropertiesPopUp(LogicalTab logicalTab, File file) {
-        var contents = new TabPane();
-        var scene = new Scene(contents);
-        var stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle("properties of \"" + file.getName() + "\"");
-        stage.setAlwaysOnTop(true);
-
-        stage.focusedProperty().addListener(observable -> {
-            if (!stage.isFocused()) stage.close();
-        });
-
-        // kind of dirty
-        logicalTab.getTab().getTabPane().getScene().getWindow().setOnCloseRequest((x) -> {
-            stage.close();
-        });
-
-        fillPropertiesPopUp(contents, logicalTab, file);
-
-        return stage;
-    }
-
-    private static void fillPropertiesPopUp(TabPane contents, LogicalTab logicalTab, File file) {
-        addGeneralTab(contents, logicalTab, file);
-    }
-
-    private static void addGeneralTab(TabPane pane, LogicalTab logicalTab, File file) {
+    static void addGeneralTab(TabPane pane, File file) {
         var contents = new GridPane();
         var tab = new Tab();
         tab.setText("General");
@@ -64,17 +36,18 @@ public class PropertiesPopUpCreator {
             return;
         }
 
-        contents.addRow(2, new Label("Type:"), new Label(FileUtilFunctions.getFileExtension(file)));
+        contents.addRow(2, new Label("Type:"), new Label(FileUtilFunctions.getFileType(file)));
         contents.addRow(3, new Label());
-        contents.addRow(
-                4,
-                new Label("Size:"),
-                new Label(FileUtilFunctions.getOptimalSizeFormat(file.length()) + " (" + file.length() + "B)")
-        );
+        contents.addRow(4, new Label("Size:"), new Label(FileUtilFunctions.getOptimalSizeFormat(file.length()) + " (" + file.length() + "B)"));
         contents.addRow(5, new Label());
         contents.addRow(6, new Label("Created:"), new Label(getMoreReadableTime(attributes.creationTime())));
         contents.addRow(7, new Label("Modified:"), new Label(getMoreReadableTime(attributes.lastModifiedTime())));
         contents.addRow(8, new Label("Accessed:"), new Label(getMoreReadableTime(attributes.lastAccessTime())));
+
+        if (file.isDirectory()) {
+            contents.addRow(9, new Label());
+            contents.addRow(10, new Label("Contains:"), new Label(Objects.requireNonNull(file.listFiles()).length + " files."));
+        }
 
     }
 
