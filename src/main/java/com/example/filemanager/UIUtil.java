@@ -1,5 +1,6 @@
 package com.example.filemanager;
 
+import com.example.filemanager.logic.ControlMenuCreator;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
@@ -9,8 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,7 +17,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
 
 public class UIUtil {
     /**
@@ -193,11 +191,7 @@ public class UIUtil {
                     // todo: execute file
                 }
             } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                //createInfoWindow(logicalTab, file).show();
-                var menu = new ContextMenu();
-                fillControlMenu(menu,logicalTab, file);
-
-                button.setContextMenu(menu);
+                ControlMenuCreator.addContextMenuToButton(button, logicalTab, file);
             }
         });
     }
@@ -233,82 +227,5 @@ public class UIUtil {
         return stage;
     }
 
-    public static void fillControlMenu(ContextMenu menu, LogicalTab logicalTab, File file) {
-        var copy = new MenuItem("copy");
-        var copyPath = new MenuItem("copy path");
-        var cut = new MenuItem("cut");
-        var delete = new MenuItem("delete");
-        var duplicate = new MenuItem("duplicate");
-        var rename = new MenuItem("rename");
-        var parameters = new MenuItem("parameters");
 
-        menu.getItems().addAll(
-                copy, copyPath,
-                new SeparatorMenuItem(), cut, delete, duplicate, rename,
-                new SeparatorMenuItem(), parameters
-        );
-
-        //region action copy
-        copy.setOnAction((x) -> {
-            var clipboard = Clipboard.getSystemClipboard();
-            ClipboardContent clipboardContent = new ClipboardContent();
-            clipboardContent.putFiles(List.of(file));
-            clipboard.setContent(clipboardContent);
-        });
-
-        copyPath.setOnAction((x) -> {
-            var clipboard = Clipboard.getSystemClipboard();
-            ClipboardContent clipboardContent = new ClipboardContent();
-            clipboardContent.putString(file.getAbsolutePath());
-            clipboard.setContent(clipboardContent);
-        });
-        //endregion
-
-        //region affecting file
-        cut.setOnAction((x) -> {
-            var clipboard = Clipboard.getSystemClipboard();
-            ClipboardContent clipboardContent = new ClipboardContent();
-            clipboardContent.putFiles(List.of(file));
-            clipboard.setContent(clipboardContent);
-
-            try {
-                logicalTab.executeCommand("delete_files", file);
-            } catch (FileException e) {
-                // todo:
-                System.out.println(e.getMessage());
-            }
-
-            UIController.updateCurrentTab();
-        });
-
-        delete.setOnAction((x) -> {
-            try {
-                logicalTab.executeCommand("delete_files", file);
-            } catch (FileException e) {
-                // todo:
-                System.out.println(e.getMessage());
-            }
-            UIController.updateCurrentTab();
-        });
-
-        duplicate.setOnAction((x) -> {
-            try {
-                logicalTab.executeCommand("paste_files", file);
-            } catch (FileException e) {
-                //todo:
-                System.out.println(e.getMessage());
-            }
-            UIController.updateCurrentTab();
-        });
-        //endregion
-
-        rename.setOnAction((x) -> {
-            // todo: this requires popup window
-        });
-
-        parameters.setOnAction((x) -> {
-            // todo: this requires popup window
-        });
-
-    }
 }
