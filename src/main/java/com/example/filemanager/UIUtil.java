@@ -190,19 +190,32 @@ public class UIUtil {
                     // todo: execute file
                 }
             } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                createInfoWindow(logicalTab, file).show();
+                //createInfoWindow(logicalTab, file).show();
+                var menu = new ContextMenu();
+                fillControlMenu(menu, file);
+
+                button.setContextMenu(menu);
             }
         });
     }
 
 
-    public static Stage createInfoWindow(LogicalTab logicalTab, File file){
-        VBox vbox = new VBox();
-        Scene scene = new Scene(vbox);
+    /**
+     * Creates an info window to show parameters and a description of a file
+     *
+     * @param logicalTab the tab containing the file
+     * @param file       the file of the window
+     * @return created stage of a window
+     */
+    public static Stage createInfoWindow(LogicalTab logicalTab, File file) {
+        var content = new ListView<String>();
+        Scene scene = new Scene(content);
         Stage stage = new Stage();
         stage.setTitle("info");
         stage.setScene(scene);
         stage.setAlwaysOnTop(true);
+
+        // ->>
 
         stage.focusedProperty().addListener(observable -> {
             if (!stage.isFocused()) stage.close();
@@ -213,6 +226,25 @@ public class UIUtil {
             stage.close();
         });
 
+
         return stage;
+    }
+
+    public static void fillControlMenu(ContextMenu menu, File file) {
+        var copy = new MenuItem("copy");
+        var copyPath = new MenuItem("copy path");
+        var cut = new MenuItem("cut");
+        var delete = new MenuItem("delete");
+        var duplicate = new MenuItem("duplicate");
+        var rename = new MenuItem("rename");
+        var parameters = new MenuItem("parameters");
+
+        menu.getItems().addAll(
+                copy, copyPath,
+                new SeparatorMenuItem(), cut, delete, duplicate, rename,
+                new SeparatorMenuItem(), parameters
+        );
+
+
     }
 }
