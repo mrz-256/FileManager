@@ -1,9 +1,10 @@
-package com.example.filemanager;
+package com.example.filemanager.controlmenu;
 
+import com.example.filemanager.UIController;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
-import com.example.filemanager.properties.PropertiesPopUpCreator;
+import com.example.filemanager.controlmenu.properties.PropertiesPopUpCreator;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;

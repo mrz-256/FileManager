@@ -1,4 +1,4 @@
-package com.example.filemanager.properties;
+package com.example.filemanager.controlmenu.properties;
 
 import com.example.filemanager.logic.LogicalTab;
 import javafx.scene.Scene;
