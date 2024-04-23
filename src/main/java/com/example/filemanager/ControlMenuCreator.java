@@ -1,6 +1,5 @@
 package com.example.filemanager;
 
-import com.example.filemanager.UIController;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.scene.control.Button;

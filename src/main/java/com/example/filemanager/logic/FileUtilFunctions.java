@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A class made for static helper functions and such
@@ -75,6 +78,30 @@ public class FileUtilFunctions {
      */
     public static File getHomeDirectory() {
         return new File(getHomePath());
+    }
+
+    /**
+     * Finds the basic system directories
+     * @return list of found directories
+     */
+    public static LinkedList<File> getPlacesFilesList(){
+        var names = new ArrayList<>(List.of("", "Pictures", "Documents", "Downloads", "Music", "Videos", "Trash"));
+
+        if (!System.getProperty("os.name").equals("Linux")){
+            names.addAll(List.of("A", "B", "C", "D"));
+            // todo: does windows have other special directories?
+        }
+
+        var result = new LinkedList<File>();
+
+        for (var name : names) {
+            var file = new File(FileUtilFunctions.getHomeDirectory(), name);
+            if (file.exists() && file.isDirectory()) {
+                result.add(file);
+            }
+        }
+
+        return result;
     }
 
 

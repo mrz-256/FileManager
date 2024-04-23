@@ -39,7 +39,7 @@ public class UIUtil {
 
         } catch (IOException e) {
             // todo:
-            System.out.println("TODO: FAILED TAB CREATION - " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -51,15 +51,9 @@ public class UIUtil {
      * @param pane the VBox list of the files to fill
      */
     public static void fillPlacesList(VBox pane) {
-        String[] names = {"", "Pictures", "Documents", "Downloads", "Music", "Videos", "Trash"};
-
-        for (var name : names) {
-            var file = new File(FileUtilFunctions.getHomeDirectory(), name);
-            if (file.exists() && file.isDirectory()) {
-                addFileToPlacesList(pane, file);
-            }
+        for (var file : FileUtilFunctions.getPlacesFilesList()) {
+            addFileToPlacesList(pane, file);
         }
-
     }
 
     /**
