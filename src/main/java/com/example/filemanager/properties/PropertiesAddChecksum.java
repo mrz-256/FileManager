@@ -1,13 +1,10 @@
 package com.example.filemanager.properties;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
+import com.example.filemanager.logic.FileUtilFunctions;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -26,19 +23,55 @@ public class PropertiesAddChecksum {
         // tab won't be added at all
         if (file.isDirectory() || file.length() == 0) return;
 
-        var contents = new GridPane();
+        var contents = new VBox();
+        var grid = new GridPane();
         var tab = new Tab();
-        tab.setText("Checksum");
+        grid.getColumnConstraints().add(new ColumnConstraints(75));
         tab.setContent(contents);
         tab.setClosable(false);
+        tab.setText("Checksum");
         pane.getTabs().add(tab);
 
-        contents.getColumnConstraints().add(new ColumnConstraints(150));
+        //region match check
+        var field = new TextField();
+        var matchInfo = new Label();
 
-        addCheckSum("MD5", file, 1, contents);
-        addCheckSum("SHA1", file, 2, contents);
-        addCheckSum("SHA256", file, 3, contents);
-        addCheckSum("SHA512", file, 4, contents);
+        contents.getChildren().addAll(field, matchInfo);
+
+        field.setPromptText("MD5 or SHA1 or SHA256 or SHA 512..");
+        field.setOnAction((x) -> {
+            var text = field.getText();
+            String type = switch (text.length()){
+                case 32 -> "MD5";
+                case 40 -> "SHA1";
+                case 64 -> "SHA256";
+                case 128 -> "SHA512";
+                default -> "";
+            };
+
+            if (type.isEmpty()) {
+                matchInfo.setText("incomplete checksum..");
+                matchInfo.setStyle("-fx-border-color: grey");
+                return;
+            }
+
+            if (text.equals(getChecksum(type, file))){
+                matchInfo.setText("Checksums do match.");
+                matchInfo.setStyle("-fx-border-color: #63ff63");
+            } else {
+                matchInfo.setText("Checksums do NOT match.");
+                matchInfo.setStyle("-fx-border-color: #ff8282");
+            }
+        });
+        //endregion
+
+        //region individual checksums
+        contents.getChildren().add(grid);
+        addCheckSum("MD5", file, 2, grid);
+        addCheckSum("SHA1", file, 3, grid);
+        addCheckSum("SHA256", file, 4, grid);
+        addCheckSum("SHA512", file, 5, grid);
+        //endregion
 
     }
 
@@ -52,26 +85,27 @@ public class PropertiesAddChecksum {
      * @param contents the place where the row gets added
      */
     private static void addCheckSum(String type, File file, int row, GridPane contents) {
-        contents.add(new Label(type + ":"), 0, row);
         var calculate = new Button("calculate");
+        var label = new Label("");
+
+        contents.add(new Label(type + ":"), 0, row);
+        contents.add(label, 1, row);
         contents.add(calculate, 3, row);
 
-        calculate.setOnMouseClicked((x) -> {
-            var checksum = getChecksum(type, file);
 
-            contents.add(new Label(checksum), 1, row);
+        calculate.setOnMouseClicked((x) -> {
+            calculate.setDisable(true);
+
+            var checksum = getChecksum(type, file);
+            label.setText(checksum.substring(0, 8) + "...  ");
+            label.setTooltip(new Tooltip(checksum));
 
             var copy = new Button("copy");
             contents.add(copy, 2, row);
-            copy.setOnMouseClicked((y) -> {
-                var clipboard = Clipboard.getSystemClipboard();
-                var clipboardContent = new ClipboardContent();
-                clipboardContent.putString(checksum);
-                clipboard.setContent(clipboardContent);
-            });
-            calculate.setDisable(true);
-        });
 
+            copy.setOnMouseClicked((y) -> FileUtilFunctions.storeTextToClipboard(checksum));
+
+        });
     }
 
     /**

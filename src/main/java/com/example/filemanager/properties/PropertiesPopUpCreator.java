@@ -21,7 +21,6 @@ public class PropertiesPopUpCreator {
             if (!stage.isFocused()) stage.close();
         });
 
-        // kind of dirty
         logicalTab.getTab().getTabPane().getScene().getWindow().setOnCloseRequest((x) -> {
             stage.close();
         });
