@@ -143,6 +143,10 @@ public class LogicalTab {
     public File getDirectory(){
         return directory;
     }
+
+    public Tab getTab() {
+        return tab;
+    }
     //endregion
 
     //region setters

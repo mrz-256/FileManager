@@ -5,14 +5,13 @@ import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.Tooltip;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -162,7 +161,7 @@ public class UIUtil {
         button.setStyle(styleCSS);
 
         try {
-            button.setGraphic(UIUtil.loadImageIcon(file, (int)(size * iconToButtonRation)));
+            button.setGraphic(UIUtil.loadImageIcon(file, (int) (size * iconToButtonRation)));
         } catch (FileException ignore) {
             // icon will be plain button with no icon
         }
@@ -190,7 +189,30 @@ public class UIUtil {
                 } else {
                     // todo: execute file
                 }
+            } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                createInfoWindow(logicalTab, file).show();
             }
         });
+    }
+
+
+    public static Stage createInfoWindow(LogicalTab logicalTab, File file){
+        VBox vbox = new VBox();
+        Scene scene = new Scene(vbox);
+        Stage stage = new Stage();
+        stage.setTitle("info");
+        stage.setScene(scene);
+        stage.setAlwaysOnTop(true);
+
+        stage.focusedProperty().addListener(observable -> {
+            if (!stage.isFocused()) stage.close();
+        });
+
+        // kind of dirty
+        logicalTab.getTab().getTabPane().getScene().getWindow().setOnCloseRequest((x) -> {
+            stage.close();
+        });
+
+        return stage;
     }
 }
