@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 public class UIUtil {
     /**
@@ -192,7 +195,7 @@ public class UIUtil {
             } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                 //createInfoWindow(logicalTab, file).show();
                 var menu = new ContextMenu();
-                fillControlMenu(menu, file);
+                fillControlMenu(menu,logicalTab, file);
 
                 button.setContextMenu(menu);
             }
@@ -230,7 +233,7 @@ public class UIUtil {
         return stage;
     }
 
-    public static void fillControlMenu(ContextMenu menu, File file) {
+    public static void fillControlMenu(ContextMenu menu, LogicalTab logicalTab, File file) {
         var copy = new MenuItem("copy");
         var copyPath = new MenuItem("copy path");
         var cut = new MenuItem("cut");
@@ -245,6 +248,67 @@ public class UIUtil {
                 new SeparatorMenuItem(), parameters
         );
 
+        //region action copy
+        copy.setOnAction((x) -> {
+            var clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent clipboardContent = new ClipboardContent();
+            clipboardContent.putFiles(List.of(file));
+            clipboard.setContent(clipboardContent);
+        });
+
+        copyPath.setOnAction((x) -> {
+            var clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent clipboardContent = new ClipboardContent();
+            clipboardContent.putString(file.getAbsolutePath());
+            clipboard.setContent(clipboardContent);
+        });
+        //endregion
+
+        //region affecting file
+        cut.setOnAction((x) -> {
+            var clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent clipboardContent = new ClipboardContent();
+            clipboardContent.putFiles(List.of(file));
+            clipboard.setContent(clipboardContent);
+
+            try {
+                logicalTab.executeCommand("delete_files", file);
+            } catch (FileException e) {
+                // todo:
+                System.out.println(e.getMessage());
+            }
+
+            UIController.updateCurrentTab();
+        });
+
+        delete.setOnAction((x) -> {
+            try {
+                logicalTab.executeCommand("delete_files", file);
+            } catch (FileException e) {
+                // todo:
+                System.out.println(e.getMessage());
+            }
+            UIController.updateCurrentTab();
+        });
+
+        duplicate.setOnAction((x) -> {
+            try {
+                logicalTab.executeCommand("paste_files", file);
+            } catch (FileException e) {
+                //todo:
+                System.out.println(e.getMessage());
+            }
+            UIController.updateCurrentTab();
+        });
+        //endregion
+
+        rename.setOnAction((x) -> {
+            // todo: this requires popup window
+        });
+
+        parameters.setOnAction((x) -> {
+            // todo: this requires popup window
+        });
 
     }
 }
