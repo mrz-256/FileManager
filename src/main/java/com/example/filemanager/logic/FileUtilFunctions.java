@@ -63,6 +63,16 @@ public class FileUtilFunctions {
     }
 
     /**
+     * Returns the file extension
+     *
+     * @param file the file
+     * @return the extension
+     */
+    public static String getFileExtension(File file) {
+        return file.getName().replaceFirst(".*\\.(.*)", "$1");
+    }
+
+    /**
      * Returns string path to home directory on given machine
      *
      * @return the path
@@ -82,12 +92,13 @@ public class FileUtilFunctions {
 
     /**
      * Finds the basic system directories
+     *
      * @return list of found directories
      */
-    public static LinkedList<File> getPlacesFilesList(){
+    public static LinkedList<File> getPlacesFilesList() {
         var names = new ArrayList<>(List.of("", "Pictures", "Documents", "Downloads", "Music", "Videos", "Trash"));
 
-        if (!System.getProperty("os.name").equals("Linux")){
+        if (!System.getProperty("os.name").equals("Linux")) {
             names.addAll(List.of("A", "B", "C", "D"));
             // todo: does windows have other special directories?
         }
@@ -125,10 +136,11 @@ public class FileUtilFunctions {
 
     /**
      * Writes epoch time as a string date
+     *
      * @param epochTime milliseconds since epoch
      * @return yyyy/mm/dd formatted date
      */
-    public static String getSimplifiedDate(long epochTime){
+    public static String getSimplifiedDate(long epochTime) {
         LocalDate date = LocalDate.ofEpochDay(epochTime / 1000 / 60 / 60 / 24);
         return date.toString();
     }

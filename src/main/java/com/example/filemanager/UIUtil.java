@@ -112,8 +112,7 @@ public class UIUtil {
             );
         }
 
-        String filename = file.getName();
-        String extension = filename.replaceFirst(".*\\.(.*)", "$1");
+        String extension = FileUtilFunctions.getFileExtension(file);
 
         //// image can be used as an icon
         if (extension.equals("png")
