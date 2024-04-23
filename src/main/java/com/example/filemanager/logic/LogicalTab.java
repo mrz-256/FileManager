@@ -129,6 +129,7 @@ public class LogicalTab {
                     listedFiles.clear();
                 }
             }
+            case "rename" -> new RenameFileCommand().execute(directory, configuration, params);
         }
     }
 

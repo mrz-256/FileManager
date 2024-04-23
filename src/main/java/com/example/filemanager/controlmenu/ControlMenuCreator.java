@@ -1,6 +1,7 @@
 package com.example.filemanager.controlmenu;
 
 import com.example.filemanager.UIController;
+import com.example.filemanager.controlmenu.rename.RenamePropertiesCreator;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
@@ -81,7 +82,8 @@ public class ControlMenuCreator {
         //endregion
 
         rename.setOnAction((x) -> {
-            // todo: this requires popup window
+            var popup = RenamePropertiesCreator.createRenamePropertiesPopUp(file);
+            popup.show();
         });
 
         properties.setOnAction((x) -> {
