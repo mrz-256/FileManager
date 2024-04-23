@@ -73,7 +73,12 @@ public class FileUtilFunctions {
      */
     public static String getFileType(File file) {
         if (file.isDirectory()) return "directory";
-        return file.getName().replaceFirst(".*\\.(.*)", "$1");
+        if (file.isHidden()) return "hidden";
+        var name = file.getName();
+
+        if (name.charAt(name.length()-1)=='~') return "save";
+        if (!name.matches(".*\\..+")) return "unknown";
+        return name.replaceFirst(".*\\.(.*)", "$1");
     }
 
     /**
