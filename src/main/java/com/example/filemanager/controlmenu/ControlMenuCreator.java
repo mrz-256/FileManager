@@ -12,16 +12,34 @@ import javafx.scene.control.SeparatorMenuItem;
 
 import java.io.File;
 
+/**
+ * Creator of the menu opened by right-clicking on a file
+ */
 public class ControlMenuCreator {
 
 
+    /**
+     * Creates the menu
+     *
+     * @param logicalTab the tab with the file
+     * @param file       the file for which the menu is being created
+     * @return the new context menu
+     */
     public static ContextMenu createControlContextMenu(LogicalTab logicalTab, File file) {
         var menu = new ContextMenu();
         fillControlMenu(menu, logicalTab, file);
         return menu;
     }
 
+    /**
+     * Fills the context menu with actual values
+     *
+     * @param menu       the menu
+     * @param logicalTab the logical tab
+     * @param file       the file
+     */
     private static void fillControlMenu(ContextMenu menu, LogicalTab logicalTab, File file) {
+        // all used menu items
         var copy = new MenuItem("copy");
         var copyPath = new MenuItem("copy path");
         var cut = new MenuItem("cut");
@@ -79,17 +97,19 @@ public class ControlMenuCreator {
             }
             UIController.updateCurrentTab();
         });
-        //endregion
 
         rename.setOnAction((x) -> {
             var popup = RenamePropertiesCreator.createRenamePropertiesPopUp(file);
             popup.show();
         });
+        //endregion
 
+        //region properties
         properties.setOnAction((x) -> {
             var popup = PropertiesPopUpCreator.createPropertiesPopUp(logicalTab, file);
             popup.show();
         });
+        //endregion
 
     }
 

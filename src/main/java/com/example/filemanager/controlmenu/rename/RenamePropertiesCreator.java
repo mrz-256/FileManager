@@ -1,7 +1,6 @@
 package com.example.filemanager.controlmenu.rename;
 
 import com.example.filemanager.UIController;
-import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.commands.RenameFileCommand;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.scene.Scene;
@@ -13,9 +12,18 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * Creator of rename popup windows.
+ */
 public class RenamePropertiesCreator {
 
-    public static Stage createRenamePropertiesPopUp(File file){
+    /**
+     * Creates a query popup window to ask for the new filename.
+     *
+     * @param file the file to rename
+     * @return the popup window
+     */
+    public static Stage createRenamePropertiesPopUp(File file) {
         var contents = new VBox();
         var scene = new Scene(contents);
         var stage = new Stage();
@@ -37,7 +45,7 @@ public class RenamePropertiesCreator {
             feedback.setStyle("-fx-border-color: #ff8989");
 
             var text = field.getText();
-            if (text.isEmpty()){
+            if (text.isEmpty()) {
                 feedback.setText("Invalid filename.");
                 return;
             }
@@ -51,7 +59,7 @@ public class RenamePropertiesCreator {
                 feedback.setText("Success.");
 
                 stage.close();
-            } catch (FileException e){
+            } catch (FileException e) {
                 feedback.setText(e.getMessage().replaceAll("\\|.*", ""));
             }
             UIController.updateCurrentTab();

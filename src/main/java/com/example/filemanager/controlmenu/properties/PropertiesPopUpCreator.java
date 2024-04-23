@@ -7,8 +7,18 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * Creator of popup properties windows
+ */
 public class PropertiesPopUpCreator {
 
+    /**
+     * Creates a popup window with properties and information about a file
+     *
+     * @param logicalTab logical tab
+     * @param file       the file whose properties are being displayed
+     * @return a new popup window, closes when loses focus
+     */
     public static Stage createPropertiesPopUp(LogicalTab logicalTab, File file) {
         var contents = new TabPane();
         var scene = new Scene(contents);
