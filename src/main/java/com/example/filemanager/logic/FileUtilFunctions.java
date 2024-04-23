@@ -68,7 +68,8 @@ public class FileUtilFunctions {
      * @param file the file
      * @return the extension
      */
-    public static String getFileExtension(File file) {
+    public static String getFileType(File file) {
+        if (file.isDirectory()) return "directory";
         return file.getName().replaceFirst(".*\\.(.*)", "$1");
     }
 

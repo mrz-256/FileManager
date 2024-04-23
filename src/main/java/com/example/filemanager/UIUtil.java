@@ -5,13 +5,11 @@ import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -100,32 +98,26 @@ public class UIUtil {
     public static ImageView loadImageIcon(File file, int size) throws FileException {
         if (!file.exists()) throw new FileException("File doesn't exist - can't create icon", file);
 
-        if (file.isDirectory()) {
-            return new ImageView(
-                    UIController.class.getResource("/icons/file_icons/icon_directory.png").toExternalForm()
-            );
-        }
-
         if (file.isHidden()) {
             return new ImageView(
                     UIController.class.getResource("/icons/file_icons/icon_hidden.png").toExternalForm()
             );
         }
 
-        String extension = FileUtilFunctions.getFileExtension(file);
+        String type = FileUtilFunctions.getFileType(file);
 
         //// image can be used as an icon
-        if (extension.equals("png")
-                || extension.equals("jpg")
-                || extension.equals("gif")
-                || extension.equals("bmp")
-                || extension.equals("jpeg")
+        if (type.equals("png")
+                || type.equals("jpg")
+                || type.equals("gif")
+                || type.equals("bmp")
+                || type.equals("jpeg")
         ) {
             return new ImageView(new Image(file.toURI().toString(), size, size, true, true));
         }
 
-        // there is an icon for given extension
-        var resource = UIController.class.getResource("/icons/file_icons/icon_" + extension + ".png");
+        // there is an icon for given type
+        var resource = UIController.class.getResource("/icons/file_icons/icon_" + type + ".png");
         if (resource != null) {
             return new ImageView(resource.toExternalForm());
         }
