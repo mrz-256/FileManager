@@ -1,16 +1,14 @@
 package com.example.filemanager;
 
+import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.properties.PropertiesPopUpCreator;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 
 import java.io.File;
-import java.util.List;
 
 public class ControlMenuCreator {
 
@@ -38,26 +36,17 @@ public class ControlMenuCreator {
 
         //region action copy
         copy.setOnAction((x) -> {
-            var clipboard = Clipboard.getSystemClipboard();
-            ClipboardContent clipboardContent = new ClipboardContent();
-            clipboardContent.putFiles(List.of(file));
-            clipboard.setContent(clipboardContent);
+            FileUtilFunctions.storeFileToClipboard(file);
         });
 
         copyPath.setOnAction((x) -> {
-            var clipboard = Clipboard.getSystemClipboard();
-            ClipboardContent clipboardContent = new ClipboardContent();
-            clipboardContent.putString(file.getAbsolutePath());
-            clipboard.setContent(clipboardContent);
+            FileUtilFunctions.storeTextToClipboard(file.getAbsolutePath());
         });
         //endregion
 
         //region affecting file
         cut.setOnAction((x) -> {
-            var clipboard = Clipboard.getSystemClipboard();
-            ClipboardContent clipboardContent = new ClipboardContent();
-            clipboardContent.putFiles(List.of(file));
-            clipboard.setContent(clipboardContent);
+            FileUtilFunctions.storeFileToClipboard(file);
 
             try {
                 logicalTab.executeCommand("delete_files", file);

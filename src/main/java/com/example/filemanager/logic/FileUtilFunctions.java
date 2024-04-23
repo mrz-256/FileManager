@@ -1,6 +1,9 @@
 package com.example.filemanager.logic;
 
 
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -145,4 +148,27 @@ public class FileUtilFunctions {
         LocalDate date = LocalDate.ofEpochDay(epochTime / 1000 / 60 / 60 / 24);
         return date.toString();
     }
+
+    /**
+     * Stores files to clipboard
+     * @param files the files to store
+     */
+    public static void storeFileToClipboard(File... files){
+        var clipboard = Clipboard.getSystemClipboard();
+        var clipboardContent = new ClipboardContent();
+        clipboardContent.putFiles(List.of(files));
+        clipboard.setContent(clipboardContent);
+    }
+
+    /**
+     * Stores text to clipboard
+     * @param text the text to store
+     */
+    public static void storeTextToClipboard(String text){
+        var clipboard = Clipboard.getSystemClipboard();
+        var clipboardContent = new ClipboardContent();
+        clipboardContent.putString(text);
+        clipboard.setContent(clipboardContent);
+    }
+
 }
