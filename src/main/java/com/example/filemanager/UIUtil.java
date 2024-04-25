@@ -4,42 +4,43 @@ import com.example.filemanager.controlmenu.ControlMenuCreator;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 
+/**
+ * A util class which mostly contains static functions that help create javafx constructs, i.e. it focuses on UI rather
+ * than logic.
+ */
 public class UIUtil {
+
     /**
-     * Creates a new tab with open directory `file`
-     * Also creates the corresponding Logical tab
+     * Creates a new tab with open directory `file` and adds it into the tabPane.
+     * Also creates the corresponding Logical tab and adds it into the `tabs` list.
      *
      * @param tabPane the tabPane holding the newly created tab
      * @param file    directory open in given tab
      */
     public static void createNewTab(TabPane tabPane, LinkedList<LogicalTab> tabs, File file) {
+        var grid = new GridPane();
+        var scroll = new ScrollPane();
+        var tab = new Tab();
 
-        FXMLLoader loader = new FXMLLoader(UIController.class.getResource("tab.fxml"));
-        try {
-            Tab tab = loader.load();
-            tab.setText(file.getName());
+        tab.setContent(scroll);
+        scroll.setContent(grid);
 
-            tabPane.getTabs().add(tab);
+        tab.setText(file.getName());
+        tabPane.getTabs().add(tab);
 
-            var logicalTab = new LogicalTab(tab, file, tabs);
-            tabs.add(logicalTab);
-
-        } catch (IOException e) {
-            var alert = createAlert(Alert.AlertType.ERROR, "Failed creating new tab.", e.getMessage());
-            alert.show();
-        }
+        var logicalTab = new LogicalTab(tab, file, tabs);
+        tabs.add(logicalTab);
     }
 
 
