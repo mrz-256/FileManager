@@ -173,7 +173,17 @@ public class FileUtilFunctions {
         var clipboard = Clipboard.getSystemClipboard();
         var clipboardContent = new ClipboardContent();
         clipboardContent.putString(text);
+        clipboardContent.putHtml(text);
         clipboard.setContent(clipboardContent);
+    }
+
+    /**
+     * Gets the file contents from keyboard
+     * @return list of files in keyboard
+     */
+    public static ArrayList<File> getFilesFromKeyboard(){
+        var clipboard = Clipboard.getSystemClipboard();
+        return (ArrayList<File>) clipboard.getFiles();
     }
 
 }
