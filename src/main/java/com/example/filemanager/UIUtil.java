@@ -100,11 +100,13 @@ public class UIUtil {
      * @throws FileException when file doesn't exist
      */
     public static ImageView loadImageIcon(File file, int size) throws FileException {
-        if (!file.exists()) throw new FileException("File doesn't exist - can't create icon", file);
+        if (!file.exists()) {
+            throw new FileException("File doesn't exist - can't create icon", file);
+        }
 
         String type = FileUtilFunctions.getFileType(file);
 
-        //// image can be used as an icon
+        // types which can be used as the icon are loaded here
         if (type.equals("png")
                 || type.equals("jpg")
                 || type.equals("gif")
@@ -114,16 +116,18 @@ public class UIUtil {
             return new ImageView(new Image(file.toURI().toString(), size, size, true, true));
         }
 
-        // there is an icon for given type
+        // if I have an icon drawn for given file type it is loaded
         var resource = UIController.class.getResource("/icons/file_icons/icon_" + type + ".png");
         if (resource != null) {
             return new ImageView(resource.toExternalForm());
         }
 
         // default 'unknown' (?) icon
-        return new ImageView(
-                UIController.class.getResource("/icons/file_icons/icon_unknown.png").toExternalForm()
-        );
+        resource = UIController.class.getResource("/icons/file_icons/icon_unknown.png");
+        if (resource != null) {
+            return new ImageView(resource.toExternalForm());
+        }
+        return null;
     }
 
     /**
