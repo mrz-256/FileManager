@@ -93,6 +93,10 @@ public class UIController {
     public static void updateCurrentTab() {
         var tab = getInstance().getCurrentLogicalTab();
         tab.updateListedFiles();
+        updateDisplayOfCurrentTab(tab);
+    }
+
+    public static void updateDisplayOfCurrentTab(LogicalTab tab){
         tab.updateTabDisplay((int) getInstance().tabPane.getWidth());
     }
 
@@ -123,7 +127,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.moveBack();
         tab.updateListedFiles();
-        tab.updateTabDisplay((int) tabPane.getWidth());
+        updateDisplayOfCurrentTab(tab);
     }
     //endregion
 
@@ -133,7 +137,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().showHiddenFiles = showHiddenCheckbox.isSelected();
         tab.updateListedFiles();
-        tab.updateTabDisplay((int) tabPane.getWidth());
+        updateDisplayOfCurrentTab(tab);
     }
     //endregion
 
@@ -143,7 +147,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new NameStrategy();
         tab.updateListedFiles();
-        tab.updateTabDisplay((int) tabPane.getWidth());
+        updateDisplayOfCurrentTab(tab);
     }
 
     @FXML
@@ -151,7 +155,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new SizeStrategy();
         tab.updateListedFiles();
-        tab.updateTabDisplay((int) tabPane.getWidth());
+        updateDisplayOfCurrentTab(tab);
     }
 
     @FXML
@@ -159,7 +163,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new LastModifiedStrategy();
         tab.updateListedFiles();
-        tab.updateTabDisplay((int) tabPane.getWidth());
+        updateDisplayOfCurrentTab(tab);
     }
     //endregion
 
@@ -212,7 +216,7 @@ public class UIController {
             tab.executeCommand("search", new File(value));
         } catch (FileException ignored) {} // doesn't matter - nothing happens
 
-        tab.updateTabDisplay((int) tabPane.getWidth());
+        updateDisplayOfCurrentTab(tab);
         tab.setTitle("search for \"" + value + "\"");
     }
 
@@ -221,7 +225,7 @@ public class UIController {
         searchTextField.clear();
         var tab = getCurrentLogicalTab();
         tab.updateListedFiles();
-        tab.updateTabDisplay((int) tabPane.getWidth());
+        updateDisplayOfCurrentTab(tab);
     }
 
     public void onSearchChoice() {
