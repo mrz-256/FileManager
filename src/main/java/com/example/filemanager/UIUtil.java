@@ -37,8 +37,7 @@ public class UIUtil {
             tabs.add(logicalTab);
 
         } catch (IOException e) {
-            // todo:
-            System.out.println(e.getMessage());
+            createAlert(Alert.AlertType.ERROR, "Failed creating new tab.", e.getMessage()).show();
         }
     }
 
@@ -170,12 +169,27 @@ public class UIUtil {
                     // todo: execute file
                 }
             } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                var menu =  ControlMenuCreator.createControlContextMenu(logicalTab, file);
+                var menu = ControlMenuCreator.createControlContextMenu(logicalTab, file);
                 button.setContextMenu(menu);
             }
         });
     }
 
+    /**
+     * Creates an Alert of given type with given message.
+     *
+     * @param type   the type of alert
+     * @param header the header text
+     * @param body   the `text` text
+     * @return the new alert
+     */
+    public static Alert createAlert(Alert.AlertType type, String header, String body) {
+        var dialogue = new Alert(type);
+        dialogue.setTitle(type.name());
+        dialogue.setHeaderText(header);
+        dialogue.setContentText(body);
+        return dialogue;
+    }
 
 
 }
