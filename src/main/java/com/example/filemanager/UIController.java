@@ -9,8 +9,6 @@ import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SizeStrategy;
 import com.example.filemanager.ui.display_strategy.BoxStrategy;
 import com.example.filemanager.ui.display_strategy.ListStrategy;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -236,8 +234,15 @@ public class UIController {
 
     //endregion
     @FXML
-    public void onPasteFilesClick(Event event) {
-
+    public void onPasteFilesClick() {
+        var tab = getCurrentLogicalTab();
+        var files = FileUtilFunctions.getFilesFromClipboard();
+        try {
+            tab.executeCommand("paste_files", files);
+        } catch (FileException e) {
+            UIUtil.createAlert(Alert.AlertType.ERROR, "Failed pasting files.", e.getMessage());
+        }
+        updateCurrentTab();
     }
 
 }
