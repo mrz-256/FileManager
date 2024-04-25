@@ -63,6 +63,7 @@
                       <MenuItem mnemonicParsing="false" text="new file" />
                     </items>
                   </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#onPasteFilesClick" text="paste files here" />
                   <Menu mnemonicParsing="false" text="sort files by">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#onSortFilesByName" text="name" />

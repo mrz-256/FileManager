@@ -10,6 +10,7 @@ import com.example.filemanager.logic.sort_strategy.SizeStrategy;
 import com.example.filemanager.ui.display_strategy.BoxStrategy;
 import com.example.filemanager.ui.display_strategy.ListStrategy;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -202,6 +203,7 @@ public class UIController {
     }
     //endregion
 
+    //region search
     @FXML
     public void onSearchConfirm() {
         String value = searchTextField.getText();
@@ -231,4 +233,11 @@ public class UIController {
                 ? LogicalConfiguration.SearchStart.SEARCH_FROM_HERE
                 : LogicalConfiguration.SearchStart.SEARCH_FROM_HOME;
     }
+
+    //endregion
+    @FXML
+    public void onPasteFilesClick(Event event) {
+
+    }
+
 }
