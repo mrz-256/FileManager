@@ -1,11 +1,13 @@
 package com.example.filemanager.controlmenu;
 
 import com.example.filemanager.UIController;
+import com.example.filemanager.UIUtil;
 import com.example.filemanager.controlmenu.rename.RenamePropertiesCreator;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.controlmenu.properties.PropertiesPopUpCreator;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -71,8 +73,7 @@ public class ControlMenuCreator {
             try {
                 logicalTab.executeCommand("delete_files", file);
             } catch (FileException e) {
-                // todo:
-                System.out.println(e.getMessage());
+                UIUtil.createAlert(Alert.AlertType.ERROR, "Can't cut file: " + file, e.getMessage());
             }
 
             UIController.updateCurrentTab();
@@ -82,8 +83,7 @@ public class ControlMenuCreator {
             try {
                 logicalTab.executeCommand("delete_files", file);
             } catch (FileException e) {
-                // todo:
-                System.out.println(e.getMessage());
+                UIUtil.createAlert(Alert.AlertType.ERROR, "Can't delete file: " + file, e.getMessage());
             }
             UIController.updateCurrentTab();
         });
@@ -92,8 +92,7 @@ public class ControlMenuCreator {
             try {
                 logicalTab.executeCommand("paste_files", file);
             } catch (FileException e) {
-                //todo:
-                System.out.println(e.getMessage());
+                UIUtil.createAlert(Alert.AlertType.ERROR, "Can't duplicate file " + file, e.getMessage());
             }
             UIController.updateCurrentTab();
         });

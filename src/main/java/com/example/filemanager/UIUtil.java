@@ -72,13 +72,15 @@ public class UIUtil {
         button.setPrefWidth(200);
         button.setAlignment(Pos.CENTER_LEFT);
 
+        System.out.println();
+
         button.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
                 try {
                     UIController.setDirectoryInCurrentTab(file);
                 } catch (FileException e) {
-                    // todo
-                    System.out.println("TODO: UI UTIL ADD FILE TO PLACES ERROR " + e.getMessage());
+                    // This means the file probably doesn't exist on given computer or can't be accessed
+                    // There is no point in showing an error here.
                 }
             }
         });
