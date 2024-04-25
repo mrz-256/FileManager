@@ -179,11 +179,12 @@ public class FileUtilFunctions {
 
     /**
      * Gets the file contents from keyboard
-     * @return list of files in keyboard
+     *
+     * @return the files from keyboard
      */
-    public static ArrayList<File> getFilesFromClipboard(){
+    public static File[] getFilesFromClipboard(){
         var clipboard = Clipboard.getSystemClipboard();
-        return (ArrayList<File>) clipboard.getFiles();
+        return clipboard.getFiles().toArray(new File[0]);
     }
 
 }
