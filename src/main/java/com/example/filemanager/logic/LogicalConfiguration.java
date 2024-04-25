@@ -4,7 +4,8 @@ import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SortStrategy;
 
 /**
- * Stores the configuration of a context
+ * Stores the configuration of a context.
+ * This influences how are files gathered.
  */
 public class LogicalConfiguration {
     public SortStrategy sortStrategy;
