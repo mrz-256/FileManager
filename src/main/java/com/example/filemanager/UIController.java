@@ -78,30 +78,42 @@ public class UIController {
     }
 
     /**
-     * Updates all tabs
+     * Updates contents and displays of all tabs
      */
     public static void updateAllTabs() {
         for (var tab : tabs) {
             tab.updateListedFiles();
-            tab.updateTabDisplay((int) getInstance().tabPane.getWidth());
+            updateDisplayOfTab(tab);
         }
     }
 
     /**
-     * Updates selected(current) tab
+     * Updates content and display of current tab
      */
     public static void updateCurrentTab() {
         var tab = getInstance().getCurrentLogicalTab();
         tab.updateListedFiles();
-        updateDisplayOfCurrentTab(tab);
+        updateDisplayOfTab(tab);
     }
 
-    public static void updateDisplayOfCurrentTab(LogicalTab tab){
+    /**
+     * Updates display of provided tab
+     *
+     * @param tab the tab whose display is to be updated
+     */
+    public static void updateDisplayOfTab(LogicalTab tab) {
         tab.updateTabDisplay((int) getInstance().tabPane.getWidth());
     }
 
+    /**
+     * Sets the directory of current tab
+     *
+     * @param directory the directory to use
+     * @throws FileException when the directory is invalid or can't be opened
+     */
     public static void setDirectoryInCurrentTab(File directory) throws FileException {
-        getInstance().getCurrentLogicalTab().setDirectory(directory);
+        var tab = getInstance().getCurrentLogicalTab();
+        tab.setDirectory(directory);
         updateCurrentTab();
     }
 
@@ -127,7 +139,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.moveBack();
         tab.updateListedFiles();
-        updateDisplayOfCurrentTab(tab);
+        updateDisplayOfTab(tab);
     }
     //endregion
 
@@ -137,7 +149,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().showHiddenFiles = showHiddenCheckbox.isSelected();
         tab.updateListedFiles();
-        updateDisplayOfCurrentTab(tab);
+        updateDisplayOfTab(tab);
     }
     //endregion
 
@@ -147,7 +159,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new NameStrategy();
         tab.updateListedFiles();
-        updateDisplayOfCurrentTab(tab);
+        updateDisplayOfTab(tab);
     }
 
     @FXML
@@ -155,7 +167,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new SizeStrategy();
         tab.updateListedFiles();
-        updateDisplayOfCurrentTab(tab);
+        updateDisplayOfTab(tab);
     }
 
     @FXML
@@ -163,7 +175,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new LastModifiedStrategy();
         tab.updateListedFiles();
-        updateDisplayOfCurrentTab(tab);
+        updateDisplayOfTab(tab);
     }
     //endregion
 
@@ -214,9 +226,10 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         try {
             tab.executeCommand("search", new File(value));
-        } catch (FileException ignored) {} // doesn't matter - nothing happens
+        } catch (FileException ignored) {
+        } // doesn't matter - nothing happens
 
-        updateDisplayOfCurrentTab(tab);
+        updateDisplayOfTab(tab);
         tab.setTitle("search for \"" + value + "\"");
     }
 
@@ -225,7 +238,7 @@ public class UIController {
         searchTextField.clear();
         var tab = getCurrentLogicalTab();
         tab.updateListedFiles();
-        updateDisplayOfCurrentTab(tab);
+        updateDisplayOfTab(tab);
     }
 
     public void onSearchChoice() {
@@ -237,6 +250,8 @@ public class UIController {
     }
 
     //endregion
+
+    //region paste
     @FXML
     public void onPasteFilesClick() {
         var tab = getCurrentLogicalTab();
@@ -244,9 +259,25 @@ public class UIController {
         try {
             tab.executeCommand("paste_files", files);
         } catch (FileException e) {
-            UIUtil.createAlert(Alert.AlertType.ERROR, "Failed pasting files.", e.getMessage());
+            var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed pasting files.", e.getMessage());
+            alert.show();
         }
         updateCurrentTab();
     }
+    //endregion
+
+    //region undo
+    @FXML
+    public void onUndoClicked() {
+        var tab = getCurrentLogicalTab();
+        try {
+            tab.executeCommand("undo");
+        } catch (FileException e) {
+            var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed undoing last action", e.getMessage());
+            alert.show();
+        }
+        updateCurrentTab();
+    }
+    //endregion
 
 }

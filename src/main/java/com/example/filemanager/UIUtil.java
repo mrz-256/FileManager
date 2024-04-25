@@ -37,7 +37,8 @@ public class UIUtil {
             tabs.add(logicalTab);
 
         } catch (IOException e) {
-            createAlert(Alert.AlertType.ERROR, "Failed creating new tab.", e.getMessage()).show();
+            var alert = createAlert(Alert.AlertType.ERROR, "Failed creating new tab.", e.getMessage());
+            alert.show();
         }
     }
 

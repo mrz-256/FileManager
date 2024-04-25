@@ -71,6 +71,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#onSortFilesByLastModification" text="last modified" />
                     </items>
                   </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#onUndoClicked" text="undo last action" />
                </items>
                 </SplitMenuButton>
             </items>
