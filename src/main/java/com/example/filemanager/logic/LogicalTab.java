@@ -94,6 +94,11 @@ public class LogicalTab {
     }
     //endregion
 
+    /**
+     * Updates the ui contents of the javafx Tab. Maximal number of shown files is 512
+     * because otherwise the loading is too slow.
+     * @param width the width of tab pane
+     */
     public void updateTabDisplay(int width) {
         tab.setText(directory.getAbsolutePath());
 
