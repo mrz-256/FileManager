@@ -171,10 +171,11 @@ public class UIUtil {
                         logicalTab.setDirectory(file);
                         UIController.updateCurrentTab();
                     } catch (FileException e) {
-                        System.out.println("TODO: GRID STRATEGY ERROR " + e.getMessage());
+                        var alert = createAlert(Alert.AlertType.ERROR, "Failed moving to directory", e.getMessage());
+                        alert.show();
                     }
                 } else {
-                    // todo: execute file
+                    // todo: execute/open file
                 }
             } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                 var menu = ControlMenuCreator.createControlContextMenu(logicalTab, file);

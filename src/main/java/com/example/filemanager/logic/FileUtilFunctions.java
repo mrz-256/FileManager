@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A class made for static helper functions and such
+ * A class with static functions focused on logic for working with files.
  */
 public class FileUtilFunctions {
 
@@ -49,35 +49,49 @@ public class FileUtilFunctions {
         // file already has unique name
         if (!file.exists()) return file;
 
-        // file doesn't have counter
-        if (!file.getName().matches("^.*\\(\\d+\\)\\..+")) {
-            String new_name = file.getName().replaceAll("^(.*)(\\..+)$", "$1(1)$2");
+        String name = file.getName();
+
+        // in case where file name doesn't have a counter yet, it appends it in between the name and extension.
+        // New name may already exist, so function must recursively check for that too
+        if (!name.matches("^.*\\(\\d+\\)\\..+")) {
+            String new_name = name.replaceAll("^(.*)(\\..+)$", "$1(1)$2");
             return inventUniqueName(new File(file.getParent() + "/" + new_name));
         }
 
-        // get the existing counter
-        String num = file.getName().replaceAll(".*\\((\\d+)\\)\\..+$", "$1");
+        // this is the already existing counter in the filename
+        String num = name.replaceAll(".*\\((\\d+)\\)\\..+$", "$1");
 
         // create new name with incremented counter
         num = String.valueOf(Integer.parseInt(num) + 1);
-        String new_name = file.getName().replaceAll("^(.*)\\(\\d+\\)(\\..+)$", "$1(" + num + ")$2");
+        String new_name = name.replaceAll("^(.*)\\(\\d+\\)(\\..+)$", "$1(" + num + ")$2");
 
+        // check the new name
         return inventUniqueName(new File(file.getParent() + "/" + new_name));
     }
 
     /**
-     * Returns the file extension
+     * Returns the file extension. First checks for special types like directory and hidden before checking
+     * actual extension.
      *
      * @param file the file
-     * @return the extension
+     * @return the type
      */
     public static String getFileType(File file) {
-        if (file.isDirectory()) return "directory";
-        if (file.isHidden()) return "hidden";
+        if (file.isDirectory()) {
+            return "directory";
+        }
+        if (file.isHidden()) {
+            return "hidden";
+        }
+
         var name = file.getName();
 
-        if (name.charAt(name.length()-1)=='~') return "save";
-        if (!name.matches(".*\\..+")) return "unknown";
+        if (name.charAt(name.length()-1)=='~') {
+            return "save";
+        }
+        if (!name.matches(".*\\..+")) {
+            return "unknown";
+        }
         return name.replaceFirst(".*\\.(.*)", "$1");
     }
 
@@ -134,12 +148,14 @@ public class FileUtilFunctions {
     public static String getOptimalSizeFormat(long byteSize) {
         String[] units = {"", "K", "M", "G", "T", "P"};
         int unit_index = 0;
+
         double size = byteSize;
+
         while (size > 1024) {
             size /= 1024;
             unit_index++;
         }
-        size = Math.floor(size * 100) / 100;
+        size = Math.floor(size * 100) / 100; // rounds to two decimal places
         return size + units[unit_index] + "B";
     }
 
@@ -161,6 +177,7 @@ public class FileUtilFunctions {
     public static void storeFileToClipboard(File... files){
         var clipboard = Clipboard.getSystemClipboard();
         var clipboardContent = new ClipboardContent();
+
         clipboardContent.putFiles(List.of(files));
         clipboard.setContent(clipboardContent);
     }
@@ -172,6 +189,7 @@ public class FileUtilFunctions {
     public static void storeTextToClipboard(String text){
         var clipboard = Clipboard.getSystemClipboard();
         var clipboardContent = new ClipboardContent();
+
         clipboardContent.putString(text);
         clipboardContent.putHtml(text);
         clipboard.setContent(clipboardContent);
