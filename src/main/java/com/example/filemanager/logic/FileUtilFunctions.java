@@ -181,7 +181,7 @@ public class FileUtilFunctions {
      * Gets the file contents from keyboard
      * @return list of files in keyboard
      */
-    public static ArrayList<File> getFilesFromKeyboard(){
+    public static ArrayList<File> getFilesFromClipboard(){
         var clipboard = Clipboard.getSystemClipboard();
         return (ArrayList<File>) clipboard.getFiles();
     }
