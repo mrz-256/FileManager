@@ -1,6 +1,7 @@
 package com.example.filemanager.ui_logic.rename;
 
 import com.example.filemanager.UIController;
+import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.commands.RenameFileCommand;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.scene.Scene;
@@ -23,7 +24,7 @@ public class RenameDialogueCreator {
      * @param file the file to rename
      * @return the popup window
      */
-    public static Stage createRenameDialogue(File file) {
+    public static Stage createRenameDialogue(File file, LogicalTab tab) {
         var contents = new VBox();
         var scene = new Scene(contents);
         var stage = new Stage();
@@ -53,16 +54,13 @@ public class RenameDialogueCreator {
             var new_file = new File(file.getParent(), text);
 
             try {
-                RenameFileCommand command = new RenameFileCommand();
-                command.execute(null, null, new File[]{file, new_file});
-                feedback.setStyle("-fx-border-color: #b0ff89");
-                feedback.setText("Success.");
+                tab.executeCommand("rename", file, new_file);
 
                 stage.close();
+                UIController.updateCurrentTab();
             } catch (FileException e) {
                 feedback.setText(e.getMessage().replaceAll("\\|.*", ""));
             }
-            UIController.updateCurrentTab();
 
         });
 

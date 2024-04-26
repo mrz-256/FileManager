@@ -7,6 +7,7 @@ import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.sort_strategy.LastModifiedStrategy;
 import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SizeStrategy;
+import com.example.filemanager.ui_logic.newdirectory.NewDirectoryDialogueCreator;
 import com.example.filemanager.ui_logic.newfile.NewFileDialogueCreator;
 import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
 import com.example.filemanager.ui_logic.display_strategy.ListStrategy;
@@ -288,7 +289,9 @@ public class UIController {
     }
 
     public void onNewDirectoryClicked(ActionEvent actionEvent) {
-
+        var tab = getCurrentLogicalTab();
+        var dialog = NewDirectoryDialogueCreator.createNewDialog(tab);
+        dialog.show();
     }
     //endregion
 

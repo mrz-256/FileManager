@@ -1,8 +1,9 @@
-package com.example.filemanager.ui_logic.newfile;
+package com.example.filemanager.ui_logic.newdirectory;
 
 import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
+import com.example.filemanager.logic.commands.NewDirectoryCommand;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,23 +14,24 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+
 /**
- * Creator of new file popup windows.
+ * Creator of new directory dialogue popup.
  */
-public class NewFileDialogueCreator {
+public class NewDirectoryDialogueCreator {
 
     /**
-     * Creates a 'create-new-file' dialogue
+     * Creates a 'new-directory-dialogue'
      *
      * @param tab the current tab
-     * @return the dialogue popup
+     * @return the dialogue
      */
-    public static Stage createNewFileDialog(LogicalTab tab) {
+    public static Stage createNewDialog(LogicalTab tab) {
         var contents = new GridPane();
         var scene = new Scene(contents);
         var stage = new Stage();
         stage.setScene(scene);
-        stage.setTitle("New file..");
+        stage.setTitle("New directory..");
 
         var text = new TextField();
         var confirm = new Button("confirm");
@@ -37,13 +39,13 @@ public class NewFileDialogueCreator {
         contents.addRow(0, text, confirm);
         contents.addRow(1, info);
 
-        text.setPromptText("filename..");
+        text.setPromptText("directory name..");
 
         confirm.setOnMouseClicked((x) -> {
             var name = text.getText();
             if (name.isEmpty()) return;
 
-            var file = new File(tab.getDirectory(), name + ".txt");
+            var file = new File(tab.getDirectory(), name);
 
             if (file.exists()) {
                 info.setText("Such file already exists.");
@@ -52,7 +54,7 @@ public class NewFileDialogueCreator {
             }
 
             try {
-                tab.executeCommand("new_file", file);
+                tab.executeCommand("new_directory", file);
 
                 stage.close();
                 UIController.updateCurrentTab();
@@ -64,6 +66,7 @@ public class NewFileDialogueCreator {
 
 
         return stage;
+
     }
 
 }

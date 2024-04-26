@@ -98,7 +98,7 @@ public class ControlMenuCreator {
         });
 
         rename.setOnAction((x) -> {
-            var popup = RenameDialogueCreator.createRenameDialogue(file);
+            var popup = RenameDialogueCreator.createRenameDialogue(file, logicalTab);
             popup.show();
         });
         //endregion
