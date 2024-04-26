@@ -1,12 +1,12 @@
-package com.example.filemanager.controlmenu;
+package com.example.filemanager.ui_logic.controlmenu;
 
 import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
-import com.example.filemanager.controlmenu.rename.RenamePropertiesCreator;
+import com.example.filemanager.ui_logic.rename.RenameDialogueCreator;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
-import com.example.filemanager.controlmenu.properties.PropertiesPopUpCreator;
+import com.example.filemanager.ui_logic.controlmenu.properties.PropertiesDialogueCreator;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -98,14 +98,14 @@ public class ControlMenuCreator {
         });
 
         rename.setOnAction((x) -> {
-            var popup = RenamePropertiesCreator.createRenamePropertiesPopUp(file);
+            var popup = RenameDialogueCreator.createRenameDialogue(file);
             popup.show();
         });
         //endregion
 
         //region properties
         properties.setOnAction((x) -> {
-            var popup = PropertiesPopUpCreator.createPropertiesPopUp(logicalTab, file);
+            var popup = PropertiesDialogueCreator.createPropertiesDialogue(logicalTab, file);
             popup.show();
         });
         //endregion

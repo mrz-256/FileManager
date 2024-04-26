@@ -1,4 +1,4 @@
-package com.example.filemanager.controlmenu.properties;
+package com.example.filemanager.ui_logic.controlmenu.properties;
 
 import com.example.filemanager.logic.FileUtilFunctions;
 import javafx.scene.control.*;
@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.security.MessageDigest;
 
 
-public class PropertiesAddChecksum {
+public class PropertiesChecksumTabCreator {
 
     /**
      * Adds a tab with checksums to the properties popup.

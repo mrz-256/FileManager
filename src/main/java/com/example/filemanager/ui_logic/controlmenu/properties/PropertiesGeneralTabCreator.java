@@ -1,4 +1,4 @@
-package com.example.filemanager.controlmenu.properties;
+package com.example.filemanager.ui_logic.controlmenu.properties;
 
 import com.example.filemanager.logic.FileUtilFunctions;
 import javafx.scene.control.Label;
@@ -14,7 +14,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Objects;
 
-public class PropertiesAddGeneral {
+public class PropertiesGeneralTabCreator {
 
     /**
      * Adds a tab with general information to the properties popup.

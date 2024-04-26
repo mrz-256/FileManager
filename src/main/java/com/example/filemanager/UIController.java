@@ -7,8 +7,10 @@ import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.sort_strategy.LastModifiedStrategy;
 import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SizeStrategy;
-import com.example.filemanager.ui.display_strategy.BoxStrategy;
-import com.example.filemanager.ui.display_strategy.ListStrategy;
+import com.example.filemanager.ui_logic.newfile.NewFileDialogueCreator;
+import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
+import com.example.filemanager.ui_logic.display_strategy.ListStrategy;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -277,6 +279,16 @@ public class UIController {
             alert.show();
         }
         updateCurrentTab();
+    }
+
+    public void onNewFileClicked() {
+        var tab = getCurrentLogicalTab();
+        var dialog = NewFileDialogueCreator.createNewFileDialog(tab);
+        dialog.show();
+    }
+
+    public void onNewDirectoryClicked(ActionEvent actionEvent) {
+
     }
     //endregion
 

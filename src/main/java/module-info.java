@@ -9,10 +9,10 @@ module com.example.filemanager {
     exports com.example.filemanager.logic.sort_strategy;
     exports com.example.filemanager.logic.commands;
     exports com.example.filemanager.logic.exceptions;
-    exports com.example.filemanager.ui.display_strategy;
     exports com.example.filemanager;
-    exports com.example.filemanager.controlmenu.properties;
-    opens com.example.filemanager.controlmenu.properties to javafx.fxml;
-    exports com.example.filemanager.controlmenu;
-    opens com.example.filemanager.controlmenu to javafx.fxml;
+    exports com.example.filemanager.ui_logic.controlmenu.properties;
+    opens com.example.filemanager.ui_logic.controlmenu.properties to javafx.fxml;
+    exports com.example.filemanager.ui_logic.controlmenu;
+    opens com.example.filemanager.ui_logic.controlmenu to javafx.fxml;
+    exports com.example.filemanager.ui_logic.display_strategy;
 }

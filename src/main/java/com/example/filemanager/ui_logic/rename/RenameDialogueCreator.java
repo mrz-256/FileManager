@@ -1,4 +1,4 @@
-package com.example.filemanager.controlmenu.rename;
+package com.example.filemanager.ui_logic.rename;
 
 import com.example.filemanager.UIController;
 import com.example.filemanager.logic.commands.RenameFileCommand;
@@ -15,7 +15,7 @@ import java.io.File;
 /**
  * Creator of rename popup windows.
  */
-public class RenamePropertiesCreator {
+public class RenameDialogueCreator {
 
     /**
      * Creates a query popup window to ask for the new filename.
@@ -23,7 +23,7 @@ public class RenamePropertiesCreator {
      * @param file the file to rename
      * @return the popup window
      */
-    public static Stage createRenamePropertiesPopUp(File file) {
+    public static Stage createRenameDialogue(File file) {
         var contents = new VBox();
         var scene = new Scene(contents);
         var stage = new Stage();

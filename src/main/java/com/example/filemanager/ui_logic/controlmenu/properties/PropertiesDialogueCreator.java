@@ -1,4 +1,4 @@
-package com.example.filemanager.controlmenu.properties;
+package com.example.filemanager.ui_logic.controlmenu.properties;
 
 import com.example.filemanager.logic.LogicalTab;
 import javafx.scene.Scene;
@@ -10,7 +10,7 @@ import java.io.File;
 /**
  * Creator of popup properties windows
  */
-public class PropertiesPopUpCreator {
+public class PropertiesDialogueCreator {
 
     /**
      * Creates a popup window with properties and information about a file
@@ -19,7 +19,7 @@ public class PropertiesPopUpCreator {
      * @param file       the file whose properties are being displayed
      * @return a new popup window, closes when loses focus
      */
-    public static Stage createPropertiesPopUp(LogicalTab logicalTab, File file) {
+    public static Stage createPropertiesDialogue(LogicalTab logicalTab, File file) {
         var contents = new TabPane();
         var scene = new Scene(contents);
         var stage = new Stage();
@@ -41,8 +41,8 @@ public class PropertiesPopUpCreator {
     }
 
     private static void fillPropertiesPopUp(TabPane contents, File file) {
-        PropertiesAddGeneral.addGeneralTab(contents, file);
-        PropertiesAddChecksum.addChecksumTab(contents, file);
+        PropertiesGeneralTabCreator.addGeneralTab(contents, file);
+        PropertiesChecksumTabCreator.addChecksumTab(contents, file);
     }
 
 

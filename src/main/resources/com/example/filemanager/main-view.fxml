@@ -59,8 +59,8 @@
                   <CheckMenuItem fx:id="showHiddenCheckbox" mnemonicParsing="false" onAction="#onShowHiddenClicked" text="show hidden files" />
                   <Menu mnemonicParsing="false" text="new file">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="new directory" />
-                      <MenuItem mnemonicParsing="false" text="new file" />
+                        <MenuItem mnemonicParsing="false" text="new directory"  onAction="#onNewDirectoryClicked"/>
+                        <MenuItem mnemonicParsing="false" text="new file"  onAction="#onNewFileClicked"/>
                     </items>
                   </Menu>
                   <MenuItem mnemonicParsing="false" onAction="#onPasteFilesClick" text="paste files here" />

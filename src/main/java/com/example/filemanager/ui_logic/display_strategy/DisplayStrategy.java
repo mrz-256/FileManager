@@ -1,4 +1,4 @@
-package com.example.filemanager.ui.display_strategy;
+package com.example.filemanager.ui_logic.display_strategy;
 
 import com.example.filemanager.logic.LogicalTab;
 import javafx.scene.control.Tab;

@@ -2,8 +2,8 @@ package com.example.filemanager.logic;
 
 import com.example.filemanager.logic.commands.*;
 import com.example.filemanager.logic.exceptions.FileException;
-import com.example.filemanager.ui.display_strategy.DisplayStrategy;
-import com.example.filemanager.ui.display_strategy.BoxStrategy;
+import com.example.filemanager.ui_logic.display_strategy.DisplayStrategy;
+import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
 import javafx.scene.control.Tab;
 
 import java.io.File;
