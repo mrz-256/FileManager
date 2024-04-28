@@ -161,6 +161,10 @@ public class LogicalTab {
     public Tab getTab() {
         return tab;
     }
+
+    public String getTitle(){
+        return tab.getText();
+    }
     //endregion
 
     //region setters

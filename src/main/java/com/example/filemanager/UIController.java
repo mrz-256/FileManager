@@ -242,10 +242,13 @@ public class UIController {
     @FXML
     public void onFilterUpdated() {
         var tab = getCurrentLogicalTab();
+        var title = tab.getTitle();
+
         tab.applyFilter(filterSearchField.getText());
         filterSearchField.setText("");
 
         updateDisplayOfTab(tab);
+        tab.setTitle("filtered " + title);
     }
     //endregion
 
