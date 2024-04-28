@@ -113,6 +113,14 @@ public class LogicalTab {
     }
 
     /**
+     * Applies the filter in configuration to the currently listed files.
+     */
+    public void applyFilter()
+    {
+        listedFiles.removeIf(file -> !file.getName().matches(".*" + configuration.filter + ".*"));
+    }
+
+    /**
      * Executes text representation of a command on parameters params within this context.
      * @param command command to execute.
      * @param params optional params to use

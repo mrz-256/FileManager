@@ -215,8 +215,12 @@ public class UIController {
     //region filter
     @FXML
     public void onFilterUpdated() {
-        getCurrentLogicalTab().getConfiguration().filter = filterSearchField.getText();
-        updateCurrentTab();
+        var tab = getCurrentLogicalTab();
+        tab.getConfiguration().filter = filterSearchField.getText();
+
+        tab.applyFilter();
+
+        updateDisplayOfTab(tab);
     }
     //endregion
 
@@ -281,7 +285,9 @@ public class UIController {
         }
         updateCurrentTab();
     }
+    //endregion
 
+    //region new
     public void onNewFileClicked() {
         var tab = getCurrentLogicalTab();
         var dialog = NewFileDialogueCreator.createNewFileDialog(tab);
