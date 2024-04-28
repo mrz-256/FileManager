@@ -11,7 +11,6 @@ import com.example.filemanager.ui_logic.newdirectory.NewDirectoryDialogueCreator
 import com.example.filemanager.ui_logic.newfile.NewFileDialogueCreator;
 import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
 import com.example.filemanager.ui_logic.display_strategy.ListStrategy;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -269,8 +268,9 @@ public class UIController {
     }
 
     @FXML
-    public void onSearchClear() {
+    public void onClear() {
         searchTextField.clear();
+        filterSearchField.clear();
         var tab = getCurrentLogicalTab();
         tab.updateListedFiles();
         updateDisplayOfTab(tab);

@@ -52,70 +52,78 @@
                     </tooltip>
                 </Button>
                 <SplitMenuButton contentDisplay="TEXT_ONLY" mnemonicParsing="false" popupSide="RIGHT" prefHeight="11.0" prefWidth="93.0" text="Settings" textAlignment="RIGHT">
-               <graphic>
-                  <Label text="Settings" />
-               </graphic>
-               <items>
-                  <CheckMenuItem fx:id="showHiddenCheckbox" mnemonicParsing="false" onAction="#onShowHiddenClicked" text="show hidden files" />
-                  <Menu mnemonicParsing="false" text="new file">
+                    <graphic>
+                        <Label text="Settings" />
+                    </graphic>
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onNewDirectoryClicked" text="new directory" />
-                        <MenuItem mnemonicParsing="false" onAction="#onNewFileClicked" text="new file" />
+                        <CheckMenuItem fx:id="showHiddenCheckbox" mnemonicParsing="false" onAction="#onShowHiddenClicked" text="show hidden files" />
+                        <Menu mnemonicParsing="false" text="new file">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#onNewDirectoryClicked" text="new directory" />
+                                <MenuItem mnemonicParsing="false" onAction="#onNewFileClicked" text="new file" />
+                            </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#onPasteFilesClick" text="paste files here" />
+                        <Menu mnemonicParsing="false" text="sort files by">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#onSortFilesByName" text="name" />
+                                <MenuItem mnemonicParsing="false" onAction="#onSortFilesBySize" text="size" />
+                                <MenuItem mnemonicParsing="false" onAction="#onSortFilesByLastModification" text="last modified" />
+                                <CheckMenuItem fx:id="sortSmallestFirst" mnemonicParsing="false" onAction="#onSmallestFirstClicked" text="smallest first" />
+                            </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#onUndoClicked" text="undo last action" />
                     </items>
-                  </Menu>
-                  <MenuItem mnemonicParsing="false" onAction="#onPasteFilesClick" text="paste files here" />
-                  <Menu mnemonicParsing="false" text="sort files by">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onSortFilesByName" text="name" />
-                        <MenuItem mnemonicParsing="false" onAction="#onSortFilesBySize" text="size" />
-                        <MenuItem mnemonicParsing="false" onAction="#onSortFilesByLastModification" text="last modified" />
-                        <CheckMenuItem fx:id="sortSmallestFirst" mnemonicParsing="false" onAction="#onSmallestFirstClicked" text="smallest first" />
-                    </items>
-                  </Menu>
-                  <MenuItem mnemonicParsing="false" onAction="#onUndoClicked" text="undo last action" />
-               </items>
                 </SplitMenuButton>
             </items>
         </ToolBar>
-      <TitledPane animated="false" expanded="false" text="search">
-         <content>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <TextField fx:id="searchTextField" promptText="search.." />
-                  <ChoiceBox fx:id="searchChoiceBox" onAction="#onSearchChoice" prefWidth="150.0" value="search from here">
-                   <items>
-                       <FXCollections fx:factory="observableArrayList">
-                           <String fx:value="search from here" />
-                           <String fx:value="search from home" />
-                       </FXCollections>
-                   </items>
-                   </ChoiceBox>
-                  <Button fx:id="searchConfirmButton" mnemonicParsing="false" onAction="#onSearchConfirm" text="search" />
-                  <Button fx:id="searchClearButton" mnemonicParsing="false" onAction="#onSearchClear" text="clear" />
-               </children>
-            </HBox>
-         </content>
-      </TitledPane>
-      <TitledPane fx:id="filterTitledPane" animated="false" expanded="false" text="filter">
-         <content>
-            <TextField fx:id="filterSearchField" onAction="#onFilterUpdated" promptText="regex filter.." />
-         </content>
-      </TitledPane>
+        <TitledPane animated="false" expanded="false" text="search">
+            <content>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <TextField fx:id="searchTextField" promptText="search.." />
+                        <ChoiceBox fx:id="searchChoiceBox" onAction="#onSearchChoice" prefWidth="150.0" value="search from here">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="search from here" />
+                                    <String fx:value="search from home" />
+                                </FXCollections>
+                            </items>
+                        </ChoiceBox>
+                        <Button fx:id="searchConfirmButton" mnemonicParsing="false" onAction="#onSearchConfirm" text="search" />
+                        <Button fx:id="searchClearButton" mnemonicParsing="false" onAction="#onClear" text="clear" />
+                    </children>
+                </HBox>
+            </content>
+        </TitledPane>
+        <TitledPane fx:id="filterTitledPane" animated="false" expanded="false" text="filter">
+            <content>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <TextField fx:id="filterSearchField" onAction="#onFilterUpdated" promptText="regex filter.." xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
+                        <Button mnemonicParsing="false" onAction="#onClear" text="clear" />
+
+                    </children>
+                </HBox>
+            </content>
+        </TitledPane>
         <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0" VBox.vgrow="ALWAYS">
-         <VBox fillWidth="false" maxWidth="200.0" minWidth="150" VBox.vgrow="ALWAYS">
-            <children>
+            <VBox fillWidth="false" maxWidth="200.0" minWidth="150" VBox.vgrow="ALWAYS">
+                <children>
                     <Label prefWidth="200.0" style="-fx-border-color: grey; -fx-background-color: transparent;" text="Places">
-                  <font>
-                     <Font size="21.0" />
-                  </font></Label>
+                        <font>
+                            <Font size="21.0" />
+                        </font>
+                    </Label>
                     <VBox id="places_vbox" fx:id="places" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
                     <VBox id="global_files_scrollpane" fx:id="recent" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
-            </children>
-         </VBox>
+                </children>
+            </VBox>
             <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onTabPaneUpdate" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
-            <tabs>
+                <tabs>
 
-            </tabs></TabPane>
+                </tabs>
+            </TabPane>
         </HBox>
     </children>
 </VBox>
