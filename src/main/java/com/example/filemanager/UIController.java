@@ -25,6 +25,8 @@ import java.util.LinkedList;
 public class UIController {
     @FXML
     private CheckMenuItem showHiddenCheckbox;
+    @FXML
+    private CheckMenuItem sortSmallestFirst;
 
     @FXML
     private TabPane tabPane;
@@ -76,6 +78,8 @@ public class UIController {
             UIController.updateCurrentTab();
         });
         instance = this;
+
+        sortSmallestFirst.setSelected(true);
 
         UIUtil.fillPlacesList(places);
     }
@@ -177,6 +181,14 @@ public class UIController {
     public void onSortFilesByLastModification() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new LastModifiedStrategy();
+        tab.updateListedFiles();
+        updateDisplayOfTab(tab);
+    }
+
+    @FXML
+    public void onSmallestFirstClicked() {
+        var tab = getCurrentLogicalTab();
+        tab.getConfiguration().sortSmallestFirst = sortSmallestFirst.isSelected();
         tab.updateListedFiles();
         updateDisplayOfTab(tab);
     }

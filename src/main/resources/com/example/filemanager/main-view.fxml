@@ -59,8 +59,8 @@
                   <CheckMenuItem fx:id="showHiddenCheckbox" mnemonicParsing="false" onAction="#onShowHiddenClicked" text="show hidden files" />
                   <Menu mnemonicParsing="false" text="new file">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="new directory"  onAction="#onNewDirectoryClicked"/>
-                        <MenuItem mnemonicParsing="false" text="new file"  onAction="#onNewFileClicked"/>
+                        <MenuItem mnemonicParsing="false" onAction="#onNewDirectoryClicked" text="new directory" />
+                        <MenuItem mnemonicParsing="false" onAction="#onNewFileClicked" text="new file" />
                     </items>
                   </Menu>
                   <MenuItem mnemonicParsing="false" onAction="#onPasteFilesClick" text="paste files here" />
@@ -69,6 +69,7 @@
                       <MenuItem mnemonicParsing="false" onAction="#onSortFilesByName" text="name" />
                         <MenuItem mnemonicParsing="false" onAction="#onSortFilesBySize" text="size" />
                         <MenuItem mnemonicParsing="false" onAction="#onSortFilesByLastModification" text="last modified" />
+                        <CheckMenuItem fx:id="sortSmallestFirst" mnemonicParsing="false" onAction="#onSmallestFirstClicked" text="smallest first" />
                     </items>
                   </Menu>
                   <MenuItem mnemonicParsing="false" onAction="#onUndoClicked" text="undo last action" />
@@ -108,11 +109,6 @@
                      <Font size="21.0" />
                   </font></Label>
                     <VBox id="places_vbox" fx:id="places" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
-               <Label layoutX="10.0" layoutY="10.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-background-color: transparent;" text="Recent">
-                  <font>
-                     <Font size="21.0" />
-                  </font>
-               </Label>
                     <VBox id="global_files_scrollpane" fx:id="recent" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
             </children>
          </VBox>

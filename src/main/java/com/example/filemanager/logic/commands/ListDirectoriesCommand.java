@@ -28,11 +28,8 @@ public class ListDirectoriesCommand extends FileCommand {
             return file.isDirectory()
                     && (configuration.showHiddenFiles || !file.isHidden());
         });
-        if (directories == null || directories.length == 0) return null;
 
-        configuration.sortStrategy.sort(directories);
-
-        return new ArrayList<>(List.of(directories));
+        return configuration.apply(directories);
     }
 
     @Override

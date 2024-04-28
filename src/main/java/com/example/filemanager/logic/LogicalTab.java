@@ -113,7 +113,7 @@ public class LogicalTab {
     }
 
     /**
-     * Applies the filter in configuration to the currently listed files.
+     * Applies the filter to the currently listed files.
      */
     public void applyFilter(String filter)
     {

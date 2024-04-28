@@ -14,13 +14,14 @@ public class ListFilesCommand extends FileCommand {
 
     /**
      * Lists all files in directory
+     *
      * @return list of the files
      * @throws FileException never
      */
     @Override
     public ArrayList<File> execute(
             File directory, LogicalConfiguration configuration, File[] working
-    )  throws FileException {
+    ) throws FileException {
         CommandHistory.addCommand(this, false);
 
         File[] files = directory.listFiles(file -> {
@@ -28,11 +29,7 @@ public class ListFilesCommand extends FileCommand {
                     && (configuration.showHiddenFiles || !file.isHidden());
         });
 
-        if (files == null || files.length == 0) return null;
-
-        configuration.sortStrategy.sort(files);
-
-        return new ArrayList<>(List.of(files));
+        return configuration.apply(files);
     }
 
     @Override
