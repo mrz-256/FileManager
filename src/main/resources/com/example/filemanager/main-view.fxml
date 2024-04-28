@@ -77,7 +77,7 @@
                 </SplitMenuButton>
             </items>
         </ToolBar>
-      <TitledPane fx:id="searchPane" animated="false" expanded="false" text="search">
+      <TitledPane animated="false" expanded="false" text="search">
          <content>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>

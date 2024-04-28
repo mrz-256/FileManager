@@ -14,9 +14,11 @@ import com.example.filemanager.ui_logic.display_strategy.ListStrategy;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -35,8 +37,6 @@ public class UIController {
     @FXML
     private VBox recent;
 
-    @FXML
-    private TitledPane searchPane;
     @FXML
     public TextField searchTextField;
     @FXML
@@ -60,6 +60,11 @@ public class UIController {
      * List of all Logical tabs in app
      */
     private static LinkedList<LogicalTab> tabs;
+    /**
+     * When updating a directory display, loading images takes the most time. Storing them saves some loading,
+     * but may eventually cause some problems for memory.
+     */
+    private static HashMap<String, Image> loadedImages;
 
 
     public static UIController getInstance() {
@@ -72,6 +77,7 @@ public class UIController {
     @FXML
     void initialize() {
         tabs = new LinkedList<>();
+        loadedImages = new HashMap<>();
 
         UIUtil.createNewTab(tabPane, tabs, FileUtilFunctions.getHomeDirectory());
         tabPane.widthProperty().addListener((observableValue, number, newNumber) -> {
@@ -82,6 +88,15 @@ public class UIController {
         sortSmallestFirst.setSelected(true);
 
         UIUtil.fillPlacesList(places);
+    }
+
+    public static Image getLoadedImage(String uri)
+    {
+        return loadedImages.get(uri);
+    }
+
+    public static void setLoadedImage(String uri, Image image){
+        loadedImages.put(uri, image);
     }
 
     /**

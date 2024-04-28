@@ -113,7 +113,17 @@ public class UIUtil {
                 || type.equals("bmp")
                 || type.equals("jpeg")
         ) {
-            return new ImageView(new Image(file.toURI().toString(), size, size, true, true));
+            var uri = file.toURI().toString();
+            var image = UIController.getLoadedImage(uri);
+
+            if (image == null)
+            {
+                /// takes ~20% of the application execution
+                image = new Image(uri, size, size, true, true);
+                UIController.setLoadedImage(uri, image);
+            }
+
+            return new ImageView(image);
         }
 
         // if I have an icon drawn for given file type it is loaded
