@@ -319,7 +319,7 @@ public class UIController {
         dialog.show();
     }
 
-    public void onNewDirectoryClicked(ActionEvent actionEvent) {
+    public void onNewDirectoryClicked() {
         var tab = getCurrentLogicalTab();
         var dialog = NewDirectoryDialogueCreator.createNewDialog(tab);
         dialog.show();

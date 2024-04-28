@@ -117,7 +117,7 @@ public class LogicalTab {
      */
     public void applyFilter(String filter)
     {
-        listedFiles.removeIf(file -> !file.getName().matches(".*" + filter + ".*"));
+        listedFiles.removeIf(file -> !file.getName().matches(filter));
     }
 
     /**
