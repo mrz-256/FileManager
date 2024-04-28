@@ -26,8 +26,7 @@ public class ListDirectoriesCommand extends FileCommand {
 
         File[] directories = directory.listFiles(file -> {
             return file.isDirectory()
-                    && (configuration.showHiddenFiles || !file.isHidden())
-                    && file.getName().matches(".*" + configuration.filter + ".*");
+                    && (configuration.showHiddenFiles || !file.isHidden());
         });
         if (directories == null || directories.length == 0) return null;
 

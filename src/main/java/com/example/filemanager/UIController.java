@@ -194,7 +194,6 @@ public class UIController {
         if (tabPane.getTabs().size() == 1) {
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         }
-        updateAllTabs();
     }
     //endregion
 
@@ -216,9 +215,8 @@ public class UIController {
     @FXML
     public void onFilterUpdated() {
         var tab = getCurrentLogicalTab();
-        tab.getConfiguration().filter = filterSearchField.getText();
-
-        tab.applyFilter();
+        tab.applyFilter(filterSearchField.getText());
+        filterSearchField.setText("");
 
         updateDisplayOfTab(tab);
     }

@@ -115,9 +115,9 @@ public class LogicalTab {
     /**
      * Applies the filter in configuration to the currently listed files.
      */
-    public void applyFilter()
+    public void applyFilter(String filter)
     {
-        listedFiles.removeIf(file -> !file.getName().matches(".*" + configuration.filter + ".*"));
+        listedFiles.removeIf(file -> !file.getName().matches(".*" + filter + ".*"));
     }
 
     /**

@@ -10,21 +10,19 @@ import com.example.filemanager.logic.sort_strategy.SortStrategy;
 public class LogicalConfiguration {
     public SortStrategy sortStrategy;
     public boolean showHiddenFiles;
-    public String filter;
     public SearchStart searchStart;
     public enum SearchStart {
         SEARCH_FROM_HERE, SEARCH_FROM_HOME
     }
 
 
-    public LogicalConfiguration(SortStrategy sortStrategy, boolean showHiddenFiles, String filter, SearchStart searchStart) {
+    public LogicalConfiguration(SortStrategy sortStrategy, boolean showHiddenFiles, SearchStart searchStart) {
         this.sortStrategy = sortStrategy;
         this.showHiddenFiles = showHiddenFiles;
-        this.filter = filter;
         this.searchStart = searchStart;
     }
 
     public static LogicalConfiguration defaultConfiguration(){
-        return new LogicalConfiguration(new NameStrategy(), false, "", SearchStart.SEARCH_FROM_HERE);
+        return new LogicalConfiguration(new NameStrategy(), false, SearchStart.SEARCH_FROM_HERE);
     }
 }
