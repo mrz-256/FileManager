@@ -32,19 +32,17 @@ public class LogicalConfiguration {
         return new LogicalConfiguration(new NameStrategy(), false, true, SearchStart.SEARCH_FROM_HERE);
     }
 
-    public ArrayList<File> apply(File[] files){
-        if (files == null || files.length == 0) return null;
+    public void apply(List<File> files){
 
         sortStrategy.sort(files);
 
         if (!sortSmallestFirst) {
-            for (int i = 0; i < files.length / 2; i++) {
-                var tmp = files[i];
-                files[i] = files[files.length - i - 1];
-                files[files.length - i - 1] = tmp;
+            for (int i = 0; i < files.size() / 2; i++) {
+                var tmp = files.get(i);
+                files.set(i, files.get(files.size() - i - 1));
+                files.set(files.size() - i - 1,  tmp);
             }
         }
 
-        return new ArrayList<>(List.of(files));
     }
 }
