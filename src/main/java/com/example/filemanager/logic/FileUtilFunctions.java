@@ -119,7 +119,7 @@ public class FileUtilFunctions {
      * @return list of found directories
      */
     public static LinkedList<File> getPlacesFilesList() {
-        var names = new ArrayList<>(List.of("", "Pictures", "Documents", "Downloads", "Music", "Videos", "Trash"));
+        var names = new ArrayList<>(List.of("", "Pictures", "Desktop", "Documents", "Downloads", "Music", "Videos", "Trash"));
 
         if (!System.getProperty("os.name").equals("Linux")) {
             names.addAll(List.of("A", "B", "C", "D"));
@@ -156,7 +156,7 @@ public class FileUtilFunctions {
             unit_index++;
         }
         size = Math.floor(size * 100) / 100; // rounds to two decimal places
-        return size + units[unit_index] + "B";
+        return size + " " + units[unit_index] + "B";
     }
 
     /**
