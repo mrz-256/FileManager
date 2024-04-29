@@ -1,4 +1,7 @@
 # File Manager
 A simple file manager program written in java.
 
-![screenshot](https://github.com/mrz-256/FileManager/assets/134142969/896e3df3-5fac-438a-a5b4-ed8ef644fe13)
+![image](https://github.com/mrz-256/FileManager/assets/134142969/f4f995fe-02cf-4cd3-a538-ec5d651e1a42)
+
+
+[DOCUMENTATION.pdf](https://github.com/mrz-256/FileManager/files/15151265/DOCUMENTATION.pdf)
