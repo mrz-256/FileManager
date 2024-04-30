@@ -143,6 +143,7 @@ public class LogicalTab {
                 }
             }
             case "rename" -> new RenameFileCommand().execute(directory, configuration, params);
+            case "open" -> new OpenFileCommand().execute(directory, configuration, params);
         }
     }
 

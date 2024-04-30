@@ -6,13 +6,17 @@ import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
 /**
@@ -116,8 +120,7 @@ public class UIUtil {
             var uri = file.toURI().toString();
             var image = UIController.getLoadedImage(uri);
 
-            if (image == null)
-            {
+            if (image == null) {
                 /// takes ~20% of the application execution
                 image = new Image(uri, size, size, true, true);
                 UIController.setLoadedImage(uri, image);
@@ -180,12 +183,18 @@ public class UIUtil {
                     try {
                         logicalTab.setDirectory(file);
                         UIController.updateCurrentTab();
+
                     } catch (FileException e) {
                         var alert = createAlert(Alert.AlertType.ERROR, "Failed moving to directory", e.getMessage());
                         alert.show();
                     }
                 } else {
-                    // todo: execute/open file
+                    try {
+                        logicalTab.executeCommand("open", file);
+                    } catch (FileException e) {
+                        var alert = createAlert(Alert.AlertType.ERROR, "Failed opening file", e.getMessage());
+                        alert.show();
+                    }
                 }
             } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                 var menu = ControlMenuCreator.createControlContextMenu(logicalTab, file);
@@ -209,8 +218,6 @@ public class UIUtil {
         dialogue.setContentText(body);
         return dialogue;
     }
-
-
 
 
 }
