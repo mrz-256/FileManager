@@ -41,7 +41,7 @@
                         <Tooltip text="display boxes as list" />
                     </tooltip>
                 </Button>
-                <Button id="new-tab-button" mnemonicParsing="false" onMouseClicked="#onNewTabClicked">
+                <Button fx:id="newTabButton" id="new-tab-button" mnemonicParsing="false" onMouseClicked="#onNewTabClicked">
                     <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../../../icons/button_icons/icon_5.png" />

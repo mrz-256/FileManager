@@ -25,6 +25,8 @@ import java.util.LinkedList;
  */
 public class UIController {
     @FXML
+    public Button newTabButton;
+    @FXML
     private CheckMenuItem showHiddenCheckbox;
     @FXML
     private CheckMenuItem sortSmallestFirst;
@@ -59,6 +61,7 @@ public class UIController {
      * List of all Logical tabs in app
      */
     private static LinkedList<LogicalTab> tabs;
+    private static final int MAX_TABS = 10;
     /**
      * When updating a directory display, loading images takes the most time. Storing them saves some loading,
      * but may eventually cause some problems for memory.
@@ -213,12 +216,20 @@ public class UIController {
     public void onNewTabClicked() {
         UIUtil.createNewTab(tabPane, tabs, getCurrentLogicalTab().getDirectory());
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+
+        if (tabs.size() == MAX_TABS){
+            newTabButton.setDisable(true);
+        }
+
         updateAllTabs();
     }
 
     public void onTabPaneUpdate() {
         if (tabPane.getTabs().size() == 1) {
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        }
+        if (tabs.size() < MAX_TABS){
+            newTabButton.setDisable(false);
         }
     }
     //endregion
