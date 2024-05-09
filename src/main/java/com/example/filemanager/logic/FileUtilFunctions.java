@@ -113,31 +113,6 @@ public class FileUtilFunctions {
         return new File(getHomePath());
     }
 
-    /**
-     * Finds the basic system directories
-     *
-     * @return list of found directories
-     */
-    public static LinkedList<File> getPlacesFilesList() {
-        var names = new ArrayList<>(List.of("", "Pictures", "Desktop", "Documents", "Downloads", "Music", "Videos", "Trash"));
-
-        if (!System.getProperty("os.name").equals("Linux")) {
-            names.addAll(List.of("A", "B", "C", "D"));
-            // todo: does windows have other special directories?
-        }
-
-        var result = new LinkedList<File>();
-
-        for (var name : names) {
-            var file = new File(FileUtilFunctions.getHomeDirectory(), name);
-            if (file.exists() && file.isDirectory()) {
-                result.add(file);
-            }
-        }
-
-        return result;
-    }
-
 
     /**
      * Transform numerical size in bytes into minimal string representation

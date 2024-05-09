@@ -54,8 +54,14 @@ public class UIUtil {
      *
      * @param pane the VBox list of the files to fill
      */
-    public static void fillPlacesList(VBox pane) {
-        for (var file : FileUtilFunctions.getPlacesFilesList()) {
+    public static void fillPlacesList(VBox pane, LogicalTab tab) {
+        tab.updateListedFiles();
+        var files = tab.getListedFiles();
+
+        for (var file : files) {
+            if (!file.isDirectory()) {
+                continue;
+            }
             addFileToPlacesList(pane, file);
         }
     }

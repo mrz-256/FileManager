@@ -89,7 +89,7 @@ public class UIController {
 
         sortSmallestFirst.setSelected(true);
 
-        UIUtil.fillPlacesList(places);
+        UIUtil.fillPlacesList(places, tabs.get(0));
     }
 
     public static Image getLoadedImage(String uri)
