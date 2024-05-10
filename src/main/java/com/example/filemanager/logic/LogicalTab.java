@@ -39,12 +39,16 @@ public class LogicalTab {
 
         //pathHistory.add(directory);
 
-        tab.setOnClosed( (x) -> {parentList.remove(this);});
+        tab.setOnClosed((x) -> {
+            parentList.remove(this);
+        });
     }
 
     //region moving directory
+
     /**
      * Sets current directory of this Tab.
+     *
      * @param directory the directory to use
      * @throws FileException when directory is invalid or can't be opened
      */
@@ -64,14 +68,15 @@ public class LogicalTab {
     /**
      * Moves to the last open directory from pathHistory
      */
-    public void moveBack(){
-        if (pathHistory.hasBack()){
+    public void moveBack() {
+        if (pathHistory.hasBack()) {
             directory = pathHistory.getBack();
         }
     }
     //endregion
 
     //region file contents
+
     /**
      * Updates list of listed files.
      */
@@ -87,6 +92,7 @@ public class LogicalTab {
     /**
      * Gives list of files visible in this Tab by given configuration of context.
      * Already calls for updateListedFiles().
+     *
      * @return the files to list
      */
     public ArrayList<File> getListedFiles() {
@@ -97,12 +103,13 @@ public class LogicalTab {
     /**
      * Updates the ui contents of the javafx Tab. Maximal number of shown files is 512
      * because otherwise the loading is too slow.
+     *
      * @param width the width of tab pane
      */
     public void updateTabDisplay(int width) {
         tab.setText(directory.getAbsolutePath());
 
-        if (listedFiles.size() > 512){
+        if (listedFiles.size() > 512) {
             listedFiles = (ArrayList<File>) listedFiles.subList(0, 512);
         }
 
@@ -115,47 +122,55 @@ public class LogicalTab {
     /**
      * Applies the filter to the currently listed files.
      */
-    public void applyFilter(String filter)
-    {
+    public void applyFilter(String filter) {
         listedFiles.removeIf(file -> !file.getName().matches(filter));
     }
 
     /**
      * Executes text representation of a command on parameters params within this context.
+     *
      * @param command command to execute.
-     * @param params optional params to use
+     * @param params  optional params to use
      * @throws FileException when command fails
      */
     public void executeCommand(String command, File... params) throws FileException {
+        if (command.equals("undo")) {
+            CommandHistory.undoLast();
+        }
 
-        switch (command.toLowerCase()) {
-            case "undo" -> CommandHistory.undoLast();
-            case "new_file" -> new NewFileCommand().execute(directory, configuration, params);
-            case "new_directory" -> new NewDirectoryCommand().execute(directory, configuration, params);
-            case "delete_files" -> new DeleteFilesCommand().execute(directory, configuration, params);
-            case "paste_files" -> new PasteFilesCommand().execute(directory, configuration, params);
-            case "search" -> {
-                var found = new SearchCommand().execute(directory, configuration, params);
-                if (found != null && !found.isEmpty()){
-                    listedFiles = found;
-                } else {
-                    listedFiles.clear();
-                }
-            }
-            case "rename" -> new RenameFileCommand().execute(directory, configuration, params);
-            case "open" -> new OpenFileCommand().execute(directory, configuration, params);
+        FileCommand to_execute = switch (command.toLowerCase()) {
+            case "paste_files" -> new PasteFilesCommand();
+            case "list_all" -> new ListAllCommand();
+            case "new_file" -> new NewFileCommand();
+            case "open" -> new OpenFileCommand();
+            case "new_directory" -> new NewDirectoryCommand();
+            case "found" -> new SearchCommand();
+            case "delete_files" -> new DeleteFilesCommand();
+            case "rename" -> new RenameFileCommand();
+            default -> null;
+        };
+
+        if (to_execute == null)
+        {
+            throw new FileException("Invalid command ("+command+")");
+        }
+
+        var files = to_execute.execute(directory, configuration, params);
+        if (files != null){
+            this.listedFiles = files;
         }
     }
 
     //region getters
+
     /**
      * @return the configuration of logical tab
      */
-    public LogicalConfiguration getConfiguration(){
+    public LogicalConfiguration getConfiguration() {
         return configuration;
     }
 
-    public File getDirectory(){
+    public File getDirectory() {
         return directory;
     }
 
@@ -163,7 +178,7 @@ public class LogicalTab {
         return tab;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return tab.getText();
     }
     //endregion
@@ -177,7 +192,7 @@ public class LogicalTab {
         this.zoom = zoom;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         tab.setText(title);
     }
     //endregion
