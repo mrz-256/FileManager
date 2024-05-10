@@ -81,9 +81,8 @@ public class LogicalTab {
      * Updates list of listed files.
      */
     public void updateListedFiles() {
-        ListAllCommand command = new ListAllCommand();
         try {
-            listedFiles = command.execute(directory, configuration, null);
+            executeCommand("list_all");
         } catch (FileException ignored) {
             // ListAllCommand never throws exceptions
         }
@@ -140,8 +139,8 @@ public class LogicalTab {
         }
 
         FileCommand to_execute = switch (command.toLowerCase()) {
-            case "paste_files" -> new PasteFilesCommand();
             case "list_all" -> new ListAllCommand();
+            case "paste_files" -> new PasteFilesCommand();
             case "new_file" -> new NewFileCommand();
             case "open" -> new OpenFileCommand();
             case "new_directory" -> new NewDirectoryCommand();
@@ -159,6 +158,9 @@ public class LogicalTab {
         var files = to_execute.execute(directory, configuration, params);
         if (files != null){
             this.listedFiles = files;
+        }
+        else {
+            executeCommand("list_all");
         }
     }
 

@@ -39,23 +39,30 @@ public class FileUtilFunctions {
      * Returns a new file with name which doesn't exist yet.
      * Example: test-file.txt -> test-file(1).txt
      * If test-file(1).txt already exists, it will be test-file(2).txt and so on.
+     * <br>
+     * It's possible the name with incremented name already exists too, so recursion is necessary.
      *
      * @param file the file name to turn into something unique
      * @return a new File with unique name similar to original
      */
     public static File inventUniqueName(File file) {
-        // It's possible the name with incremented name already exists too, so recursion is necessary.
+        // crude division into two methods, solves the problem
+        if (file.isFile()) {
+            return inventUniqueFileName(file);
+        } else {
+            return inventUniqueDirectoryName(file);
+        }
+    }
 
-        // file already has unique name
+    private static File inventUniqueFileName(File file) {
         if (!file.exists()) return file;
-
-        String name = file.getName();
+        var name = file.getName();
 
         // in case where file name doesn't have a counter yet, it appends it in between the name and extension.
         // New name may already exist, so function must recursively check for that too
-        if (!name.matches("^.*\\(\\d+\\)\\..+")) {
+        if (!name.matches("^.*\\(\\d+\\)\\..+$")) {
             String new_name = name.replaceAll("^(.*)(\\..+)$", "$1(1)$2");
-            return inventUniqueName(new File(file.getParent() + "/" + new_name));
+            return inventUniqueName(new File(file.getParent(), new_name));
         }
 
         // this is the already existing counter in the filename
@@ -66,7 +73,29 @@ public class FileUtilFunctions {
         String new_name = name.replaceAll("^(.*)\\(\\d+\\)(\\..+)$", "$1(" + num + ")$2");
 
         // check the new name
-        return inventUniqueName(new File(file.getParent() + "/" + new_name));
+        return inventUniqueName(new File(file.getParent(), new_name));
+    }
+
+    private static File inventUniqueDirectoryName(File file){
+        if (!file.exists()) return file;
+        var name = file.getName();
+
+        // in case where file name doesn't have a counter yet, it appends it in between the name and extension.
+        // New name may already exist, so function must recursively check for that too
+        if (!name.matches("^.*\\(\\d+\\)$")) {
+            String new_name = name.replaceAll("^(.*)$", "$1(1)");
+            return inventUniqueName(new File(file.getParent(), new_name));
+        }
+
+        // this is the already existing counter in the filename
+        String num = name.replaceAll(".*\\((\\d+)\\)$", "$1");
+
+        // create new name with incremented counter
+        num = String.valueOf(Integer.parseInt(num) + 1);
+        String new_name = name.replaceAll("^(.*)\\(\\d+\\)$", "$1(" + num + ")");
+
+        // check the new name
+        return inventUniqueName(new File(file.getParent(), new_name));
     }
 
     /**
@@ -86,7 +115,7 @@ public class FileUtilFunctions {
 
         var name = file.getName();
 
-        if (name.charAt(name.length()-1)=='~') {
+        if (name.charAt(name.length() - 1) == '~') {
             return "save";
         }
         if (!name.matches(".*\\..+")) {
@@ -147,9 +176,10 @@ public class FileUtilFunctions {
 
     /**
      * Stores files to clipboard
+     *
      * @param files the files to store
      */
-    public static void storeFileToClipboard(File... files){
+    public static void storeFileToClipboard(File... files) {
         var clipboard = Clipboard.getSystemClipboard();
         var clipboardContent = new ClipboardContent();
 
@@ -159,9 +189,10 @@ public class FileUtilFunctions {
 
     /**
      * Stores text to clipboard
+     *
      * @param text the text to store
      */
-    public static void storeTextToClipboard(String text){
+    public static void storeTextToClipboard(String text) {
         var clipboard = Clipboard.getSystemClipboard();
         var clipboardContent = new ClipboardContent();
 
@@ -175,7 +206,7 @@ public class FileUtilFunctions {
      *
      * @return the files from keyboard
      */
-    public static File[] getFilesFromClipboard(){
+    public static File[] getFilesFromClipboard() {
         var clipboard = Clipboard.getSystemClipboard();
         return clipboard.getFiles().toArray(new File[0]);
     }
