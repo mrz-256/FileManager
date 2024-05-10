@@ -136,6 +136,7 @@ public class LogicalTab {
     public void executeCommand(String command, File... params) throws FileException {
         if (command.equals("undo")) {
             CommandHistory.undoLast();
+            return;
         }
 
         FileCommand to_execute = switch (command.toLowerCase()) {
