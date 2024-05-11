@@ -14,6 +14,9 @@ import com.example.filemanager.ui_logic.display_strategy.ListStrategy;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -329,7 +332,33 @@ public class UIController {
         var dialog = NewDirectoryDialogueCreator.createNewDialog(tab);
         dialog.show();
     }
+
+    public void onKeyTyped(KeyEvent keyEvent) {
+        var tab = getCurrentLogicalTab();
+
+        if (keyEvent.isControlDown()){
+            switch (keyEvent.getCode()){
+                case PLUS: case ADD: {
+                    tab.zoom(true);
+                    break;
+                }
+                case MINUS: case SUBTRACT: {
+                    tab.zoom(false);
+                    break;
+                }
+            }
+
+        }
+
+        System.out.println(keyEvent.getCode());
+
+
+        tab.updateTabDisplay();
+    }
     //endregion
+
+    //region zoom
+
 
 
 }

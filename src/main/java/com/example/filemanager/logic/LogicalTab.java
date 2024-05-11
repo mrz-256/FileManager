@@ -18,15 +18,23 @@ import java.util.LinkedList;
  * CommandHistory is a singleton common for all tabs.
  */
 public class LogicalTab {
+    private final Tab tab;
     private File directory;
-    private final LogicalConfiguration configuration;
-    private final PathHistory pathHistory;
     private ArrayList<File> listedFiles;
 
-    private final Tab tab;
+    private final LogicalConfiguration configuration;
     private DisplayStrategy displayStrategy;
+    private final PathHistory pathHistory;
+
+    /**
+     * Zoom [0;100] percent
+     */
     private int zoom;
     private static final int DEFAULT_ICON_SIZE = 100;
+    private static final int ZOOM_SPEED = 10;
+    private static final int MIN_ZOOM = 60;
+    private static final int MAX_ZOOM = 120;
+    private static final int DEFAULT_ZOOM = 90;
 
 
     public LogicalTab(Tab tab, File directory, LinkedList<LogicalTab> parentList) {
@@ -37,11 +45,9 @@ public class LogicalTab {
         this.tab = tab;
         this.pathHistory = new PathHistory();
         this.displayStrategy = new BoxStrategy();
-        this.zoom = 100; // 100%
+        this.zoom = DEFAULT_ZOOM;
 
-        tab.setOnClosed((x) -> {
-            parentList.remove(this);
-        });
+        tab.setOnClosed((x) -> parentList.remove(this));
     }
 
 
@@ -65,18 +71,6 @@ public class LogicalTab {
     }
 
     /**
-     * Moves to the last open directory from pathHistory. Updates the files.
-     */
-    public void moveBack() {
-        if (pathHistory.hasBack()) {
-            directory = pathHistory.getBack();
-        }
-        update();
-    }
-
-
-
-    /**
      * Updates list of listed files.
      */
     public void update() {
@@ -86,7 +80,6 @@ public class LogicalTab {
             // ListAllCommand never throws exceptions
         }
     }
-
 
     /**
      * Updates the ui contents of the javafx Tab. Maximal number of shown files is 512
@@ -102,8 +95,18 @@ public class LogicalTab {
 
         displayStrategy.display(
                 tab, this,
-                DEFAULT_ICON_SIZE * zoom / 100, UIController.getTabPaneWidth()
+                (DEFAULT_ICON_SIZE * zoom) / 100, UIController.getTabPaneWidth()
         );
+    }
+
+    /**
+     * Moves to the last open directory from pathHistory. Updates the files.
+     */
+    public void moveBack() {
+        if (pathHistory.hasBack()) {
+            directory = pathHistory.getBack();
+        }
+        update();
     }
 
     /**
@@ -114,7 +117,7 @@ public class LogicalTab {
     }
 
     /**
-     * Executes text representation of a command on parameters params within this context.
+     * Executes text representation of a command on parameters `params` within this context.
      * Automatically updates tab display.
      *
      * @param command command to execute.
@@ -154,11 +157,12 @@ public class LogicalTab {
         }
     }
 
-    //region getters
+    public void zoom(boolean in) {
+        int change = ZOOM_SPEED * ((in) ? 1 : -1);
+        zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom + change));
+    }
 
-    /**
-     * @return the config of logical tab
-     */
+    //region getters
     public LogicalConfiguration getConfiguration() {
         return configuration;
     }
@@ -175,11 +179,6 @@ public class LogicalTab {
         return tab.getText();
     }
 
-    /**
-     * Gives list of files visible in this Tab.
-     *
-     * @return the files to list
-     */
     public ArrayList<File> getListedFiles() {
         return listedFiles;
     }
@@ -197,13 +196,5 @@ public class LogicalTab {
     public void setTitle(String title) {
         tab.setText(title);
     }
-
-    public void setListedFiles(ArrayList<File> listedFiles) {
-        this.listedFiles = listedFiles;
-    }
-
-    public void clearListedFiles() {
-        listedFiles.clear();
-    }
-//endregion
+    //endregion
 }
