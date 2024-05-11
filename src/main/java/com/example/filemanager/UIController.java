@@ -13,14 +13,10 @@ import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
 import com.example.filemanager.ui_logic.display_strategy.ListStrategy;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -63,12 +59,6 @@ public class UIController {
      */
     private static LinkedList<LogicalTab> tabs;
     private static final int MAX_TABS = 10;
-    /**
-     * When updating a directory display, loading images takes the most time. Storing them saves some loading,
-     * but may eventually cause some problems for memory.
-     */
-    private static HashMap<String, Image> loadedImages;
-
 
     public static UIController getInstance() {
         return instance;
@@ -77,27 +67,15 @@ public class UIController {
     @FXML
     void initialize() {
         tabs = new LinkedList<>();
-        loadedImages = new HashMap<>();
 
         UIUtil.createNewTab(tabPane, tabs, FileUtilFunctions.getHomeDirectory());
-        tabPane.widthProperty().addListener((observableValue, number, newNumber) -> {
-            UIController.updateCurrentTab();
-        });
+        tabPane.widthProperty().addListener((observableValue, number, newNumber) -> UIController.updateCurrentTab());
         instance = this;
 
         sortSmallestFirst.setSelected(true);
 
         UIUtil.fillPlacesList(places);
         updateCurrentTab();
-    }
-
-    public static Image getLoadedImage(String uri)
-    {
-        return loadedImages.get(uri);
-    }
-
-    public static void setLoadedImage(String uri, Image image){
-        loadedImages.put(uri, image);
     }
 
     /**
@@ -349,9 +327,6 @@ public class UIController {
             }
 
         }
-
-        System.out.println(keyEvent.getCode());
-
 
         tab.updateTabDisplay();
     }

@@ -1,7 +1,7 @@
 package com.example.filemanager.ui_logic.display_strategy;
 
-import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
+import com.example.filemanager.ui_logic.images.IconButtonCreator;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
@@ -32,21 +32,19 @@ public class BoxStrategy implements DisplayStrategy {
 
         ArrayList<File> files = logicalTab.getListedFiles();
 
-        if (files.isEmpty()){
+        if (files.isEmpty()) {
             return;
         }
 
         int position = 0;
         for (var file : files) {
-            Button button = UIUtil.createIconButton(
-                    file, icon_size,
+            Button button = IconButtonCreator.createIconButton(
+                    file, logicalTab, icon_size,
                     "-fx-background-color: transparent;" +
                             "-fx-content-display: top;" +
-                            "-fx-border-color: rgba(128,128,128,0.13);",
-                    3 / 5f
+                            "-fx-border-color: rgba(128,128,128,0.13);"
             );
             button.setText(file.getName());
-            UIUtil.setOnFileClickFunction(button, logicalTab, file);
 
             pane.add(button, position % hcells, position / hcells);
             position++;

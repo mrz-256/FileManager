@@ -16,4 +16,5 @@ module com.example.filemanager {
     opens com.example.filemanager.ui_logic.controlmenu to javafx.fxml;
     exports com.example.filemanager.ui_logic.display_strategy;
     exports com.example.filemanager.logic.commands.commands;
+    exports com.example.filemanager.ui_logic.images;
 }

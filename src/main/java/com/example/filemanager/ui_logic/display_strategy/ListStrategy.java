@@ -1,9 +1,9 @@
 package com.example.filemanager.ui_logic.display_strategy;
 
 
-import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
+import com.example.filemanager.ui_logic.images.IconButtonCreator;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -28,32 +28,30 @@ public class ListStrategy implements DisplayStrategy {
 
         ArrayList<File> files = logicalTab.getListedFiles();
 
-        if (files.isEmpty()){
+        if (files.isEmpty()) {
             return;
         }
 
         pane.addRow(0, new Label(), new Label("name"), new Label("size"), new Label("last modification"));
         pane.getColumnConstraints().clear();
         pane.getColumnConstraints().addAll(
-                new ColumnConstraints(icon_size/2f),
+                new ColumnConstraints(icon_size / 2f),
                 new ColumnConstraints(150),
                 new ColumnConstraints(80)
         );
 
-        for (int i=0; i < files.size(); i++) {
+        for (int i = 0; i < files.size(); i++) {
             var file = files.get(i);
 
-            Button button = UIUtil.createIconButton(
-                    file, icon_size / 2,
+            Button button = IconButtonCreator.createIconButton(
+                    file, logicalTab, icon_size / 2,
                     "-fx-background-color: transparent;" +
                             "-fx-content-display: left;" +
-                            "-fx-border-color: rgba(128,128,128,0.13);",
-                    3/5f
+                            "-fx-border-color: rgba(128,128,128,0.13);"
             );
-            UIUtil.setOnFileClickFunction(button, logicalTab, file);
 
 
-            pane.addRow(i+1,
+            pane.addRow(i + 1,
                     button,
                     new Label(file.getName()),
                     new Label(FileUtilFunctions.getOptimalSizeFormat(file.length())),
