@@ -4,7 +4,7 @@ import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.ui_logic.rename.RenameDialogueCreator;
-import com.example.filemanager.logic.FileUtilFunctions;
+import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.ui_logic.controlmenu.properties.PropertiesDialogueCreator;
@@ -59,17 +59,17 @@ public class ControlMenuCreator {
 
         //region action copy
         copy.setOnAction((x) -> {
-            FileUtilFunctions.storeFileToClipboard(file);
+            FUtil.storeFileToClipboard(file);
         });
 
         copyPath.setOnAction((x) -> {
-            FileUtilFunctions.storeTextToClipboard(file.getAbsolutePath());
+            FUtil.storeTextToClipboard(file.getAbsolutePath());
         });
         //endregion
 
         //region affecting file
         cut.setOnAction((x) -> {
-            FileUtilFunctions.storeFileToClipboard(file);
+            FUtil.storeFileToClipboard(file);
 
             try {
                 logicalTab.executeCommand(FileCommandName.DELETE, file);

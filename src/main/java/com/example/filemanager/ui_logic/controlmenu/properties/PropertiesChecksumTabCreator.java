@@ -1,6 +1,6 @@
 package com.example.filemanager.ui_logic.controlmenu.properties;
 
-import com.example.filemanager.logic.FileUtilFunctions;
+import com.example.filemanager.logic.FUtil;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -103,7 +103,7 @@ public class PropertiesChecksumTabCreator {
             var copy = new Button("copy");
             contents.add(copy, 2, row);
 
-            copy.setOnMouseClicked((y) -> FileUtilFunctions.storeTextToClipboard(checksum));
+            copy.setOnMouseClicked((y) -> FUtil.storeTextToClipboard(checksum));
 
         });
     }

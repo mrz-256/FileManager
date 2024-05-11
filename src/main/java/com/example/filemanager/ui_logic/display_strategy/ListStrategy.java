@@ -1,7 +1,7 @@
 package com.example.filemanager.ui_logic.display_strategy;
 
 
-import com.example.filemanager.logic.FileUtilFunctions;
+import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.ui_logic.images.IconButtonCreator;
 import javafx.scene.control.*;
@@ -54,8 +54,8 @@ public class ListStrategy implements DisplayStrategy {
             pane.addRow(i + 1,
                     button,
                     new Label(file.getName()),
-                    new Label(FileUtilFunctions.getOptimalSizeFormat(file.length())),
-                    new Label(FileUtilFunctions.getSimplifiedDate(file.lastModified()))
+                    new Label(FUtil.optimalizeSizeFormat(file.length())),
+                    new Label(FUtil.simplifyDateFormat(file.lastModified()))
             );
         }
 

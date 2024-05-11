@@ -1,7 +1,7 @@
 package com.example.filemanager.ui_logic.images;
 
 import com.example.filemanager.UIController;
-import com.example.filemanager.logic.FileUtilFunctions;
+import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
@@ -69,7 +69,7 @@ public class IconButtonCreator {
             throw new FileException("File doesn't exist - can't create icon", file);
         }
 
-        String type = FileUtilFunctions.getFileType(file);
+        String type = FUtil.getFileType(file);
 
         // types which can be used as the icon are loaded here
         if (type.equals("png")

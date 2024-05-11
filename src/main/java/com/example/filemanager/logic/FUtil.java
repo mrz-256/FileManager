@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * A class with static functions focused on logic for working with files.
  */
-public class FileUtilFunctions {
+public class FUtil {
 
 
     /**
@@ -104,14 +104,15 @@ public class FileUtilFunctions {
      * @return the type
      */
     public static String getFileType(File file) {
+        var name = file.getName();
+
         if (file.isDirectory()) {
             return "directory";
         }
-        if (file.isHidden()) {
+
+        if (file.isHidden() || name.charAt(0) == '.') {
             return "hidden";
         }
-
-        var name = file.getName();
 
         if (name.charAt(name.length() - 1) == '~') {
             return "save";
@@ -147,7 +148,7 @@ public class FileUtilFunctions {
      * @param byteSize the size in bytes
      * @return the optimal string representation
      */
-    public static String getOptimalSizeFormat(long byteSize) {
+    public static String optimalizeSizeFormat(long byteSize) {
         String[] units = {"", "K", "M", "G", "T", "P"};
         int unit_index = 0;
 
@@ -167,9 +168,19 @@ public class FileUtilFunctions {
      * @param epochTime milliseconds since epoch
      * @return yyyy/mm/dd formatted date
      */
-    public static String getSimplifiedDate(long epochTime) {
+    public static String simplifyDateFormat(long epochTime) {
         LocalDate date = LocalDate.ofEpochDay(epochTime / 1000 / 60 / 60 / 24);
         return date.toString();
+    }
+
+    /**
+     * Clears ISO time of T, Z and decimal part
+     *
+     * @param time the string iso time
+     * @return simplified time
+     */
+    public static String simplifyDateTime(String time) {
+        return time.replaceAll("((\\..*Z)|T)", " ");
     }
 
     /**

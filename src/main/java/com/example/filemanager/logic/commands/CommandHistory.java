@@ -1,30 +1,30 @@
 package com.example.filemanager.logic.commands;
 
+import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.commands.commands.FileCommand;
 
-import java.util.Date;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.time.Instant;
 import java.util.Stack;
 
 /**
  * Class for command history and command undoing
  */
 public class CommandHistory {
-    private static CommandHistory instance;
-    private final Stack<FileCommand> executedCommands;
-    private final StringBuilder log;
+    private static Stack<FileCommand> executedCommands;
+    private static StringBuilder log;
+    private static int logSize;
+    private static final int MAX_LOG_SIZE = 10;
+    private static final String LOG_FILE_PATH = "src/main/resources/data/logs.txt";
 
 
-    private CommandHistory() {
-        this.executedCommands = new Stack<>();
-        this.log = new StringBuilder("##started : ").append(new Date().getTime()).append("##\n");
+    public static void initialize() {
+        log = new StringBuilder("##started : ").append(FUtil.simplifyDateTime(Instant.now().toString())).append("##\n");
+        executedCommands = new Stack<>();
+        logSize = 0;
     }
-
-    public static CommandHistory getInstance() {
-        if (instance == null) instance = new CommandHistory();
-
-        return instance;
-    }
-
 
     /**
      * Adds new command to history
@@ -36,9 +36,21 @@ public class CommandHistory {
         addLog(command, false);
 
         if (undoable) {
-            getInstance().executedCommands.push(command);
+            executedCommands.push(command);
         }
 
+    }
+
+    /**
+     * Undoes last executed command that can be.
+     */
+    public static void undoLast() {
+        if (executedCommands.empty()) return;
+
+        FileCommand command = executedCommands.pop();
+        addLog(command, true);
+
+        command.undo();
     }
 
     /**
@@ -48,30 +60,28 @@ public class CommandHistory {
      * @param undo    if command was 'undo' or 'do'
      */
     private static void addLog(FileCommand command, boolean undo) {
-        var log = getInstance().log;
+        logSize++;
 
-        log.append("# ").append(new Date().getTime());
+        log.append("# ").append(FUtil.simplifyDateTime(Instant.now().toString()));
         log.append(" : ").append((undo) ? "undo" : "do");
         log.append(" : ").append(command.getID()).append('\n');
+
+        if (logSize > MAX_LOG_SIZE){
+            flushToFile();
+        }
     }
 
-    /**
-     * Undoes last executed command that can be.
-     */
-    public static void undoLast() {
-        if (getInstance().executedCommands.empty()) return;
+    public static void flushToFile(){
+        var file = new File(LOG_FILE_PATH);
 
-        FileCommand command = getInstance().executedCommands.pop();
-        addLog(command, true);
+        try(var br = new BufferedWriter(new FileWriter(file, true))){
+            br.write(log.toString());
+        }
+        catch (Exception e){
+            System.out.println("E" + e.getMessage());
+        }
 
-        command.undo();
-    }
-
-    /**
-     * @return string representation of whole command history
-     */
-    @Override
-    public String toString() {
-        return log.toString();
+        log = new StringBuilder();
+        logSize = 0;
     }
 }

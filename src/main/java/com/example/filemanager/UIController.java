@@ -1,8 +1,9 @@
 package com.example.filemanager;
 
-import com.example.filemanager.logic.FileUtilFunctions;
+import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.LogicalTab;
+import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.sort_strategy.LastModifiedStrategy;
@@ -68,8 +69,9 @@ public class UIController {
     @FXML
     void initialize() {
         tabs = new LinkedList<>();
+        CommandHistory.initialize();
 
-        UIUtil.createNewTab(tabPane, tabs, FileUtilFunctions.getHomeDirectory());
+        UIUtil.createNewTab(tabPane, tabs, FUtil.getHomeDirectory());
         tabPane.widthProperty().addListener((observableValue, number, newNumber) -> UIController.updateCurrentTab());
         instance = this;
 
@@ -279,7 +281,7 @@ public class UIController {
     @FXML
     public void onPasteFilesClick() {
         var tab = getCurrentLogicalTab();
-        var files = FileUtilFunctions.getFilesFromClipboard();
+        var files = FUtil.getFilesFromClipboard();
         try {
             tab.executeCommand(FileCommandName.PASTE, files);
         } catch (FileException e) {

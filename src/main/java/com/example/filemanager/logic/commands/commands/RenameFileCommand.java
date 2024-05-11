@@ -1,6 +1,6 @@
 package com.example.filemanager.logic.commands.commands;
 
-import com.example.filemanager.logic.FileUtilFunctions;
+import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
@@ -35,7 +35,7 @@ public class RenameFileCommand extends FileCommand {
         if (new_file.exists()) throw new RenameFileException("File already exits.", new_file);
         if (original.equals(new_file)) throw new RenameFileException("New file is same as the old one.", new_file);
 
-        FileUtilFunctions.copyFile(original, new_file);
+        FUtil.copyFile(original, new_file);
 
         original.delete();
 
@@ -46,7 +46,7 @@ public class RenameFileCommand extends FileCommand {
     public void undo() {
         if (!new_file.exists()) return;
 
-        FileUtilFunctions.copyFile(new_file, original);
+        FUtil.copyFile(new_file, original);
         new_file.delete();
     }
 

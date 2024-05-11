@@ -1,6 +1,6 @@
 package com.example.filemanager.logic.commands.commands;
 
-import com.example.filemanager.logic.FileUtilFunctions;
+import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
@@ -55,7 +55,7 @@ public class DeleteFilesCommand extends FileCommand {
         try {
             File tmp = File.createTempFile(file.getName(), null);
 
-            if (FileUtilFunctions.copyFile(file, tmp)) {
+            if (FUtil.copyFile(file, tmp)) {
                 tmp.deleteOnExit();
                 save.add(tmp);
                 original.add(file);
@@ -68,7 +68,7 @@ public class DeleteFilesCommand extends FileCommand {
     public void undo() {
         for (int i = 0; i < save.size(); i++) {
             if (save.get(i) != null && original.get(i) != null) {
-                FileUtilFunctions.copyFile(save.get(i), original.get(i));
+                FUtil.copyFile(save.get(i), original.get(i));
             }
         }
     }
