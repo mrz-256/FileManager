@@ -144,7 +144,7 @@ public class LogicalTab {
             case "new_file" -> new NewFileCommand();
             case "open" -> new OpenFileCommand();
             case "new_directory" -> new NewDirectoryCommand();
-            case "found" -> new SearchCommand();
+            case "search" -> new SearchCommand();
             case "delete_files" -> new DeleteFilesCommand();
             case "rename" -> new RenameFileCommand();
             default -> null;

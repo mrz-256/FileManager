@@ -231,6 +231,11 @@ public class UIController {
         if (tabs.size() < MAX_TABS){
             newTabButton.setDisable(false);
         }
+
+        searchTextField.clear();
+        filterSearchField.clear();
+        var show_hidden = getCurrentLogicalTab().getConfiguration().showHiddenFiles;
+        showHiddenCheckbox.setSelected(show_hidden);
     }
     //endregion
 
@@ -339,5 +344,6 @@ public class UIController {
         dialog.show();
     }
     //endregion
+
 
 }

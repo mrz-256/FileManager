@@ -1,5 +1,6 @@
 package com.example.filemanager;
 
+import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.ui_logic.controlmenu.ControlMenuCreator;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
@@ -18,6 +19,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A util class which mostly contains static functions that help create javafx constructs, i.e. it focuses on UI rather
@@ -59,7 +62,7 @@ public class UIUtil {
         var files = tab.getListedFiles();
 
         for (var file : files) {
-            if (!file.isDirectory()) {
+            if (!file.isDirectory() || file.isHidden( )) {
                 continue;
             }
             addFileToPlacesList(pane, file);
@@ -91,8 +94,7 @@ public class UIUtil {
                 try {
                     UIController.setDirectoryInCurrentTab(file);
                 } catch (FileException e) {
-                    // This means the file probably doesn't exist on given computer or can't be accessed
-                    // There is no point in showing an error here.
+                    // ignored
                 }
             }
         });
