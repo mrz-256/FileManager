@@ -3,7 +3,6 @@ package com.example.filemanager.ui_logic.newdirectory;
 import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
-import com.example.filemanager.logic.commands.NewDirectoryCommand;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

@@ -1,7 +1,5 @@
 package com.example.filemanager.logic.exceptions;
 
-import com.example.filemanager.logic.commands.FileCommand;
-
 import java.io.File;
 
 public class PasteFilesException extends FileException {

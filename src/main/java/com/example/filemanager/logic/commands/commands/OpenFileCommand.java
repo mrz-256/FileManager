@@ -1,7 +1,9 @@
-package com.example.filemanager.logic.commands;
+package com.example.filemanager.logic.commands.commands;
 
 
 import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.commands.CommandContext;
+import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.awt.*;
@@ -29,6 +31,7 @@ public class OpenFileCommand extends FileCommand {
                 try {
                     desktop.open(file);
                 } catch (IOException e) {
+                    // todo: somehow propagate the error somewhere
                     System.out.println(e.getMessage());
                 }
             }
@@ -37,31 +40,28 @@ public class OpenFileCommand extends FileCommand {
 
     /**
      * Opens the first file in `working` in the default application.
-     * The file is opened in another thread because weird error which I can't catch and which always freezes the main
-     * thread.
-     * @param directory the current directory (unused here)
-     * @param configuration the configuration (unused here)
-     * @param working the file to open
-     * @return null
+     * The file is opened in another thread so that worker thread executing this command isn't affected.
+     *
+     * @return null;
      * @throws FileException when opening fails.
      */
     @Override
-    public ArrayList<File> execute(File directory, LogicalConfiguration configuration, File[] working) throws FileException {
+    public ArrayList<File> execute(CommandContext context) throws FileException  {
         CommandHistory.addCommand(this, false);
 
-        if (working == null || working.length == 0){
+        if (context.working() == null || context.working().length == 0){
             throw new FileException("Not provided any file.");
         }
 
-        var file = working[0];
+        var file = context.working()[0];
 
         if (!file.exists() || file.isDirectory()){
             throw new FileException("Invalid file.", file);
         }
 
-
-        var fo = new FileOpener(file);
-        fo.start();
+        //actually opens the file
+        var fileOpener = new FileOpener(file);
+        fileOpener.start();
 
         return null;
     }

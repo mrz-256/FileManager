@@ -1,7 +1,9 @@
-package com.example.filemanager.logic.commands;
+package com.example.filemanager.logic.commands.commands;
 
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.commands.CommandContext;
+import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.exceptions.DeleteFileException;
 
 import java.io.File;
@@ -27,15 +29,13 @@ public class DeleteFilesCommand extends FileCommand {
      * @throws DeleteFileException when specific deletion fails
      */
     @Override
-    public ArrayList<File> execute(
-            File directory, LogicalConfiguration configuration, File[] working
-    ) throws DeleteFileException {
+    public ArrayList<File> execute(CommandContext context) throws DeleteFileException {
         CommandHistory.addCommand(this, true);
 
         StringBuilder error = new StringBuilder();
 
 
-        for (var file : working) {
+        for (var file : context.working()) {
             saveFile(file);
 
             if (!file.delete()){

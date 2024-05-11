@@ -1,6 +1,8 @@
 package com.example.filemanager.logic;
 
+import com.example.filemanager.UIController;
 import com.example.filemanager.logic.commands.*;
+import com.example.filemanager.logic.commands.commands.*;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.ui_logic.display_strategy.DisplayStrategy;
 import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
@@ -35,16 +37,13 @@ public class LogicalTab {
         this.tab = tab;
         this.pathHistory = new PathHistory();
         this.displayStrategy = new BoxStrategy();
-        this.zoom = 100;
-
-        //pathHistory.add(directory);
+        this.zoom = 100; // 100%
 
         tab.setOnClosed((x) -> {
             parentList.remove(this);
         });
     }
 
-    //region moving directory
 
     /**
      * Sets current directory of this Tab.
@@ -62,25 +61,25 @@ public class LogicalTab {
 
         pathHistory.add(this.directory);
         this.directory = directory;
-        updateListedFiles();
+        update();
     }
 
     /**
-     * Moves to the last open directory from pathHistory
+     * Moves to the last open directory from pathHistory. Updates the files.
      */
     public void moveBack() {
         if (pathHistory.hasBack()) {
             directory = pathHistory.getBack();
         }
+        update();
     }
-    //endregion
 
-    //region file contents
+
 
     /**
      * Updates list of listed files.
      */
-    public void updateListedFiles() {
+    public void update() {
         try {
             executeCommand("list_all");
         } catch (FileException ignored) {
@@ -88,33 +87,22 @@ public class LogicalTab {
         }
     }
 
-    /**
-     * Gives list of files visible in this Tab by given configuration of context.
-     * Already calls for updateListedFiles().
-     *
-     * @return the files to list
-     */
-    public ArrayList<File> getListedFiles() {
-        return listedFiles;
-    }
-    //endregion
 
     /**
      * Updates the ui contents of the javafx Tab. Maximal number of shown files is 512
      * because otherwise the loading is too slow.
-     *
-     * @param width the width of tab pane
      */
-    public void updateTabDisplay(int width) {
+    public void updateTabDisplay() {
         tab.setText(directory.getAbsolutePath());
 
         if (listedFiles.size() > 512) {
             listedFiles = (ArrayList<File>) listedFiles.subList(0, 512);
         }
 
+
         displayStrategy.display(
                 tab, this,
-                DEFAULT_ICON_SIZE * zoom / 100, width
+                DEFAULT_ICON_SIZE * zoom / 100, UIController.getTabPaneWidth()
         );
     }
 
@@ -127,12 +115,13 @@ public class LogicalTab {
 
     /**
      * Executes text representation of a command on parameters params within this context.
+     * Automatically updates tab display.
      *
      * @param command command to execute.
      * @param params  optional params to use
-     * @throws FileException when command fails
+     * @throws FileException when invalid command is passed
      */
-    public void executeCommand(String command, File... params) throws FileException {
+    public synchronized void executeCommand(String command, File... params) throws FileException {
         if (command.equals("undo")) {
             CommandHistory.undoLast();
             return;
@@ -150,16 +139,17 @@ public class LogicalTab {
             default -> null;
         };
 
-        if (to_execute == null)
-        {
-            throw new FileException("Invalid command ("+command+")");
+        if (to_execute == null) {
+            throw new FileException("Invalid command (" + command + ")");
         }
 
-        var files = to_execute.execute(directory, configuration, params);
-        if (files != null){
-            this.listedFiles = files;
-        }
-        else {
+        var context = new CommandContext(directory, this, configuration, params);
+
+        var files = to_execute.execute(context);
+        if (files != null) {
+            listedFiles = files;
+            updateTabDisplay();
+        } else {
             executeCommand("list_all");
         }
     }
@@ -167,7 +157,7 @@ public class LogicalTab {
     //region getters
 
     /**
-     * @return the configuration of logical tab
+     * @return the config of logical tab
      */
     public LogicalConfiguration getConfiguration() {
         return configuration;
@@ -184,6 +174,15 @@ public class LogicalTab {
     public String getTitle() {
         return tab.getText();
     }
+
+    /**
+     * Gives list of files visible in this Tab.
+     *
+     * @return the files to list
+     */
+    public ArrayList<File> getListedFiles() {
+        return listedFiles;
+    }
     //endregion
 
     //region setters
@@ -198,5 +197,13 @@ public class LogicalTab {
     public void setTitle(String title) {
         tab.setText(title);
     }
-    //endregion
+
+    public void setListedFiles(ArrayList<File> listedFiles) {
+        this.listedFiles = listedFiles;
+    }
+
+    public void clearListedFiles() {
+        listedFiles.clear();
+    }
+//endregion
 }

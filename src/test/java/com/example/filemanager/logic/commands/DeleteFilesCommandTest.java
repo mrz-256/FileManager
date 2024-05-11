@@ -1,6 +1,7 @@
 package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.commands.commands.DeleteFilesCommand;
 import com.example.filemanager.logic.exceptions.FileException;
 import org.junit.jupiter.api.Test;
 

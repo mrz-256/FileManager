@@ -2,7 +2,6 @@ package com.example.filemanager.ui_logic.rename;
 
 import com.example.filemanager.UIController;
 import com.example.filemanager.logic.LogicalTab;
-import com.example.filemanager.logic.commands.RenameFileCommand;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

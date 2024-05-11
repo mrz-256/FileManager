@@ -1,24 +1,27 @@
-package com.example.filemanager.logic.commands;
+package com.example.filemanager.logic.commands.commands;
 
 import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.commands.CommandContext;
+import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * A command to list all files.
+ */
 public class ListAllCommand extends FileCommand {
 
     /**
-     * Lists all files in current directory
+     * Lists all files in directory of context.
      *
      * @return found files
      * @throws FileException never
      */
     @Override
-    public ArrayList<File> execute(
-            File directory, LogicalConfiguration configuration, File[] working
-    ) throws FileException {
+    public ArrayList<File> execute(CommandContext context) throws FileException {
         CommandHistory.addCommand(this, false);
         var result = new ArrayList<File>();
 
@@ -27,7 +30,7 @@ public class ListAllCommand extends FileCommand {
         var hidden_directories = new LinkedList<File>();
         var directories = new LinkedList<File>();
 
-        var all = directory.listFiles();
+        var all = context.directory().listFiles();
 
         if (all == null) {
             return result;
@@ -35,7 +38,7 @@ public class ListAllCommand extends FileCommand {
 
         for (var file : all) {
             if (file.isHidden()) {
-                if (!configuration.showHiddenFiles) continue;
+                if (!context.config().showHiddenFiles) continue;
 
                 if (file.isDirectory()) hidden_directories.add(file);
                 else hidden_files.add(file);
@@ -45,10 +48,10 @@ public class ListAllCommand extends FileCommand {
             }
         }
 
-        configuration.apply(hidden_directories);
-        configuration.apply(hidden_files);
-        configuration.apply(directories);
-        configuration.apply(files);
+        context.config().apply(hidden_directories);
+        context.config().apply(hidden_files);
+        context.config().apply(directories);
+        context.config().apply(files);
 
         result.addAll(hidden_directories);
         result.addAll(directories);

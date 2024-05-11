@@ -1,5 +1,8 @@
 package com.example.filemanager;
 
+import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.commands.CommandContext;
+import com.example.filemanager.logic.commands.commands.ListAllCommand;
 import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.ui_logic.controlmenu.ControlMenuCreator;
 import com.example.filemanager.logic.FileUtilFunctions;
@@ -18,6 +21,7 @@ import javafx.scene.layout.VBox;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -57,12 +61,18 @@ public class UIUtil {
      *
      * @param pane the VBox list of the files to fill
      */
-    public static void fillPlacesList(VBox pane, LogicalTab tab) {
-        tab.updateListedFiles();
-        var files = tab.getListedFiles();
+    public static void fillPlacesList(VBox pane) {
+
+        ArrayList<File> files;
+        try {
+            files = new ListAllCommand().execute(new CommandContext(FileUtilFunctions.getHomeDirectory(), null, LogicalConfiguration.defaultConfiguration(), null));
+        } catch (FileException e) {
+            // todo error
+            return;
+        }
 
         for (var file : files) {
-            if (!file.isDirectory() || file.isHidden( )) {
+            if (!file.isDirectory() || file.isHidden()) {
                 continue;
             }
             addFileToPlacesList(pane, file);
@@ -191,7 +201,6 @@ public class UIUtil {
                     try {
                         logicalTab.setDirectory(file);
                         UIController.updateCurrentTab();
-
                     } catch (FileException e) {
                         var alert = createAlert(Alert.AlertType.ERROR, "Failed moving to directory", e.getMessage());
                         alert.show();

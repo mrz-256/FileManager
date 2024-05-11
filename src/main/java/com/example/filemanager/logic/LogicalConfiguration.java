@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Stores the configuration of a context.
+ * Stores the config of a context.
  * This influences how are files gathered.
  */
 public class LogicalConfiguration {

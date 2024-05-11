@@ -1,7 +1,9 @@
-package com.example.filemanager.logic.commands;
+package com.example.filemanager.logic.commands.commands;
 
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.commands.CommandContext;
+import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
@@ -13,24 +15,26 @@ import java.util.Queue;
 public class SearchCommand extends FileCommand{
 
     /**
-     * Searches for all files in depth either from current directory or from home directory depending on `configuration`.
-     * Files that are added must have a name matching ```".*" + working[0].getName() + ".*"``` pattern
-     * @return list of all found files
+     * Searches for all files in depth either from current directory or from home directory depending on `config`.
+     * Files that are added must have a name matching provided pattern
+     *
+     * @return found files
      * @throws FileException never
      */
     @Override
-    public ArrayList<File> execute(
-            File directory, LogicalConfiguration configuration, File[] working
-    )throws FileException {
+    public ArrayList<File> execute(CommandContext context) throws FileException {
         CommandHistory.addCommand(this, false);
         var result = new ArrayList<File>();
 
-        if (working == null || working.length == 0) return null;
+        if (context.working() == null || context.working().length == 0){
+            //return empty list
+            return result;
+        }
 
-        File toFind = working[0];
-        File start = directory;
+        File toFind = context.working()[0];
+        File start = context.directory();
 
-        if (configuration.searchStart == LogicalConfiguration.SearchStart.SEARCH_FROM_HOME){
+        if (context.config().searchStart == LogicalConfiguration.SearchStart.SEARCH_FROM_HOME){
             start = FileUtilFunctions.getHomeDirectory();
         }
 

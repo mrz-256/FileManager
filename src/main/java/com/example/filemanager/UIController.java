@@ -35,8 +35,6 @@ public class UIController {
     private TabPane tabPane;
     @FXML
     private VBox places;
-    @FXML
-    private VBox recent;
 
     @FXML
     public TextField searchTextField;
@@ -73,9 +71,6 @@ public class UIController {
         return instance;
     }
 
-    /**
-     * Initializes tabs linkedlist
-     */
     @FXML
     void initialize() {
         tabs = new LinkedList<>();
@@ -89,7 +84,8 @@ public class UIController {
 
         sortSmallestFirst.setSelected(true);
 
-        UIUtil.fillPlacesList(places, tabs.get(0));
+        UIUtil.fillPlacesList(places);
+        updateCurrentTab();
     }
 
     public static Image getLoadedImage(String uri)
@@ -102,22 +98,11 @@ public class UIController {
     }
 
     /**
-     * Updates contents and displays of all tabs
-     */
-    public static void updateAllTabs() {
-        for (var tab : tabs) {
-            tab.updateListedFiles();
-            updateDisplayOfTab(tab);
-        }
-    }
-
-    /**
      * Updates content and display of current tab
      */
     public static void updateCurrentTab() {
         var tab = getInstance().getCurrentLogicalTab();
-        tab.updateListedFiles();
-        updateDisplayOfTab(tab);
+        tab.update();
     }
 
     /**
@@ -126,7 +111,11 @@ public class UIController {
      * @param tab the tab whose display is to be updated
      */
     public static void updateDisplayOfTab(LogicalTab tab) {
-        tab.updateTabDisplay((int) getInstance().tabPane.getWidth());
+        tab.updateTabDisplay();
+    }
+
+    public static int getTabPaneWidth(){
+        return (int) getInstance().tabPane.getWidth();
     }
 
     /**
@@ -138,7 +127,6 @@ public class UIController {
     public static void setDirectoryInCurrentTab(File directory) throws FileException {
         var tab = getInstance().getCurrentLogicalTab();
         tab.setDirectory(directory);
-        updateCurrentTab();
     }
 
     /**
@@ -162,8 +150,6 @@ public class UIController {
     public void onBackClicked() {
         var tab = getCurrentLogicalTab();
         tab.moveBack();
-        tab.updateListedFiles();
-        updateDisplayOfTab(tab);
     }
     //endregion
 
@@ -172,8 +158,7 @@ public class UIController {
     public void onShowHiddenClicked() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().showHiddenFiles = showHiddenCheckbox.isSelected();
-        tab.updateListedFiles();
-        updateDisplayOfTab(tab);
+        tab.update();
     }
     //endregion
 
@@ -182,32 +167,28 @@ public class UIController {
     public void onSortFilesByName() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new NameStrategy();
-        tab.updateListedFiles();
-        updateDisplayOfTab(tab);
+        tab.update();
     }
 
     @FXML
     public void onSortFilesBySize() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new SizeStrategy();
-        tab.updateListedFiles();
-        updateDisplayOfTab(tab);
+        tab.update();
     }
 
     @FXML
     public void onSortFilesByLastModification() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortStrategy = new LastModifiedStrategy();
-        tab.updateListedFiles();
-        updateDisplayOfTab(tab);
+        tab.update();
     }
 
     @FXML
     public void onSmallestFirstClicked() {
         var tab = getCurrentLogicalTab();
         tab.getConfiguration().sortSmallestFirst = sortSmallestFirst.isSelected();
-        tab.updateListedFiles();
-        updateDisplayOfTab(tab);
+        tab.update();
     }
     //endregion
 
@@ -221,7 +202,7 @@ public class UIController {
             newTabButton.setDisable(true);
         }
 
-        updateAllTabs();
+        updateCurrentTab();
     }
 
     public void onTabPaneUpdate() {
@@ -232,10 +213,13 @@ public class UIController {
             newTabButton.setDisable(false);
         }
 
+        // update settings to match selected tab and flush input fields
+        var config = getCurrentLogicalTab().getConfiguration();
+        showHiddenCheckbox.setSelected(config.showHiddenFiles);
+        sortSmallestFirst.setSelected(config.sortSmallestFirst);
+
         searchTextField.clear();
         filterSearchField.clear();
-        var show_hidden = getCurrentLogicalTab().getConfiguration().showHiddenFiles;
-        showHiddenCheckbox.setSelected(show_hidden);
     }
     //endregion
 
@@ -271,7 +255,9 @@ public class UIController {
     @FXML
     public void onSearchConfirm() {
         String value = searchTextField.getText();
-        if (value == null || value.matches("^\\s*$")) return;
+        if (value == null || value.matches("^\\s*$")) {
+            return;
+        }
 
         var tab = getCurrentLogicalTab();
         try {
@@ -288,7 +274,7 @@ public class UIController {
         searchTextField.clear();
         filterSearchField.clear();
         var tab = getCurrentLogicalTab();
-        tab.updateListedFiles();
+        tab.update();
         updateDisplayOfTab(tab);
     }
 
@@ -313,7 +299,7 @@ public class UIController {
             var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed pasting files.", e.getMessage());
             alert.show();
         }
-        updateCurrentTab();
+        tab.update();
     }
     //endregion
 
@@ -327,7 +313,7 @@ public class UIController {
             var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed undoing last action", e.getMessage());
             alert.show();
         }
-        updateCurrentTab();
+        tab.update();
     }
     //endregion
 
