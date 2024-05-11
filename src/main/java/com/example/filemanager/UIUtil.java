@@ -39,7 +39,7 @@ public class UIUtil {
         tab.setContent(scroll);
         scroll.setContent(grid);
 
-        tab.setText(file.getName());
+        tab.setText(file.getAbsolutePath());
         tabPane.getTabs().add(tab);
 
         var logicalTab = new LogicalTab(tab, file, tabs);

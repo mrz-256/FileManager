@@ -95,7 +95,7 @@ public class UIController {
         tab.updateTabDisplay();
     }
 
-    public static int getTabPaneWidth(){
+    public static int getTabPaneWidth() {
         return (int) getInstance().tabPane.getWidth();
     }
 
@@ -176,10 +176,14 @@ public class UIController {
     //region new tab
     @FXML
     public void onNewTabClicked() {
+        if (tabs.size() >= MAX_TABS) {
+            return;
+        }
+
         UIUtil.createNewTab(tabPane, tabs, getCurrentLogicalTab().getDirectory());
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
 
-        if (tabs.size() == MAX_TABS){
+        if (tabs.size() == MAX_TABS) {
             newTabButton.setDisable(true);
         }
 
@@ -190,7 +194,7 @@ public class UIController {
         if (tabPane.getTabs().size() == 1) {
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         }
-        if (tabs.size() < MAX_TABS){
+        if (tabs.size() < MAX_TABS) {
             newTabButton.setDisable(false);
         }
 
@@ -201,6 +205,7 @@ public class UIController {
 
         searchTextField.clear();
         filterSearchField.clear();
+        updateCurrentTab();
     }
     //endregion
 
@@ -314,14 +319,36 @@ public class UIController {
     public void onKeyTyped(KeyEvent keyEvent) {
         var tab = getCurrentLogicalTab();
 
-        if (keyEvent.isControlDown()){
-            switch (keyEvent.getCode()){
-                case PLUS: case ADD: {
+        if (keyEvent.isControlDown()) {
+            switch (keyEvent.getCode()) {
+                case PLUS:
+                case ADD: {
                     tab.zoom(true);
                     break;
                 }
-                case MINUS: case SUBTRACT: {
+                case MINUS:
+                case SUBTRACT: {
                     tab.zoom(false);
+                    break;
+                }
+                case Z: {
+                    onUndoClicked();
+                    break;
+                }
+                case V: {
+                    onPasteFilesClick();
+                    break;
+                }
+                case F: {
+                    onNewFileClicked();
+                    break;
+                }
+                case D: {
+                    onNewDirectoryClicked();
+                    break;
+                }
+                case T: {
+                    onNewTabClicked();
                     break;
                 }
             }
@@ -333,7 +360,6 @@ public class UIController {
     //endregion
 
     //region zoom
-
 
 
 }
