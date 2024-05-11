@@ -22,9 +22,12 @@ class NewFileCommandTest {
         assertFalse(tocreate.exists());
 
         command.execute(
-                directory,
-                LogicalConfiguration.defaultConfiguration(),
-                new File[]{tocreate}
+                new CommandContext(
+                        directory,
+                        null,
+                        LogicalConfiguration.defaultConfiguration(),
+                        new File[]{tocreate}
+                )
         );
 
         assertTrue(tocreate.exists());

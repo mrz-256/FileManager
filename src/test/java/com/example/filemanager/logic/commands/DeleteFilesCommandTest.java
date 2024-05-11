@@ -18,9 +18,12 @@ class DeleteFilesCommandTest {
         File todelete = new File(directory, "test-file.txt");
 
         command.execute(
-                directory,
-                LogicalConfiguration.defaultConfiguration(),
-                new File[]{todelete}
+                new CommandContext(
+                        directory,
+                        null,
+                        LogicalConfiguration.defaultConfiguration(),
+                        new File[]{todelete}
+                )
         );
 
         assertFalse(todelete.exists());
