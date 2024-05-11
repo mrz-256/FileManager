@@ -189,10 +189,6 @@ public class LogicalTab {
         this.displayStrategy = displayStrategy;
     }
 
-    public void setZoom(int zoom) {
-        this.zoom = zoom;
-    }
-
     public void setTitle(String title) {
         tab.setText(title);
     }

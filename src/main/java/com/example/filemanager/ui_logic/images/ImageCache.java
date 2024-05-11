@@ -39,6 +39,7 @@ public class ImageCache {
 
         if (data == null) {
             data = new LoadedImage();
+            // ~15% of whole execution time spent here
             data.image = new javafx.scene.image.Image(uri, size, size, true, true);
             loadedImages.put(uri, data);
         } else {
@@ -48,6 +49,9 @@ public class ImageCache {
         return data.image;
     }
 
+    /**
+     * Removes old unused loaded images. For now unused.
+     */
     public static void collectGarbage(){
         var to_remove = new LinkedList<String>();
 

@@ -65,7 +65,6 @@ public class UIUtil {
 
             files = list_command.execute(context);
         } catch (FileException e) {
-            // todo error
             return;
         }
 

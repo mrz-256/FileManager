@@ -22,7 +22,7 @@ public class IconButtonCreator {
     /**
      * The ratio between the whole button and the icon.
      */
-    private static final double ICON_TO_BUTTON_RATIO = 4 / 5f;
+    private static final double ICON_TO_BUTTON_RATIO = 3 / 5f;
 
 
     /**
