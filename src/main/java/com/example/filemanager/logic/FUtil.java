@@ -44,53 +44,31 @@ public class FUtil {
      * @return a new File with unique name similar to original
      */
     public static File inventUniqueName(File file) {
-        // crude division into two methods, solves the problem
-        if (file.isFile()) {
-            return inventUniqueFileName(file);
-        } else {
-            return inventUniqueDirectoryName(file);
-        }
-    }
-
-    private static File inventUniqueFileName(File file) {
         if (!file.exists()) return file;
         var name = file.getName();
 
+        var has_counter     = (file.isFile()) ? "^.*\\(\\d+\\)\\..+$" : "^.*\\(\\d+\\)$";
+        var countless_expr  = (file.isFile()) ? "^(.*)(\\..+)$" : "^(.*)$";
+        var name_with_count = (file.isFile()) ? "$1(1)$2" : "$1(1)";
+
+        var expr_with_count = (file.isFile()) ? "(.*)\\((\\d+)\\)(\\..+)$" : "(.*)\\((\\d+)\\)$";
+        var count_subexpr = "$2";
+
+
         // in case where file name doesn't have a counter yet, it appends it in between the name and extension.
         // New name may already exist, so function must recursively check for that too
-        if (!name.matches("^.*\\(\\d+\\)\\..+$")) {
-            String new_name = name.replaceAll("^(.*)(\\..+)$", "$1(1)$2");
+        if (!name.matches(has_counter)) {
+            String new_name = name.replaceAll(countless_expr, name_with_count);
             return inventUniqueName(new File(file.getParent(), new_name));
         }
 
         // this is the already existing counter in the filename
-        String num = name.replaceAll(".*\\((\\d+)\\)\\..+$", "$1");
+        String num = name.replaceAll(expr_with_count, count_subexpr);
 
         // create new name with incremented counter
         num = String.valueOf(Integer.parseInt(num) + 1);
-        String new_name = name.replaceAll("^(.*)\\(\\d+\\)(\\..+)$", "$1(" + num + ")$2");
-
-        // check the new name
-        return inventUniqueName(new File(file.getParent(), new_name));
-    }
-
-    private static File inventUniqueDirectoryName(File file) {
-        if (!file.exists()) return file;
-        var name = file.getName();
-
-        // in case where file name doesn't have a counter yet, it appends it in between the name and extension.
-        // New name may already exist, so function must recursively check for that too
-        if (!name.matches("^.*\\(\\d+\\)$")) {
-            String new_name = name.replaceAll("^(.*)$", "$1(1)");
-            return inventUniqueName(new File(file.getParent(), new_name));
-        }
-
-        // this is the already existing counter in the filename
-        String num = name.replaceAll(".*\\((\\d+)\\)$", "$1");
-
-        // create new name with incremented counter
-        num = String.valueOf(Integer.parseInt(num) + 1);
-        String new_name = name.replaceAll("^(.*)\\(\\d+\\)$", "$1(" + num + ")");
+        var incremented_count_expr = (file.isFile()) ? "$1(" + num + ")$3" : "$1("  + num + ")";
+        String new_name = name.replaceAll(expr_with_count, incremented_count_expr);
 
         // check the new name
         return inventUniqueName(new File(file.getParent(), new_name));
@@ -148,7 +126,7 @@ public class FUtil {
      * @param byteSize the size in bytes
      * @return the optimal string representation
      */
-    public static String optimalizeSizeFormat(long byteSize) {
+    public static String optimizeSizeFormat(long byteSize) {
         String[] units = {"", "K", "M", "G", "T", "P"};
         int unit_index = 0;
 

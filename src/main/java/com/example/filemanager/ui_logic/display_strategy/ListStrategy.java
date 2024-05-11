@@ -54,7 +54,7 @@ public class ListStrategy implements DisplayStrategy {
             pane.addRow(i + 1,
                     button,
                     new Label(file.getName()),
-                    new Label(FUtil.optimalizeSizeFormat(file.length())),
+                    new Label(FUtil.optimizeSizeFormat(file.length())),
                     new Label(FUtil.simplifyDateFormat(file.lastModified()))
             );
         }

@@ -24,9 +24,9 @@ class FUtilTest {
 
     @Test
     void getOptimalSizeFormat() {
-        assertEquals("0.0 B", FUtil.optimalizeSizeFormat(0));
-        assertEquals("500.0 B", FUtil.optimalizeSizeFormat(500));
-        assertEquals("2.0 KB", FUtil.optimalizeSizeFormat(2048));
-        assertEquals("1.17 MB", FUtil.optimalizeSizeFormat(1234567));
+        assertEquals("0.0 B", FUtil.optimizeSizeFormat(0));
+        assertEquals("500.0 B", FUtil.optimizeSizeFormat(500));
+        assertEquals("2.0 KB", FUtil.optimizeSizeFormat(2048));
+        assertEquals("1.17 MB", FUtil.optimizeSizeFormat(1234567));
     }
 }

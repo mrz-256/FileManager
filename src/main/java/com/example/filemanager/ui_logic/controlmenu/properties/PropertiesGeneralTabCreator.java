@@ -43,7 +43,7 @@ public class PropertiesGeneralTabCreator {
 
         contents.addRow(2, new Label("Type:"), new Label(FUtil.getFileType(file)));
         contents.addRow(3, new Label());
-        contents.addRow(4, new Label("Size:"), new Label(FUtil.optimalizeSizeFormat(file.length()) + " (" + file.length() + "B)"));
+        contents.addRow(4, new Label("Size:"), new Label(FUtil.optimizeSizeFormat(file.length()) + " (" + file.length() + "B)"));
         contents.addRow(5, new Label());
         contents.addRow(6, new Label("Created:"), new Label(FUtil.simplifyDateTime(attr.creationTime().toString())));
         contents.addRow(7, new Label("Modified:"), new Label(FUtil.simplifyDateTime(attr.lastModifiedTime().toString())));
