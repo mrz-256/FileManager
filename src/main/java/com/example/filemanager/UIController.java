@@ -316,6 +316,8 @@ public class UIController {
         var dialog = NewDirectoryDialogueCreator.createNewDialog(tab);
         dialog.show();
     }
+    //endregion
+
 
     public void onKeyTyped(KeyEvent keyEvent) {
         var tab = getCurrentLogicalTab();
@@ -358,9 +360,5 @@ public class UIController {
 
         tab.updateTabDisplay();
     }
-    //endregion
-
-    //region zoom
-
 
 }

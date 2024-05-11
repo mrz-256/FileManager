@@ -112,7 +112,6 @@ public class IconButtonCreator {
                 if (file.isDirectory()) {
                     try {
                         logicalTab.setDirectory(file);
-                        UIController.updateCurrentTab();
                     } catch (FileException e) {
                         var alert = createAlert(Alert.AlertType.ERROR, "Failed moving to directory", e.getMessage());
                         alert.show();
