@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-
 /**
  * Creator of new directory dialogue popup.
  */
@@ -32,9 +31,14 @@ public class NewDirectoryDialogueCreator {
         stage.setScene(scene);
         stage.setTitle("New directory..");
 
+        stage.focusedProperty().addListener(observable -> {
+            if (!stage.isFocused()) stage.close();
+        });
+
         var text = new TextField();
         var confirm = new Button("confirm");
         var info = new Label();
+
         contents.addRow(0, text, confirm);
         contents.addRow(1, info);
 

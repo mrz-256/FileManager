@@ -30,7 +30,12 @@ public class RenameDialogueCreator {
         stage.setScene(scene);
         stage.setTitle("Rename file \"" + file.getName() + "\" to..");
 
+        stage.focusedProperty().addListener(observable -> {
+            if (!stage.isFocused()) stage.close();
+        });
+
         contents.getChildren().add(new Label("originally: " + file.getName()));
+
 
         var field = new TextField();
         var feedback = new Label();
@@ -38,7 +43,7 @@ public class RenameDialogueCreator {
 
         contents.getChildren().addAll(field, feedback, confirm);
 
-        field.setPromptText("new name..");
+        field.setText(file.getName());
         confirm.setText("confirm");
 
         confirm.setOnMouseClicked((x) -> {
