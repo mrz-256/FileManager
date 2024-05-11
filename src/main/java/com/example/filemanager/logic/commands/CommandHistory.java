@@ -62,8 +62,8 @@ public class CommandHistory {
     private static void addLog(FileCommand command, boolean undo) {
         logSize++;
 
-        log.append("# ").append(FUtil.simplifyDateTime(Instant.now().toString()));
-        log.append(" : ").append((undo) ? "undo" : "do");
+        log.append(FUtil.simplifyDateTime(Instant.now().toString()));
+        log.append(" : ").append((undo) ? "undo" : " do ");
         log.append(" : ").append(command.getID()).append('\n');
 
         if (logSize > MAX_LOG_SIZE){

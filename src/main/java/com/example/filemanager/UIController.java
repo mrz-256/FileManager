@@ -81,6 +81,10 @@ public class UIController {
         updateCurrentTab();
     }
 
+    public static void onclose(){
+        CommandHistory.flushToFile();
+    }
+
     /**
      * Updates content and display of current tab
      */
