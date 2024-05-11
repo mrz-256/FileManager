@@ -30,19 +30,20 @@ public class BoxStrategy implements DisplayStrategy {
         pane.getColumnConstraints().clear();
         pane.getChildren().clear();
 
-        ArrayList<File> files;
+        ArrayList<File> files = logicalTab.getListedFiles();
 
-
-        files = logicalTab.getListedFiles();
+        if (files.isEmpty()){
+            return;
+        }
 
         int position = 0;
         for (var file : files) {
             Button button = UIUtil.createIconButton(
                     file, icon_size,
                     "-fx-background-color: transparent;" +
-                    "-fx-content-display: top;" +
-                    "-fx-border-color: rgba(128,128,128,0.13);",
-                    3/5f
+                            "-fx-content-display: top;" +
+                            "-fx-border-color: rgba(128,128,128,0.13);",
+                    3 / 5f
             );
             button.setText(file.getName());
             UIUtil.setOnFileClickFunction(button, logicalTab, file);

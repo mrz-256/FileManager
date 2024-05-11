@@ -26,10 +26,11 @@ public class ListStrategy implements DisplayStrategy {
         scrollPane.setMinSize(icon_size, icon_size);
         pane.getChildren().clear();
 
-        ArrayList<File> files;
+        ArrayList<File> files = logicalTab.getListedFiles();
 
-
-        files = logicalTab.getListedFiles();
+        if (files.isEmpty()){
+            return;
+        }
 
         pane.addRow(0, new Label(), new Label("name"), new Label("size"), new Label("last modification"));
         pane.getColumnConstraints().clear();
