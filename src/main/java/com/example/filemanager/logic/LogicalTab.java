@@ -1,11 +1,13 @@
 package com.example.filemanager.logic;
 
 import com.example.filemanager.UIController;
-import com.example.filemanager.logic.commands.*;
-import com.example.filemanager.logic.commands.commands.*;
+import com.example.filemanager.logic.commands.CommandContext;
+import com.example.filemanager.logic.commands.CommandHistory;
+import com.example.filemanager.logic.commands.FileCommandName;
+import com.example.filemanager.logic.commands.commands.FileCommand;
 import com.example.filemanager.logic.exceptions.FileException;
-import com.example.filemanager.ui_logic.display_strategy.DisplayStrategy;
 import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
+import com.example.filemanager.ui_logic.display_strategy.DisplayStrategy;
 import javafx.scene.control.Tab;
 
 import java.io.File;
@@ -75,7 +77,7 @@ public class LogicalTab {
      */
     public void update() {
         try {
-            executeCommand("list_all");
+            executeCommand(FileCommandName.LIST_ALL);
         } catch (FileException ignored) {
             // ListAllCommand never throws exceptions
         }
@@ -117,34 +119,20 @@ public class LogicalTab {
     }
 
     /**
-     * Executes text representation of a command on parameters `params` within this context.
+     * Executes a command on parameters `params` within this context.
      * Automatically updates tab display.
      *
      * @param command command to execute.
      * @param params  optional params to use
      * @throws FileException when invalid command is passed
      */
-    public synchronized void executeCommand(String command, File... params) throws FileException {
-        if (command.equals("undo")) {
+    public void executeCommand(FileCommandName command, File... params) throws FileException {
+        if (command == FileCommandName.UNDO) {
             CommandHistory.undoLast();
             return;
         }
 
-        FileCommand to_execute = switch (command.toLowerCase()) {
-            case "list_all" -> new ListAllCommand();
-            case "paste_files" -> new PasteFilesCommand();
-            case "new_file" -> new NewFileCommand();
-            case "open" -> new OpenFileCommand();
-            case "new_directory" -> new NewDirectoryCommand();
-            case "search" -> new SearchCommand();
-            case "delete_files" -> new DeleteFilesCommand();
-            case "rename" -> new RenameFileCommand();
-            default -> null;
-        };
-
-        if (to_execute == null) {
-            throw new FileException("Invalid command (" + command + ")");
-        }
+        var to_execute = FileCommand.getByType(command);
 
         var context = new CommandContext(directory, this, configuration, params);
 
@@ -153,7 +141,7 @@ public class LogicalTab {
             listedFiles = files;
             updateTabDisplay();
         } else {
-            executeCommand("list_all");
+            executeCommand(FileCommandName.LIST_ALL);
         }
     }
 

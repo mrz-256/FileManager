@@ -1,8 +1,9 @@
 package com.example.filemanager.logic.commands.commands;
+
 import com.example.filemanager.logic.FileUtilFunctions;
-import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
+import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.exceptions.RenameFileException;
 
@@ -16,6 +17,7 @@ public class RenameFileCommand extends FileCommand {
 
     /**
      * Renames the first file in working to the second file in working
+     *
      * @return null
      * @throws FileException when renaming don't work
      */
@@ -23,7 +25,7 @@ public class RenameFileCommand extends FileCommand {
     public ArrayList<File> execute(CommandContext context) throws FileException {
         CommandHistory.addCommand(this, true);
 
-        if (context.working() == null || context.working().length != 2){
+        if (context.working() == null || context.working().length != 2) {
             throw new RenameFileException("Invalid arguments");
         }
 
@@ -49,7 +51,7 @@ public class RenameFileCommand extends FileCommand {
     }
 
     @Override
-    public String getID() {
-        return "rename";
+    public FileCommandName getID() {
+        return FileCommandName.RENAME;
     }
 }

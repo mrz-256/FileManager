@@ -3,6 +3,7 @@ package com.example.filemanager.ui_logic.images;
 import com.example.filemanager.UIController;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
+import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.ui_logic.controlmenu.ControlMenuCreator;
 import javafx.scene.control.Alert;
@@ -118,7 +119,7 @@ public class IconButtonCreator {
                     }
                 } else {
                     try {
-                        logicalTab.executeCommand("open", file);
+                        logicalTab.executeCommand(FileCommandName.OPEN, file);
                     } catch (FileException e) {
                         var alert = createAlert(Alert.AlertType.ERROR, "Failed opening file", e.getMessage());
                         alert.show();

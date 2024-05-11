@@ -11,6 +11,7 @@ public class SizeStrategy implements SortStrategy {
 
     /**
      * Sorts files by byte size.
+     *
      * @param files the files to sort.
      */
     @Override

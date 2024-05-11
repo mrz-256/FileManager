@@ -2,6 +2,7 @@ package com.example.filemanager.ui_logic.controlmenu;
 
 import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
+import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.ui_logic.rename.RenameDialogueCreator;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalTab;
@@ -71,7 +72,7 @@ public class ControlMenuCreator {
             FileUtilFunctions.storeFileToClipboard(file);
 
             try {
-                logicalTab.executeCommand("delete_files", file);
+                logicalTab.executeCommand(FileCommandName.DELETE, file);
             } catch (FileException e) {
                 UIUtil.createAlert(Alert.AlertType.ERROR, "Can't cut file: " + file, e.getMessage());
             }
@@ -81,7 +82,7 @@ public class ControlMenuCreator {
 
         delete.setOnAction((x) -> {
             try {
-                logicalTab.executeCommand("delete_files", file);
+                logicalTab.executeCommand(FileCommandName.DELETE, file);
             } catch (FileException e) {
                 UIUtil.createAlert(Alert.AlertType.ERROR, "Can't delete file: " + file, e.getMessage());
             }
@@ -90,7 +91,7 @@ public class ControlMenuCreator {
 
         duplicate.setOnAction((x) -> {
             try {
-                logicalTab.executeCommand("paste_files", file);
+                logicalTab.executeCommand(FileCommandName.PASTE, file);
             } catch (FileException e) {
                 UIUtil.createAlert(Alert.AlertType.ERROR, "Can't duplicate file " + file, e.getMessage());
             }

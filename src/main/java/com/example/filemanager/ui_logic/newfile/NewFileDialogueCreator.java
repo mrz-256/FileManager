@@ -3,6 +3,7 @@ package com.example.filemanager.ui_logic.newfile;
 import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.LogicalTab;
+import com.example.filemanager.logic.commands.FileCommandName;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -57,7 +58,7 @@ public class NewFileDialogueCreator {
             }
 
             try {
-                tab.executeCommand("new_file", file);
+                tab.executeCommand(FileCommandName.NEW_FILE, file);
 
                 stage.close();
                 UIController.updateCurrentTab();

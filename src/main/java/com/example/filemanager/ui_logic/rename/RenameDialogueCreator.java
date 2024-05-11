@@ -2,6 +2,7 @@ package com.example.filemanager.ui_logic.rename;
 
 import com.example.filemanager.UIController;
 import com.example.filemanager.logic.LogicalTab;
+import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -58,7 +59,7 @@ public class RenameDialogueCreator {
             var new_file = new File(file.getParent(), text);
 
             try {
-                tab.executeCommand("rename", file, new_file);
+                tab.executeCommand(FileCommandName.RENAME, file, new_file);
 
                 stage.close();
                 UIController.updateCurrentTab();

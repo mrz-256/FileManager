@@ -1,9 +1,9 @@
 package com.example.filemanager.logic.commands.commands;
 
 import com.example.filemanager.logic.FileUtilFunctions;
-import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
+import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.DeleteFileException;
 
 import java.io.File;
@@ -25,6 +25,7 @@ public class DeleteFilesCommand extends FileCommand {
 
     /**
      * Deletes all files in `working`
+     *
      * @return always null
      * @throws DeleteFileException when specific deletion fails
      */
@@ -38,41 +39,42 @@ public class DeleteFilesCommand extends FileCommand {
         for (var file : context.working()) {
             saveFile(file);
 
-            if (!file.delete()){
+            if (!file.delete()) {
                 error.append("Failed deleting file | ").append(file).append('\n');
             }
         }
 
-        if (!error.isEmpty()){
+        if (!error.isEmpty()) {
             throw new DeleteFileException(error.toString());
         }
 
         return null;
     }
 
-    private void saveFile(File file){
+    private void saveFile(File file) {
         try {
             File tmp = File.createTempFile(file.getName(), null);
 
-            if (FileUtilFunctions.copyFile(file, tmp)){
+            if (FileUtilFunctions.copyFile(file, tmp)) {
                 tmp.deleteOnExit();
                 save.add(tmp);
                 original.add(file);
             }
-        } catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
     public void undo() {
         for (int i = 0; i < save.size(); i++) {
-            if (save.get(i) != null && original.get(i) != null){
+            if (save.get(i) != null && original.get(i) != null) {
                 FileUtilFunctions.copyFile(save.get(i), original.get(i));
             }
         }
     }
 
     @Override
-    public String getID() {
-        return "delete_file";
+    public FileCommandName getID() {
+        return FileCommandName.DELETE;
     }
 }

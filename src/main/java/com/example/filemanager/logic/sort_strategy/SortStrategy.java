@@ -10,6 +10,7 @@ public interface SortStrategy {
 
     /**
      * Sorts files in place.
+     *
      * @param files the files to sort.
      */
     void sort(List<File> files);

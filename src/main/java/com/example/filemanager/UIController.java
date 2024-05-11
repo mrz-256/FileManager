@@ -3,6 +3,7 @@ package com.example.filemanager;
 import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.LogicalTab;
+import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.sort_strategy.LastModifiedStrategy;
 import com.example.filemanager.logic.sort_strategy.NameStrategy;
@@ -247,7 +248,7 @@ public class UIController {
 
         var tab = getCurrentLogicalTab();
         try {
-            tab.executeCommand("search", new File(value));
+            tab.executeCommand(FileCommandName.SEARCH, new File(value));
         } catch (FileException ignored) {
         } // doesn't matter - nothing happens
 
@@ -280,7 +281,7 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         var files = FileUtilFunctions.getFilesFromClipboard();
         try {
-            tab.executeCommand("paste_files", files);
+            tab.executeCommand(FileCommandName.PASTE, files);
         } catch (FileException e) {
             var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed pasting files.", e.getMessage());
             alert.show();
@@ -294,7 +295,7 @@ public class UIController {
     public void onUndoClicked() {
         var tab = getCurrentLogicalTab();
         try {
-            tab.executeCommand("undo");
+            tab.executeCommand(FileCommandName.UNDO);
         } catch (FileException e) {
             var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed undoing last action", e.getMessage());
             alert.show();

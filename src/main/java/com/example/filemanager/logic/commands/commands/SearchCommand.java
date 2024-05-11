@@ -4,6 +4,7 @@ import com.example.filemanager.logic.FileUtilFunctions;
 import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
+import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
@@ -12,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class SearchCommand extends FileCommand{
+public class SearchCommand extends FileCommand {
 
     /**
      * Searches for all files in depth either from current directory or from home directory depending on `config`.
@@ -26,7 +27,7 @@ public class SearchCommand extends FileCommand{
         CommandHistory.addCommand(this, false);
         var result = new ArrayList<File>();
 
-        if (context.working() == null || context.working().length == 0){
+        if (context.working() == null || context.working().length == 0) {
             //return empty list
             return result;
         }
@@ -34,7 +35,7 @@ public class SearchCommand extends FileCommand{
         File toFind = context.working()[0];
         File start = context.directory();
 
-        if (context.config().searchStart == LogicalConfiguration.SearchStart.SEARCH_FROM_HOME){
+        if (context.config().searchStart == LogicalConfiguration.SearchStart.SEARCH_FROM_HOME) {
             start = FileUtilFunctions.getHomeDirectory();
         }
 
@@ -43,11 +44,11 @@ public class SearchCommand extends FileCommand{
         que.add(start);
 
 
-        while (!que.isEmpty() && result.size() < 512){
+        while (!que.isEmpty() && result.size() < 512) {
             var current = que.poll();
 
             // continue search deeper
-            if (current.isDirectory()){
+            if (current.isDirectory()) {
                 File[] files = current.listFiles();
                 if (files == null) continue;
 
@@ -55,7 +56,7 @@ public class SearchCommand extends FileCommand{
             }
 
             // add matching file
-            else if (current.getName().matches(toFind.getName())){
+            else if (current.getName().matches(toFind.getName())) {
                 result.add(current);
             }
         }
@@ -64,7 +65,7 @@ public class SearchCommand extends FileCommand{
     }
 
     @Override
-    public String getID() {
-        return "search";
+    public FileCommandName getID() {
+        return FileCommandName.SEARCH;
     }
 }

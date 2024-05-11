@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -76,7 +74,7 @@ public class FileUtilFunctions {
         return inventUniqueName(new File(file.getParent(), new_name));
     }
 
-    private static File inventUniqueDirectoryName(File file){
+    private static File inventUniqueDirectoryName(File file) {
         if (!file.exists()) return file;
         var name = file.getName();
 

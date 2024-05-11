@@ -14,13 +14,12 @@ public class CommandHistory {
     private final StringBuilder log;
 
 
-
     private CommandHistory() {
         this.executedCommands = new Stack<>();
         this.log = new StringBuilder("##started : ").append(new Date().getTime()).append("##\n");
     }
 
-    public static CommandHistory getInstance(){
+    public static CommandHistory getInstance() {
         if (instance == null) instance = new CommandHistory();
 
         return instance;
@@ -29,13 +28,14 @@ public class CommandHistory {
 
     /**
      * Adds new command to history
-     * @param command command to add
+     *
+     * @param command  command to add
      * @param undoable if the command can be undone
      */
-    public static void addCommand(FileCommand command, boolean undoable){
+    public static void addCommand(FileCommand command, boolean undoable) {
         addLog(command, false);
 
-        if (undoable){
+        if (undoable) {
             getInstance().executedCommands.push(command);
         }
 
@@ -43,21 +43,22 @@ public class CommandHistory {
 
     /**
      * Writes about command to command log
+     *
      * @param command the command to write about
-     * @param undo if command was 'undo' or 'do'
+     * @param undo    if command was 'undo' or 'do'
      */
-    private static void addLog(FileCommand command, boolean undo){
+    private static void addLog(FileCommand command, boolean undo) {
         var log = getInstance().log;
 
         log.append("# ").append(new Date().getTime());
-        log.append(" : ").append((undo)?"undo":"do");
+        log.append(" : ").append((undo) ? "undo" : "do");
         log.append(" : ").append(command.getID()).append('\n');
     }
 
     /**
      * Undoes last executed command that can be.
      */
-    public static void undoLast(){
+    public static void undoLast() {
         if (getInstance().executedCommands.empty()) return;
 
         FileCommand command = getInstance().executedCommands.pop();

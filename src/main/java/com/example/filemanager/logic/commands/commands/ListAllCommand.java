@@ -1,8 +1,8 @@
 package com.example.filemanager.logic.commands.commands;
 
-import com.example.filemanager.logic.LogicalConfiguration;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
+import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
@@ -62,7 +62,7 @@ public class ListAllCommand extends FileCommand {
     }
 
     @Override
-    public String getID() {
-        return "list_all";
+    public FileCommandName getID() {
+        return FileCommandName.LIST_ALL;
     }
 }

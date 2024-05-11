@@ -15,6 +15,7 @@ public class LogicalConfiguration {
     public boolean showHiddenFiles;
     public SearchStart searchStart;
     public boolean sortSmallestFirst;
+
     public enum SearchStart {
         SEARCH_FROM_HERE, SEARCH_FROM_HOME
     }
@@ -27,11 +28,11 @@ public class LogicalConfiguration {
         this.searchStart = searchStart;
     }
 
-    public static LogicalConfiguration defaultConfiguration(){
+    public static LogicalConfiguration defaultConfiguration() {
         return new LogicalConfiguration(new NameStrategy(), false, true, SearchStart.SEARCH_FROM_HERE);
     }
 
-    public void apply(List<File> files){
+    public void apply(List<File> files) {
 
         sortStrategy.sort(files);
 
@@ -39,7 +40,7 @@ public class LogicalConfiguration {
             for (int i = 0; i < files.size() / 2; i++) {
                 var tmp = files.get(i);
                 files.set(i, files.get(files.size() - i - 1));
-                files.set(files.size() - i - 1,  tmp);
+                files.set(files.size() - i - 1, tmp);
             }
         }
 
