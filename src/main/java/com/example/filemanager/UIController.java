@@ -68,20 +68,23 @@ public class UIController {
 
     @FXML
     void initialize() {
-        tabs = new LinkedList<>();
+        instance = this;
+
         CommandHistory.initialize();
 
+        tabs = new LinkedList<>();
         UIUtil.createNewTab(tabPane, tabs, FUtil.getHomeDirectory());
+
         tabPane.widthProperty().addListener((observableValue, number, newNumber) -> UIController.updateCurrentTab());
-        instance = this;
 
         sortSmallestFirst.setSelected(true);
 
         UIUtil.fillPlacesList(places);
+
         updateCurrentTab();
     }
 
-    public static void onclose(){
+    public static void onClose(){
         CommandHistory.flushToFile();
     }
 
@@ -330,36 +333,13 @@ public class UIController {
 
         if (keyEvent.isControlDown()) {
             switch (keyEvent.getCode()) {
-                case PLUS:
-                case ADD: {
-                    tab.zoom(true);
-                    break;
-                }
-                case MINUS:
-                case SUBTRACT: {
-                    tab.zoom(false);
-                    break;
-                }
-                case Z: {
-                    onUndoClicked();
-                    break;
-                }
-                case V: {
-                    onPasteFilesClick();
-                    break;
-                }
-                case F: {
-                    onNewFileClicked();
-                    break;
-                }
-                case D: {
-                    onNewDirectoryClicked();
-                    break;
-                }
-                case T: {
-                    onNewTabClicked();
-                    break;
-                }
+                case PLUS, ADD -> tab.zoom(true);
+                case MINUS, SUBTRACT -> tab.zoom(false);
+                case Z -> onUndoClicked();
+                case V -> onPasteFilesClick();
+                case F -> onNewFileClicked();
+                case D -> onNewDirectoryClicked();
+                case T -> onNewTabClicked();
             }
 
         }

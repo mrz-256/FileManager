@@ -16,7 +16,7 @@ public class FileManagerApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        stage.setOnCloseRequest((x) -> UIController.onclose());
+        stage.setOnCloseRequest((x) -> UIController.onClose());
     }
 
     public static void main(String[] args) {
