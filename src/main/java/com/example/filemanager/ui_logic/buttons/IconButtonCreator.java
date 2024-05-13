@@ -1,4 +1,4 @@
-package com.example.filemanager.ui_logic.images;
+package com.example.filemanager.ui_logic.buttons;
 
 import com.example.filemanager.UIController;
 import com.example.filemanager.logic.FUtil;
@@ -6,6 +6,7 @@ import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.ui_logic.controlmenu.ControlMenuCreator;
+import com.example.filemanager.ui_logic.images.ImageCache;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;

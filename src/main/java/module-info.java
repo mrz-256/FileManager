@@ -17,4 +17,5 @@ module com.example.filemanager {
     exports com.example.filemanager.ui_logic.display_strategy;
     exports com.example.filemanager.logic.commands.commands;
     exports com.example.filemanager.ui_logic.images;
+    exports com.example.filemanager.ui_logic.buttons;
 }

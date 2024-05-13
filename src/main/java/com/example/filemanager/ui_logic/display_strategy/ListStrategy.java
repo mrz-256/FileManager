@@ -3,7 +3,7 @@ package com.example.filemanager.ui_logic.display_strategy;
 
 import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.LogicalTab;
-import com.example.filemanager.ui_logic.images.IconButtonCreator;
+import com.example.filemanager.ui_logic.buttons.IconButtonCreator;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
