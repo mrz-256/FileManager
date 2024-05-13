@@ -1,10 +1,12 @@
 package com.example.filemanager.logic.commands.commands;
 
 
+import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
+import javafx.scene.control.Alert;
 
 import java.awt.*;
 import java.io.File;
@@ -30,9 +32,9 @@ public class OpenFileCommand extends FileCommand {
             if (desktop.isSupported(Desktop.Action.OPEN)) {
                 try {
                     desktop.open(file);
-                } catch (IOException e) {
-                    // todo: somehow propagate the error somewhere
-                    System.out.println(e.getMessage());
+                } catch (Exception e) {
+                    var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Exception while opening file", e.getMessage());
+                    alert.show();
                 }
             }
         }

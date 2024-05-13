@@ -5,12 +5,10 @@ import com.example.filemanager.logic.LogicalConfig;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.commands.ListAllCommand;
-import com.example.filemanager.logic.exceptions.FileException;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -96,14 +94,11 @@ public class UIUtil {
         button.setPrefWidth(200);
         button.setAlignment(Pos.CENTER_LEFT);
 
-        System.out.println();
-
         button.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
                 try {
                     UIController.setDirectoryInCurrentTab(file);
                 } catch (Exception ignored) {
-                    //todo alert
                 }
             }
         });
@@ -112,23 +107,7 @@ public class UIUtil {
     }
 
 
-    /**
-     * Creates an Alert of given type with given message.
-     *
-     * @param type   the type of alert
-     * @param header the header text
-     * @param body   the `text` text
-     * @return the new alert
-     */
-    public static Alert createAlert(Alert.AlertType type, String header, String body) {
-        var dialogue = new Alert(type);
-        dialogue.setTitle(type.name());
-        dialogue.setHeaderText(header);
-        dialogue.setContentText(body);
-        return dialogue;
-    }
-
-    public static void filepathViewFillPath(File file){
+    public static void filepathViewFillPath(File file) {
         // stack is used to insert the buttons in the right order
 
         var pane = UIController.getFilepathViewPane();
@@ -148,7 +127,6 @@ public class UIUtil {
                 try {
                     UIController.setDirectoryInCurrentTab(finalCurrent);
                 } catch (Exception ignored) {
-                    // todo alert
                 }
             });
 
@@ -157,9 +135,25 @@ public class UIUtil {
             current = current.getParentFile();
         } while (current != null);
 
-        while (!buttons.empty()){
+        while (!buttons.empty()) {
             pane.getItems().add(buttons.pop());
         }
+    }
+
+    /**
+     * Creates an Alert of given type with given message.
+     *
+     * @param type   the type of alert
+     * @param header the header text
+     * @param body   the `text` text
+     * @return the new alert
+     */
+    public static Alert createAlert(Alert.AlertType type, String header, String body) {
+        var dialogue = new Alert(type);
+        dialogue.setTitle(type.name());
+        dialogue.setHeaderText(header);
+        dialogue.setContentText(body);
+        return dialogue;
     }
 
 

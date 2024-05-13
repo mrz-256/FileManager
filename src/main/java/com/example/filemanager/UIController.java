@@ -249,8 +249,9 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         try {
             tab.executeCommand(FileCommandName.FIND, new File(value));
-        } catch (Exception ignored) {
-            //todo alert
+        } catch (Exception e) {
+            var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed find.", e.getMessage());
+            alert.show();
         } // doesn't matter - nothing happens
     }
 
