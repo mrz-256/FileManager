@@ -76,8 +76,6 @@ public class ControlMenuCreator {
             } catch (FileException e) {
                 UIUtil.createAlert(Alert.AlertType.ERROR, "Can't cut file: " + file, e.getMessage());
             }
-
-            UIController.updateCurrentTab();
         });
 
         delete.setOnAction((x) -> {
@@ -86,16 +84,14 @@ public class ControlMenuCreator {
             } catch (FileException e) {
                 UIUtil.createAlert(Alert.AlertType.ERROR, "Can't delete file: " + file, e.getMessage());
             }
-            UIController.updateCurrentTab();
         });
 
         duplicate.setOnAction((x) -> {
             try {
-                logicalTab.executeCommand(FileCommandName.PASTE, file);
+                logicalTab.executeCommand(FileCommandName.DUPLICATE, file);
             } catch (FileException e) {
                 UIUtil.createAlert(Alert.AlertType.ERROR, "Can't duplicate file " + file, e.getMessage());
             }
-            UIController.updateCurrentTab();
         });
 
         rename.setOnAction((x) -> {

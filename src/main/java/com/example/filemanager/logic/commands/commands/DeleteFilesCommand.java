@@ -5,6 +5,8 @@ import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.DeleteFileException;
+import com.example.filemanager.logic.exceptions.DuplicateFileException;
+import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,9 +41,12 @@ public class DeleteFilesCommand extends FileCommand {
         for (var file : context.working()) {
             saveFile(file);
 
-            if (!file.delete()) {
-                error.append("Failed deleting file | ").append(file).append('\n');
+            try {
+                FUtil.deepDelete(file);
+            }catch (FileException e){
+                error.append(e);
             }
+
         }
 
         if (!error.isEmpty()) {
@@ -55,20 +60,20 @@ public class DeleteFilesCommand extends FileCommand {
         try {
             File tmp = File.createTempFile(file.getName(), null);
 
-            if (FUtil.copyFile(file, tmp)) {
-                tmp.deleteOnExit();
-                save.add(tmp);
-                original.add(file);
-            }
+            FUtil.deepCopy(file, tmp);
+            tmp.deleteOnExit();
+            save.add(tmp);
+            original.add(file);
+
         } catch (Exception ignored) {
         }
     }
 
     @Override
-    public void undo() {
+    public void undo() throws DuplicateFileException {
         for (int i = 0; i < save.size(); i++) {
             if (save.get(i) != null && original.get(i) != null) {
-                FUtil.copyFile(save.get(i), original.get(i));
+                FUtil.deepCopy(save.get(i), original.get(i));
             }
         }
     }

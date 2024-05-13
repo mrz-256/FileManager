@@ -4,7 +4,7 @@ import java.io.File;
 
 public class DeleteFileException extends FileException {
 
-    public DeleteFileException(File file) {
+    public DeleteFileException(String string, File file) {
         super("Failed deleting file", file);
     }
 

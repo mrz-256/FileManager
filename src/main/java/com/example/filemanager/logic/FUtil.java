@@ -1,15 +1,18 @@
 package com.example.filemanager.logic;
 
 
+import com.example.filemanager.logic.exceptions.DeleteFileException;
+import com.example.filemanager.logic.exceptions.DuplicateFileException;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
 /**
  * A class with static functions focused on logic for working with files.
@@ -26,10 +29,104 @@ public class FUtil {
      */
     public static boolean copyFile(File source, File destination) {
         try {
-            Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(
+                    source.toPath(),
+                    destination.toPath(),
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.COPY_ATTRIBUTES
+            );
             return true;
         } catch (IOException e) {
             return false;
+        }
+    }
+
+    /**
+     * Makes deep copy of source to destination. Skips failed files and continues at work.
+     *
+     * @param source      the source to copy
+     * @param destination the destination to copy to
+     * @throws DuplicateFileException to inform of failed copies
+     */
+    public static void deepCopy(File source, File destination) throws DuplicateFileException {
+        var err = new StringBuilder();
+
+        // start of duplicated directory
+        var copy_root = FUtil.inventUniqueName(destination);
+
+        Queue<Pair<File, File>> que = new LinkedList<>();
+        que.add(new Pair<>(source, copy_root));
+
+        while (!que.isEmpty()) {
+            var current = que.poll();
+
+            if (current.getKey().isFile()) {
+                try {
+                    if (!FUtil.copyFile(current.getKey(), current.getValue())) {
+                        throw new Exception("failed copying file");
+                    }
+                } catch (Exception e) {
+                    err.append("Error copying file(").append(e.getMessage()).append("): ").append(current.getValue()).append('\n');
+                }
+            } else {
+                if (!current.getValue().mkdirs()) {
+                    err.append("Error making subdirectory: ").append(current.getValue()).append('\n');
+                    continue;
+                }
+
+                var files = current.getKey().listFiles();
+                if (files == null || files.length == 0) {
+                    continue;
+                }
+
+                for (var f : files) {
+                    var duplicate_file = new File(current.getValue(), f.getName());
+                    que.add(new Pair<>(f, duplicate_file));
+                }
+            }
+        }
+
+        if (!err.isEmpty()) {
+            throw new DuplicateFileException(err.toString());
+        }
+    }
+
+    /**
+     * Deletes a file and, if file is directory, all its contents. Continues even on fail and only reports error at the
+     * end.
+     *
+     * @param file the file to delete
+     * @throws DeleteFileException when some files fail to be deleted.
+     */
+    public static void deepDelete(File file) throws DeleteFileException {
+        var err = new StringBuilder();
+        var stack = new Stack<File>();
+        stack.push(file);
+
+        while (!stack.empty()) {
+            var current = stack.pop();
+
+            if (current.isFile()) {
+                if (!current.delete()) {
+                    err.append("Failed deleting file.").append(file).append('\n');
+                }
+                continue;
+            }
+
+            var subfiles = current.listFiles();
+            if (subfiles == null || subfiles.length == 0) {
+                if (!current.delete()) {
+                    err.append("Failed deleting directory.").append(file).append('\n');
+                }
+                continue;
+            }
+
+            stack.push(current);
+            Collections.addAll(stack, subfiles);
+        }
+
+        if (!err.isEmpty()) {
+            throw new DeleteFileException(err.toString());
         }
     }
 
@@ -47,8 +144,8 @@ public class FUtil {
         if (!file.exists()) return file;
         var name = file.getName();
 
-        var has_counter     = (file.isFile()) ? "^.*\\(\\d+\\)\\..+$" : "^.*\\(\\d+\\)$";
-        var countless_expr  = (file.isFile()) ? "^(.*)(\\..+)$" : "^(.*)$";
+        var has_counter = (file.isFile()) ? "^.*\\(\\d+\\)\\..+$" : "^.*\\(\\d+\\)$";
+        var countless_expr = (file.isFile()) ? "^(.*)(\\..+)$" : "^(.*)$";
         var name_with_count = (file.isFile()) ? "$1(1)$2" : "$1(1)";
 
         var expr_with_count = (file.isFile()) ? "(.*)\\((\\d+)\\)(\\..+)$" : "(.*)\\((\\d+)\\)$";
@@ -67,7 +164,7 @@ public class FUtil {
 
         // create new name with incremented counter
         num = String.valueOf(Integer.parseInt(num) + 1);
-        var incremented_count_expr = (file.isFile()) ? "$1(" + num + ")$3" : "$1("  + num + ")";
+        var incremented_count_expr = (file.isFile()) ? "$1(" + num + ")$3" : "$1(" + num + ")";
         String new_name = name.replaceAll(expr_with_count, incremented_count_expr);
 
         // check the new name

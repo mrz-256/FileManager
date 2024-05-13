@@ -2,6 +2,8 @@ package com.example.filemanager.logic.commands.commands;
 
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.FileCommandName;
+import com.example.filemanager.logic.exceptions.DeleteFileException;
+import com.example.filemanager.logic.exceptions.DuplicateFileException;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
@@ -23,6 +25,7 @@ public abstract class FileCommand {
         return switch (name) {
             case UNDO -> null;
             case DELETE -> new DeleteFilesCommand();
+            case DUPLICATE -> new DuplicateFileCommand();
             case LIST_ALL -> new ListAllCommand();
             case NEW_DIRECTORY -> new NewDirectoryCommand();
             case NEW_FILE -> new NewFileCommand();
@@ -44,7 +47,7 @@ public abstract class FileCommand {
     /**
      * Method to undo given command
      */
-    public void undo() {
+    public void undo() throws FileException {
     }
 
     /**

@@ -2,6 +2,8 @@ package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.commands.commands.FileCommand;
+import com.example.filemanager.logic.exceptions.DeleteFileException;
+import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -44,7 +46,7 @@ public class CommandHistory {
     /**
      * Undoes last executed command that can be.
      */
-    public static void undoLast() {
+    public static void undoLast() throws FileException {
         if (executedCommands.empty()) return;
 
         FileCommand command = executedCommands.pop();
