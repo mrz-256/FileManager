@@ -10,7 +10,7 @@ import java.util.List;
  * Stores the config of a context.
  * This influences how are files gathered.
  */
-public class LogicalConfiguration {
+public class LogicalConfig {
     public SortStrategy sortStrategy;
     public boolean showHiddenFiles;
     public int maximalShownFiles;
@@ -22,7 +22,7 @@ public class LogicalConfiguration {
     }
 
 
-    public LogicalConfiguration(SortStrategy sortStrategy, boolean showHiddenFiles, int maximalShownFiles, boolean sortSmallestFirst, SearchStart searchStart) {
+    public LogicalConfig(SortStrategy sortStrategy, boolean showHiddenFiles, int maximalShownFiles, boolean sortSmallestFirst, SearchStart searchStart) {
         this.sortStrategy = sortStrategy;
         this.showHiddenFiles = showHiddenFiles;
         this.maximalShownFiles = maximalShownFiles;
@@ -30,8 +30,8 @@ public class LogicalConfiguration {
         this.searchStart = searchStart;
     }
 
-    public static LogicalConfiguration defaultConfiguration() {
-        return new LogicalConfiguration(new NameStrategy(), false, 512, true, SearchStart.SEARCH_FROM_HERE);
+    public static LogicalConfig defaultConfiguration() {
+        return new LogicalConfig(new NameStrategy(), false, 512, true, SearchStart.SEARCH_FROM_HERE);
     }
 
     public void apply(List<File> files) {

@@ -1,7 +1,7 @@
 package com.example.filemanager;
 
 import com.example.filemanager.logic.FUtil;
-import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.LogicalConfig;
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
@@ -145,7 +145,7 @@ public class UIController {
     @FXML
     public void onShowHiddenClicked() {
         var tab = getCurrentLogicalTab();
-        tab.getConfiguration().showHiddenFiles = showHiddenCheckbox.isSelected();
+        tab.getConfig().showHiddenFiles = showHiddenCheckbox.isSelected();
         tab.update();
     }
     //endregion
@@ -154,28 +154,28 @@ public class UIController {
     @FXML
     public void onSortFilesByName() {
         var tab = getCurrentLogicalTab();
-        tab.getConfiguration().sortStrategy = new NameStrategy();
+        tab.getConfig().sortStrategy = new NameStrategy();
         tab.update();
     }
 
     @FXML
     public void onSortFilesBySize() {
         var tab = getCurrentLogicalTab();
-        tab.getConfiguration().sortStrategy = new SizeStrategy();
+        tab.getConfig().sortStrategy = new SizeStrategy();
         tab.update();
     }
 
     @FXML
     public void onSortFilesByLastModification() {
         var tab = getCurrentLogicalTab();
-        tab.getConfiguration().sortStrategy = new LastModifiedStrategy();
+        tab.getConfig().sortStrategy = new LastModifiedStrategy();
         tab.update();
     }
 
     @FXML
     public void onSmallestFirstClicked() {
         var tab = getCurrentLogicalTab();
-        tab.getConfiguration().sortSmallestFirst = sortSmallestFirst.isSelected();
+        tab.getConfig().sortSmallestFirst = sortSmallestFirst.isSelected();
         tab.update();
     }
     //endregion
@@ -206,7 +206,7 @@ public class UIController {
         }
 
         // update settings to match selected tab and flush input fields
-        var config = getCurrentLogicalTab().getConfiguration();
+        var config = getCurrentLogicalTab().getConfig();
         showHiddenCheckbox.setSelected(config.showHiddenFiles);
         sortSmallestFirst.setSelected(config.sortSmallestFirst);
 
@@ -274,9 +274,9 @@ public class UIController {
     public void onSearchChoice() {
         var tab = getCurrentLogicalTab();
 
-        tab.getConfiguration().searchStart = (searchChoiceBox.getValue().equals("start from here"))
-                ? LogicalConfiguration.SearchStart.SEARCH_FROM_HERE
-                : LogicalConfiguration.SearchStart.SEARCH_FROM_HOME;
+        tab.getConfig().searchStart = (searchChoiceBox.getValue().equals("start from here"))
+                ? LogicalConfig.SearchStart.SEARCH_FROM_HERE
+                : LogicalConfig.SearchStart.SEARCH_FROM_HOME;
     }
 
     //endregion

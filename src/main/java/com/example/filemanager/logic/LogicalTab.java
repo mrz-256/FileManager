@@ -24,7 +24,7 @@ public class LogicalTab {
     private File directory;
     private ArrayList<File> listedFiles;
 
-    private final LogicalConfiguration configuration;
+    private final LogicalConfig config;
     private DisplayStrategy displayStrategy;
     private final PathHistory pathHistory;
 
@@ -41,7 +41,7 @@ public class LogicalTab {
 
     public LogicalTab(Tab tab, File directory, LinkedList<LogicalTab> parentList) {
         this.directory = directory;
-        this.configuration = LogicalConfiguration.defaultConfiguration();
+        this.config = LogicalConfig.defaultConfiguration();
         this.listedFiles = new ArrayList<>();
 
         this.tab = tab;
@@ -90,8 +90,8 @@ public class LogicalTab {
     public void updateTabDisplay() {
         tab.setText(directory.getAbsolutePath());
 
-        if (listedFiles.size() > configuration.maximalShownFiles) {
-            listedFiles = (ArrayList<File>) listedFiles.subList(0, configuration.maximalShownFiles);
+        if (listedFiles.size() > config.maximalShownFiles) {
+            listedFiles = (ArrayList<File>) listedFiles.subList(0, config.maximalShownFiles);
         }
 
 
@@ -134,7 +134,7 @@ public class LogicalTab {
 
         var to_execute = FileCommand.getByType(command);
 
-        var context = new CommandContext(directory, this, configuration, params);
+        var context = new CommandContext(directory, this, config, params);
 
         var files = to_execute.execute(context);
         if (files != null) {
@@ -151,8 +151,8 @@ public class LogicalTab {
     }
 
     //region getters
-    public LogicalConfiguration getConfiguration() {
-        return configuration;
+    public LogicalConfig getConfig() {
+        return config;
     }
 
     public File getDirectory() {

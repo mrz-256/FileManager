@@ -1,6 +1,6 @@
 package com.example.filemanager;
 
-import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.LogicalConfig;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.commands.ListAllCommand;
 import com.example.filemanager.logic.FUtil;
@@ -60,7 +60,7 @@ public class UIUtil {
         ArrayList<File> files;
         try {
             var list_command = new ListAllCommand();
-            var configuration = LogicalConfiguration.defaultConfiguration();
+            var configuration = LogicalConfig.defaultConfiguration();
             var context = new CommandContext(home, null, configuration, null);
 
             files = list_command.execute(context);

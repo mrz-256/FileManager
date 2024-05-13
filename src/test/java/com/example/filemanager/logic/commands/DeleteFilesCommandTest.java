@@ -1,6 +1,6 @@
 package com.example.filemanager.logic.commands;
 
-import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.LogicalConfig;
 import com.example.filemanager.logic.commands.commands.DeleteFilesCommand;
 import com.example.filemanager.logic.exceptions.FileException;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ class DeleteFilesCommandTest {
                 new CommandContext(
                         directory,
                         null,
-                        LogicalConfiguration.defaultConfiguration(),
+                        LogicalConfig.defaultConfiguration(),
                         new File[]{todelete}
                 )
         );

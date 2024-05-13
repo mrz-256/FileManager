@@ -1,7 +1,7 @@
 package com.example.filemanager.logic.commands.commands;
 
 import com.example.filemanager.logic.FUtil;
-import com.example.filemanager.logic.LogicalConfiguration;
+import com.example.filemanager.logic.LogicalConfig;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
@@ -35,7 +35,7 @@ public class SearchCommand extends FileCommand {
         File toFind = context.working()[0];
         File start = context.directory();
 
-        if (context.config().searchStart == LogicalConfiguration.SearchStart.SEARCH_FROM_HOME) {
+        if (context.config().searchStart == LogicalConfig.SearchStart.SEARCH_FROM_HOME) {
             start = FUtil.getHomeDirectory();
         }
 
