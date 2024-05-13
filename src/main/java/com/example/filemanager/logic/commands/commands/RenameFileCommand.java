@@ -32,22 +32,32 @@ public class RenameFileCommand extends FileCommand {
         original = context.working()[0];
         new_file = context.working()[1];
 
-        if (new_file.exists()) throw new RenameFileException("File already exits.", new_file);
-        if (original.equals(new_file)) throw new RenameFileException("New file is same as the old one.", new_file);
+        if (new_file.exists()) {
+            throw new RenameFileException("File already exits.", new_file);
+        }
+        if (original.equals(new_file)) {
+            throw new RenameFileException("New file is same as the old one.", new_file);
+        }
 
         FUtil.copyFile(original, new_file);
 
-        original.delete();
+        if (!original.delete()){
+            throw new RenameFileException("Can't rename properly.", original);
+        }
 
         return null;
     }
 
     @Override
-    public void undo() {
-        if (!new_file.exists()) return;
+    public void undo() throws RenameFileException {
+        if (!new_file.exists()) {
+            return;
+        }
 
         FUtil.copyFile(new_file, original);
-        new_file.delete();
+        if (!new_file.delete()){
+            throw new RenameFileException("Can't undo rename properly.", new_file);
+        }
     }
 
     @Override
