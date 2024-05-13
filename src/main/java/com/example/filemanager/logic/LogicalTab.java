@@ -10,6 +10,7 @@ import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.exceptions.InvalidLocationOfExecutionException;
 import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
 import com.example.filemanager.ui_logic.display_strategy.DisplayStrategy;
+import com.example.filemanager.ui_logic.pathview.FilepathViewCreator;
 import javafx.scene.control.Tab;
 
 import java.io.File;
@@ -98,9 +99,6 @@ public class LogicalTab {
         this.currentFileToFind = null;
 
         tab.setOnClosed((x) -> parentList.remove(this));
-
-        // updates the filepath view display
-        UIUtil.filepathViewFillPath(directory);
     }
 
 
@@ -123,9 +121,6 @@ public class LogicalTab {
 
         pathHistory.add(this.directory);
         this.directory = directory;
-
-        // updates the filepath view display
-        UIUtil.filepathViewFillPath(directory);
 
         clearFindMode();
         update();
@@ -154,8 +149,10 @@ public class LogicalTab {
         if (isInFindMode) {
             tab.setText("search \"" + currentFileToFind.getName() + "\"");
         } else {
-            tab.setText(directory.getAbsolutePath());
+            tab.setText(directory.getName());
         }
+
+        FilepathViewCreator.filepathViewFillPath(directory);
 
         displayStrategy.display(
                 tab, this,
@@ -170,9 +167,6 @@ public class LogicalTab {
         if (pathHistory.hasBack()) {
             directory = pathHistory.getBack();
         }
-
-        // updates the filepath view display
-        UIUtil.filepathViewFillPath(directory);
 
         clearFindMode();
         update();

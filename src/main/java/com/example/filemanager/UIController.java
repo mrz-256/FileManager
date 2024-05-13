@@ -50,8 +50,6 @@ public class UIController {
     public Button findClearButton;
 
     @FXML
-    public TitledPane filterTitledPane;
-    @FXML
     public TextField filterTextField;
 
     /**

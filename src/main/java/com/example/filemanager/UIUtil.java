@@ -106,40 +106,6 @@ public class UIUtil {
         pane.getChildren().add(button);
     }
 
-
-    public static void filepathViewFillPath(File file) {
-        // stack is used to insert the buttons in the right order
-
-        var pane = UIController.getFilepathViewPane();
-        pane.getItems().clear();
-
-        var buttons = new Stack<Button>();
-        var current = file;
-
-        do {
-            var button = new Button(current.getName());
-            button.setStyle(
-                    "-fx-padding: 2"
-            );
-
-            File finalCurrent = current;
-            button.setOnMouseClicked((x) -> {
-                try {
-                    UIController.setDirectoryInCurrentTab(finalCurrent);
-                } catch (Exception ignored) {
-                }
-            });
-
-            buttons.push(button);
-
-            current = current.getParentFile();
-        } while (current != null);
-
-        while (!buttons.empty()) {
-            pane.getItems().add(buttons.pop());
-        }
-    }
-
     /**
      * Creates an Alert of given type with given message.
      *
