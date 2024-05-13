@@ -10,11 +10,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * A util class which mostly contains static functions that help create javafx constructs, i.e. it focuses on UI rather
@@ -62,7 +64,7 @@ public class UIUtil {
             var context = new CommandContext(home, null, configuration, null);
 
             files = list_command.execute(context);
-        } catch (FileException e) {
+        } catch (Exception e) {
             return;
         }
 
@@ -100,8 +102,8 @@ public class UIUtil {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
                 try {
                     UIController.setDirectoryInCurrentTab(file);
-                } catch (FileException e) {
-                    // ignored
+                } catch (Exception ignored) {
+                    //todo alert
                 }
             }
         });
@@ -124,6 +126,40 @@ public class UIUtil {
         dialogue.setHeaderText(header);
         dialogue.setContentText(body);
         return dialogue;
+    }
+
+    public static void filepathViewFillPath(File file){
+        // stack is used to insert the buttons in the right order
+
+        var pane = UIController.getFilepathViewPane();
+        pane.getItems().clear();
+
+        var buttons = new Stack<Button>();
+        var current = file;
+
+        do {
+            var button = new Button(current.getName());
+            button.setStyle(
+                    "-fx-padding: 2"
+            );
+
+            File finalCurrent = current;
+            button.setOnMouseClicked((x) -> {
+                try {
+                    UIController.setDirectoryInCurrentTab(finalCurrent);
+                } catch (Exception ignored) {
+                    // todo alert
+                }
+            });
+
+            buttons.push(button);
+
+            current = current.getParentFile();
+        } while (current != null);
+
+        while (!buttons.empty()){
+            pane.getItems().add(buttons.pop());
+        }
     }
 
 

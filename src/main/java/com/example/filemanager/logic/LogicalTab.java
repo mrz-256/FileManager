@@ -1,6 +1,7 @@
 package com.example.filemanager.logic;
 
 import com.example.filemanager.UIController;
+import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
@@ -97,6 +98,9 @@ public class LogicalTab {
         this.currentFileToFind = null;
 
         tab.setOnClosed((x) -> parentList.remove(this));
+
+        // updates the filepath view display
+        UIUtil.filepathViewFillPath(directory);
     }
 
 
@@ -113,9 +117,16 @@ public class LogicalTab {
         if (!directory.isDirectory()) {
             throw new FileException("File is not a directory.", directory);
         }
+        if (!directory.canRead()){
+            throw new FileException("Can't access given directory.", directory);
+        }
 
         pathHistory.add(this.directory);
         this.directory = directory;
+
+        // updates the filepath view display
+        UIUtil.filepathViewFillPath(directory);
+
         clearFindMode();
         update();
     }
@@ -146,11 +157,6 @@ public class LogicalTab {
             tab.setText(directory.getAbsolutePath());
         }
 
-        if (listedFiles.size() > config.maximalShownFiles) {
-            listedFiles = (ArrayList<File>) listedFiles.subList(0, config.maximalShownFiles);
-        }
-
-
         displayStrategy.display(
                 tab, this,
                 (DEFAULT_ICON_SIZE * zoom) / 100, UIController.getTabPaneWidth()
@@ -164,6 +170,10 @@ public class LogicalTab {
         if (pathHistory.hasBack()) {
             directory = pathHistory.getBack();
         }
+
+        // updates the filepath view display
+        UIUtil.filepathViewFillPath(directory);
+
         clearFindMode();
         update();
     }

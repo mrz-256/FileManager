@@ -77,34 +77,42 @@
                 </SplitMenuButton>
             </items>
         </ToolBar>
-        <TitledPane animated="false" expanded="false" text="find">
+          <ToolBar fx:id="filepathView" prefHeight="40.0" style="-fx-border-color: transparent; -fx-padding: 0;" />
+        <TitledPane expanded="false" text="functions">
             <content>
-                <HBox prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <TextField fx:id="findTextField" promptText="regex.." />
-                        <ChoiceBox fx:id="findChoiceBox" onAction="#onFindChoice" prefWidth="150.0" value="search from here">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="search from here" />
-                                    <String fx:value="search from home" />
-                                </FXCollections>
-                            </items>
-                        </ChoiceBox>
-                        <Button fx:id="findConfirmButton" mnemonicParsing="false" onAction="#onSearchConfirm" text="find" />
-                        <Button fx:id="findClearButton" mnemonicParsing="false" onAction="#onClear" text="clear" />
-                    </children>
-                </HBox>
-            </content>
-        </TitledPane>
-        <TitledPane fx:id="filterTitledPane" animated="false" expanded="false" text="filter">
-            <content>
-                <HBox prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <TextField fx:id="filterTextField" onAction="#onFilterUpdated" promptText="regex filter.." xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
-                        <Button mnemonicParsing="false" onAction="#onClear" text="clear" />
-
-                    </children>
-                </HBox>
+                <TabPane prefHeight="150.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="find">
+                            <content>
+                                <HBox>
+                                    <children>
+                                        <TextField fx:id="findTextField" promptText="regex.." />
+                                        <ChoiceBox fx:id="findChoiceBox" onAction="#onFindChoice" prefWidth="150.0" value="search from here">
+                                            <items>
+                                                <FXCollections fx:factory="observableArrayList">
+                                                    <String fx:value="search from here" />
+                                                    <String fx:value="search from home" />
+                                                </FXCollections>
+                                            </items>
+                                        </ChoiceBox>
+                                        <Button fx:id="findConfirmButton" mnemonicParsing="false" onAction="#onFindConfirm" text="find" />
+                                        <Button fx:id="findClearButton" mnemonicParsing="false" onAction="#onClear" text="clear" />
+                                    </children>
+                                </HBox>
+                            </content>
+                        </Tab>
+                        <Tab text="filter">
+                            <content>
+                                <HBox>
+                                    <children>
+                                        <TextField fx:id="filterTextField" onAction="#onFilterUpdated" promptText="regex filter.." xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
+                                        <Button mnemonicParsing="false" onAction="#onClear" text="clear" />
+                                    </children>
+                                </HBox>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
             </content>
         </TitledPane>
         <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0" VBox.vgrow="ALWAYS">
@@ -115,11 +123,11 @@
                             <Font size="21.0" />
                         </font>
                     </Label>
-               <ScrollPane hbarPolicy="NEVER" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                  <content>
-                          <VBox id="places_vbox" fx:id="places" prefWidth="200.0" />
-                  </content>
-               </ScrollPane>
+                    <ScrollPane hbarPolicy="NEVER" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <content>
+                            <VBox id="places_vbox" fx:id="places" prefWidth="200.0" />
+                        </content>
+                    </ScrollPane>
                 </children>
             </VBox>
             <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#onKeyTyped" onMouseClicked="#onTabPaneUpdate" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">

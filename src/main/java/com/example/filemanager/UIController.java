@@ -13,6 +13,7 @@ import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
 import com.example.filemanager.ui_logic.display_strategy.ListStrategy;
 import com.example.filemanager.ui_logic.newdirectory.NewDirectoryDialogueCreator;
 import com.example.filemanager.ui_logic.newfile.NewFileDialogueCreator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -27,6 +28,8 @@ import java.util.LinkedList;
 public class UIController {
     @FXML
     public Button newTabButton;
+    @FXML
+    public ToolBar filepathView;
     @FXML
     private CheckMenuItem showHiddenCheckbox;
     @FXML
@@ -88,21 +91,13 @@ public class UIController {
         CommandHistory.flushToFile();
     }
 
+
     /**
      * Updates content and display of current tab
      */
     public static void updateCurrentTab() {
         var tab = getInstance().getCurrentLogicalTab();
         tab.update();
-    }
-
-    /**
-     * Updates display of provided tab
-     *
-     * @param tab the tab whose display is to be updated
-     */
-    public static void updateDisplayOfTab(LogicalTab tab) {
-        tab.updateTabDisplay();
     }
 
     public static int getTabPaneWidth() {
@@ -121,19 +116,15 @@ public class UIController {
     }
 
     /**
-     * Returns the index of the selected tab in the tabPane
-     *
-     * @return the index
-     */
-    public int getCurrentTabIndex() {
-        return tabPane.getSelectionModel().getSelectedIndex();
-    }
-
-    /**
      * @return the currently selected logical tab
      */
     public LogicalTab getCurrentLogicalTab() {
-        return tabs.get(getCurrentTabIndex());
+        var index = tabPane.getSelectionModel().getSelectedIndex();
+        return tabs.get(index);
+    }
+
+    public static ToolBar getFilepathViewPane(){
+        return getInstance().filepathView;
     }
 
     //region back button
@@ -242,14 +233,14 @@ public class UIController {
         tab.applyFilter(filterTextField.getText());
         filterTextField.setText("");
 
-        updateDisplayOfTab(tab);
+        tab.updateTabDisplay();
         tab.setTitle("filtered " + title);
     }
     //endregion
 
-    //region search
+    //region find
     @FXML
-    public void onSearchConfirm() {
+    public void onFindConfirm() {
         String value = findTextField.getText();
         if (value == null || value.matches("^\\s*$")) {
             return;
@@ -258,7 +249,8 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         try {
             tab.executeCommand(FileCommandName.FIND, new File(value));
-        } catch (FileException ignored) {
+        } catch (Exception ignored) {
+            //todo alert
         } // doesn't matter - nothing happens
     }
 
@@ -288,7 +280,7 @@ public class UIController {
         var files = FUtil.getFilesFromClipboard();
         try {
             tab.executeCommand(FileCommandName.PASTE, files);
-        } catch (FileException e) {
+        } catch (Exception e) {
             var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed pasting files.", e.getMessage());
             alert.show();
         }
@@ -324,7 +316,7 @@ public class UIController {
     }
     //endregion
 
-
+    //region shortcuts
     public void onKeyTyped(KeyEvent keyEvent) {
         var tab = getCurrentLogicalTab();
 
@@ -343,5 +335,11 @@ public class UIController {
 
         tab.updateTabDisplay();
     }
+    //endregion
+
+    public void onGotoClicked(ActionEvent actionEvent) {
+
+    }
+
 
 }

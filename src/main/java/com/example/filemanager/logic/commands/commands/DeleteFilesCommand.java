@@ -43,7 +43,7 @@ public class DeleteFilesCommand extends FileCommand {
 
             try {
                 FUtil.deepDelete(file);
-            } catch (FileException e) {
+            } catch (Exception e) {
                 error.append(e);
             }
 

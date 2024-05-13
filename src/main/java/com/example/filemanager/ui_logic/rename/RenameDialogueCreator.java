@@ -63,7 +63,7 @@ public class RenameDialogueCreator {
 
                 stage.close();
                 UIController.updateCurrentTab();
-            } catch (FileException e) {
+            } catch (Exception e) {
                 feedback.setText(e.getMessage().replaceAll("\\|.*", ""));
             }
 

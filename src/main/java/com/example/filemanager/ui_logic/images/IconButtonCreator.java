@@ -46,7 +46,7 @@ public class IconButtonCreator {
 
         try {
             button.setGraphic(IconButtonCreator.loadImageIcon(file, (int) (size * ICON_TO_BUTTON_RATIO)));
-        } catch (FileException ignore) {
+        } catch (Exception ignore) {
             // icon will be plain button with no icon
         }
 
@@ -112,14 +112,14 @@ public class IconButtonCreator {
                 if (file.isDirectory()) {
                     try {
                         logicalTab.setDirectory(file);
-                    } catch (FileException e) {
+                    } catch (Exception e) {
                         var alert = createAlert(Alert.AlertType.ERROR, "Failed moving to directory", e.getMessage());
                         alert.show();
                     }
                 } else {
                     try {
                         logicalTab.executeCommand(FileCommandName.OPEN, file);
-                    } catch (FileException e) {
+                    } catch (Exception e) {
                         var alert = createAlert(Alert.AlertType.ERROR, "Failed opening file", e.getMessage());
                         alert.show();
                     }

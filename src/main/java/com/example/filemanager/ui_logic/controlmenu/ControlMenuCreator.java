@@ -69,8 +69,9 @@ public class ControlMenuCreator {
 
             try {
                 logicalTab.executeCommand(FileCommandName.DELETE, file);
-            } catch (FileException e) {
-                UIUtil.createAlert(Alert.AlertType.ERROR, "Can't cut file: " + file, e.getMessage());
+            } catch (Exception e) {
+                var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Can't cut file: " + file, e.getMessage());
+                alert.show();
             }
         });
 
@@ -78,7 +79,8 @@ public class ControlMenuCreator {
             try {
                 logicalTab.executeCommand(FileCommandName.DELETE, file);
             } catch (FileException e) {
-                UIUtil.createAlert(Alert.AlertType.ERROR, "Can't delete file: " + file, e.getMessage());
+                var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Can't delete file: " + file, e.getMessage());
+                alert.show();
             }
         });
 
@@ -86,7 +88,8 @@ public class ControlMenuCreator {
             try {
                 logicalTab.executeCommand(FileCommandName.DUPLICATE, file);
             } catch (FileException e) {
-                UIUtil.createAlert(Alert.AlertType.ERROR, "Can't duplicate file " + file, e.getMessage());
+                var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Can't duplicate file " + file, e.getMessage());
+                alert.show();
             }
         });
 
