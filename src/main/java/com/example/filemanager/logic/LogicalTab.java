@@ -21,25 +21,65 @@ import java.util.LinkedList;
  * CommandHistory is a singleton common for all tabs.
  */
 public class LogicalTab {
+    /**
+     * The javafx tab containing files of this logical instance
+     */
     private final Tab tab;
+    /**
+     * The open directory of this tab
+     */
     private File directory;
+    /**
+     * The list of the files listed in this tab
+     */
     private ArrayList<File> listedFiles;
 
+    /**
+     * Configuration influencing the results of commands performed in this tab
+     */
     private final LogicalConfig config;
+    /**
+     * The display strategy to use in this tab
+     */
     private DisplayStrategy displayStrategy;
+    /**
+     * One-way history of previously visited directories
+     */
     private final PathHistory pathHistory;
 
-    private boolean isInSearchMode;
-    private File currentSearch;
+    /**
+     * If tab should display find results rather than the open directory; some functionality can
+     * only be performed inside directory(such as paste files etc.)
+     */
+    private boolean isInFindMode;
+    /**
+     * The current match for find functionality
+     */
+    private File currentFileToFind;
 
     /**
-     * Zoom [0;100] percent
+     * Zoom [0;100] %
      */
     private int zoom;
+    /**
+     * The default size of an icon; always multiplied by `zoom`
+     */
     private static final int DEFAULT_ICON_SIZE = 100;
+    /**
+     * The zoom change
+     */
     private static final int ZOOM_SPEED = 10;
+    /**
+     * The minimal zoom
+     */
     private static final int MIN_ZOOM = 60;
+    /**
+     * The maximal zoom
+     */
     private static final int MAX_ZOOM = 120;
+    /**
+     * The default zoom (90%)
+     */
     private static final int DEFAULT_ZOOM = 90;
 
 
@@ -53,8 +93,8 @@ public class LogicalTab {
         this.displayStrategy = new BoxStrategy();
         this.zoom = DEFAULT_ZOOM;
 
-        this.isInSearchMode = false;
-        this.currentSearch = null;
+        this.isInFindMode = false;
+        this.currentFileToFind = null;
 
         tab.setOnClosed((x) -> parentList.remove(this));
     }
@@ -76,7 +116,7 @@ public class LogicalTab {
 
         pathHistory.add(this.directory);
         this.directory = directory;
-        clearSearch();
+        clearFindMode();
         update();
     }
 
@@ -85,8 +125,8 @@ public class LogicalTab {
      */
     public void update() {
         try {
-            if (isInSearchMode && currentSearch != null){
-                executeCommand(FileCommandName.SEARCH, currentSearch);
+            if (isInFindMode && currentFileToFind != null){
+                executeCommand(FileCommandName.FIND, currentFileToFind);
             }
             else {
                 executeCommand(FileCommandName.LIST_ALL);
@@ -101,8 +141,8 @@ public class LogicalTab {
      * because otherwise the loading is too slow.
      */
     public void updateTabDisplay() {
-        if (isInSearchMode){
-            tab.setText("search \"" + currentSearch.getName() + "\"");
+        if (isInFindMode){
+            tab.setText("search \"" + currentFileToFind.getName() + "\"");
         }
         else{
             tab.setText(directory.getAbsolutePath());
@@ -126,7 +166,7 @@ public class LogicalTab {
         if (pathHistory.hasBack()) {
             directory = pathHistory.getBack();
         }
-        clearSearch();
+        clearFindMode();
         update();
     }
 
@@ -146,7 +186,7 @@ public class LogicalTab {
      * @throws FileException when invalid command is passed
      */
     public void executeCommand(FileCommandName command, File... params) throws FileException {
-        if (isInSearchMode && !command.isUniversalSafe()){
+        if (isInFindMode && !command.isUniversalSafe()){
             throw new InvalidLocationOfExecutionException("Can't perform operation " + command + " outside an directory.");
         }
         if (command == FileCommandName.UNDO) {
@@ -162,14 +202,14 @@ public class LogicalTab {
         if (files != null) {
             listedFiles = files;
 
-            if (to_execute.getID() == FileCommandName.SEARCH){
-                setSearch(params[0]);
+            if (to_execute.getID() == FileCommandName.FIND){
+                setFindMode(params[0]);
             }
 
             updateTabDisplay();
         } else {
-            if (isInSearchMode){
-                executeCommand(FileCommandName.SEARCH, currentSearch);
+            if (isInFindMode){
+                executeCommand(FileCommandName.FIND, currentFileToFind);
             }
             else{
                 executeCommand(FileCommandName.LIST_ALL);
@@ -220,25 +260,25 @@ public class LogicalTab {
     /**
      * Return to normal directory mode
      */
-    public void clearSearch(){
-        isInSearchMode = false;
-        currentSearch = null;
+    public void clearFindMode(){
+        isInFindMode = false;
+        currentFileToFind = null;
     }
 
     /**
-     * Sets tab to search mode with provided search
-     * @param search the file to search for now
+     * Sets tab to toFind mode with provided toFind
+     * @param toFind the file to toFind for now
      */
-    private void setSearch(File search){
-        isInSearchMode = true;
-        currentSearch = search;
+    private void setFindMode(File toFind){
+        isInFindMode = true;
+        currentFileToFind = toFind;
     }
 
     /**
      * @return if all commands can be executed in current state of the tab
      */
     public boolean isSafeForUniversalCommands(){
-        return !isInSearchMode;
+        return !isInFindMode;
     }
     //endregion
 }

@@ -77,12 +77,12 @@
                 </SplitMenuButton>
             </items>
         </ToolBar>
-        <TitledPane animated="false" expanded="false" text="search">
+        <TitledPane animated="false" expanded="false" text="find">
             <content>
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <TextField fx:id="searchTextField" promptText="search.." />
-                        <ChoiceBox fx:id="searchChoiceBox" onAction="#onSearchChoice" prefWidth="150.0" value="search from here">
+                        <TextField fx:id="findTextField" promptText="regex.." />
+                        <ChoiceBox fx:id="findChoiceBox" onAction="#onFindChoice" prefWidth="150.0" value="search from here">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <String fx:value="search from here" />
@@ -90,8 +90,8 @@
                                 </FXCollections>
                             </items>
                         </ChoiceBox>
-                        <Button fx:id="searchConfirmButton" mnemonicParsing="false" onAction="#onSearchConfirm" text="search" />
-                        <Button fx:id="searchClearButton" mnemonicParsing="false" onAction="#onClear" text="clear" />
+                        <Button fx:id="findConfirmButton" mnemonicParsing="false" onAction="#onSearchConfirm" text="find" />
+                        <Button fx:id="findClearButton" mnemonicParsing="false" onAction="#onClear" text="clear" />
                     </children>
                 </HBox>
             </content>
@@ -100,7 +100,7 @@
             <content>
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <TextField fx:id="filterSearchField" onAction="#onFilterUpdated" promptText="regex filter.." xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
+                        <TextField fx:id="filterTextField" onAction="#onFilterUpdated" promptText="regex filter.." xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
                         <Button mnemonicParsing="false" onAction="#onClear" text="clear" />
 
                     </children>
@@ -122,7 +122,7 @@
                </ScrollPane>
                 </children>
             </VBox>
-            <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onTabPaneUpdate" onKeyPressed="#onKeyTyped" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#onKeyTyped" onMouseClicked="#onTabPaneUpdate" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                 <tabs>
 
                 </tabs>

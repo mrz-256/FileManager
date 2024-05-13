@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class SearchCommand extends FileCommand {
+public class FindCommand extends FileCommand {
 
     /**
      * Searches for all files in depth either from current directory or from home directory depending on `config`.
@@ -56,7 +56,7 @@ public class SearchCommand extends FileCommand {
             }
 
             // add matching file
-            else if (current.getName().matches(toFind.getName())) {
+            if (current.getName().matches(toFind.getName())) {
                 result.add(current);
             }
         }
@@ -66,6 +66,6 @@ public class SearchCommand extends FileCommand {
 
     @Override
     public FileCommandName getID() {
-        return FileCommandName.SEARCH;
+        return FileCommandName.FIND;
     }
 }

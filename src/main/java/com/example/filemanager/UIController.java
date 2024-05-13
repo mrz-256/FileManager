@@ -38,18 +38,18 @@ public class UIController {
     private VBox places;
 
     @FXML
-    public TextField searchTextField;
+    public TextField findTextField;
     @FXML
-    public ChoiceBox<String> searchChoiceBox;
+    public ChoiceBox<String> findChoiceBox;
     @FXML
-    public Button searchConfirmButton;
+    public Button findConfirmButton;
     @FXML
-    public Button searchClearButton;
+    public Button findClearButton;
 
     @FXML
     public TitledPane filterTitledPane;
     @FXML
-    public TextField filterSearchField;
+    public TextField filterTextField;
 
     /**
      * Singleton instance
@@ -213,8 +213,8 @@ public class UIController {
         showHiddenCheckbox.setSelected(config.showHiddenFiles);
         sortSmallestFirst.setSelected(config.sortSmallestFirst);
 
-        searchTextField.clear();
-        filterSearchField.clear();
+        findTextField.clear();
+        filterTextField.clear();
         updateCurrentTab();
     }
     //endregion
@@ -239,8 +239,8 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         var title = tab.getTitle();
 
-        tab.applyFilter(filterSearchField.getText());
-        filterSearchField.setText("");
+        tab.applyFilter(filterTextField.getText());
+        filterTextField.setText("");
 
         updateDisplayOfTab(tab);
         tab.setTitle("filtered " + title);
@@ -250,31 +250,31 @@ public class UIController {
     //region search
     @FXML
     public void onSearchConfirm() {
-        String value = searchTextField.getText();
+        String value = findTextField.getText();
         if (value == null || value.matches("^\\s*$")) {
             return;
         }
 
         var tab = getCurrentLogicalTab();
         try {
-            tab.executeCommand(FileCommandName.SEARCH, new File(value));
+            tab.executeCommand(FileCommandName.FIND, new File(value));
         } catch (FileException ignored) {
         } // doesn't matter - nothing happens
     }
 
     @FXML
     public void onClear() {
-        searchTextField.clear();
-        filterSearchField.clear();
+        findTextField.clear();
+        filterTextField.clear();
         var tab = getCurrentLogicalTab();
-        tab.clearSearch();
+        tab.clearFindMode();
         tab.update();
     }
 
-    public void onSearchChoice() {
+    public void onFindChoice() {
         var tab = getCurrentLogicalTab();
 
-        tab.getConfig().searchStart = (searchChoiceBox.getValue().equals("start from here"))
+        tab.getConfig().searchStart = (findChoiceBox.getValue().equals("start from here"))
                 ? LogicalConfig.SearchStart.SEARCH_FROM_HERE
                 : LogicalConfig.SearchStart.SEARCH_FROM_HOME;
     }

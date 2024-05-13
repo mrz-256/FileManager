@@ -29,7 +29,7 @@ public abstract class FileCommand {
             case OPEN -> new OpenFileCommand();
             case PASTE -> new PasteFilesCommand();
             case RENAME -> new RenameFileCommand();
-            case SEARCH -> new SearchCommand();
+            case FIND -> new FindCommand();
             case _directory_only_start -> throw new FileException("Prohibited command type.");
         };
     }
