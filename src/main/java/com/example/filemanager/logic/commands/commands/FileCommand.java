@@ -17,8 +17,9 @@ public abstract class FileCommand {
      *
      * @param name the command to match
      * @return the command
+     * @throws FileException the prohibited command type usage
      */
-    public static FileCommand getByType(FileCommandName name) {
+    public static FileCommand getByType(FileCommandName name) throws FileException {
         return switch (name) {
             case UNDO -> null;
             case DELETE -> new DeleteFilesCommand();
@@ -29,6 +30,7 @@ public abstract class FileCommand {
             case PASTE -> new PasteFilesCommand();
             case RENAME -> new RenameFileCommand();
             case SEARCH -> new SearchCommand();
+            case _directory_only_start -> throw new FileException("Prohibited command type.");
         };
     }
 

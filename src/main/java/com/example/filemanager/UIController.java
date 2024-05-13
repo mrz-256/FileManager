@@ -260,9 +260,6 @@ public class UIController {
             tab.executeCommand(FileCommandName.SEARCH, new File(value));
         } catch (FileException ignored) {
         } // doesn't matter - nothing happens
-
-        updateDisplayOfTab(tab);
-        tab.setTitle("search for \"" + value + "\"");
     }
 
     @FXML
@@ -270,8 +267,8 @@ public class UIController {
         searchTextField.clear();
         filterSearchField.clear();
         var tab = getCurrentLogicalTab();
+        tab.clearSearch();
         tab.update();
-        updateDisplayOfTab(tab);
     }
 
     public void onSearchChoice() {
