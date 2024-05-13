@@ -51,7 +51,9 @@ public class PropertiesGeneralTabCreator {
 
         if (file.isDirectory()) {
             contents.addRow(9, new Label());
-            contents.addRow(10, new Label("Contains:"), new Label(Objects.requireNonNull(file.listFiles()).length + " files."));
+            var files = file.listFiles();
+            int nfiles = (files != null) ? files.length : 0;
+            contents.addRow(10, new Label("Contains:"), new Label(nfiles + " files."));
         }
 
     }
