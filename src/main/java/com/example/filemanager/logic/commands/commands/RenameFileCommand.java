@@ -41,7 +41,7 @@ public class RenameFileCommand extends FileCommand {
 
         FUtil.copyFile(original, new_file);
 
-        if (!original.delete()){
+        if (!original.delete()) {
             throw new RenameFileException("Can't rename properly.", original);
         }
 
@@ -55,7 +55,7 @@ public class RenameFileCommand extends FileCommand {
         }
 
         FUtil.copyFile(new_file, original);
-        if (!new_file.delete()){
+        if (!new_file.delete()) {
             throw new RenameFileException("Can't undo rename properly.", new_file);
         }
     }

@@ -9,10 +9,10 @@ import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.logic.sort_strategy.LastModifiedStrategy;
 import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import com.example.filemanager.logic.sort_strategy.SizeStrategy;
-import com.example.filemanager.ui_logic.newdirectory.NewDirectoryDialogueCreator;
-import com.example.filemanager.ui_logic.newfile.NewFileDialogueCreator;
 import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
 import com.example.filemanager.ui_logic.display_strategy.ListStrategy;
+import com.example.filemanager.ui_logic.newdirectory.NewDirectoryDialogueCreator;
+import com.example.filemanager.ui_logic.newfile.NewFileDialogueCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -84,7 +84,7 @@ public class UIController {
         updateCurrentTab();
     }
 
-    public static void onClose(){
+    public static void onClose() {
         CommandHistory.flushToFile();
     }
 

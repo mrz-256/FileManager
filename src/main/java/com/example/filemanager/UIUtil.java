@@ -1,15 +1,13 @@
 package com.example.filemanager;
 
+import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.LogicalConfig;
+import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.commands.ListAllCommand;
-import com.example.filemanager.logic.FUtil;
-import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.logic.exceptions.FileException;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;

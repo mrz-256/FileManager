@@ -18,6 +18,7 @@ public class ImageCache {
 
     private static final int INCREASE_LIFE = 5;
     private static final int DECREASE_LIFE = 1;
+
     private static class LoadedImage {
         Image image;
         int life;
@@ -52,19 +53,19 @@ public class ImageCache {
     /**
      * Removes old unused loaded images. For now unused.
      */
-    public static void collectGarbage(){
+    public static void collectGarbage() {
         var to_remove = new LinkedList<String>();
 
-        for(var key : loadedImages.keySet()){
+        for (var key : loadedImages.keySet()) {
             var data = loadedImages.get(key);
 
             data.life -= DECREASE_LIFE;
-            if (data.life <= 0){
+            if (data.life <= 0) {
                 to_remove.add(key);
             }
         }
 
-        for(var data : to_remove){
+        for (var data : to_remove) {
             loadedImages.remove(data);
         }
     }

@@ -47,7 +47,7 @@ public class PasteFilesCommand extends FileCommand {
             try {
                 FUtil.deepCopy(file, new_file);
                 copies.add(new_file);
-            } catch (DuplicateFileException e){
+            } catch (DuplicateFileException e) {
                 err.append(e.getMessage());
             }
         }
@@ -71,6 +71,7 @@ public class PasteFilesCommand extends FileCommand {
             }
         }
     }
+
     @Override
     public FileCommandName getID() {
         return FileCommandName.PASTE;

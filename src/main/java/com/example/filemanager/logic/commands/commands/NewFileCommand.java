@@ -49,7 +49,7 @@ public class NewFileCommand extends FileCommand {
     @Override
     public void undo() throws NewFileException {
         if (creation.exists()) {
-            if (!creation.delete()){
+            if (!creation.delete()) {
                 throw new NewFileException("Can't undo creation of file.", creation);
             }
         }

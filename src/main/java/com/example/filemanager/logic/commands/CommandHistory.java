@@ -2,7 +2,6 @@ package com.example.filemanager.logic.commands;
 
 import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.commands.commands.FileCommand;
-import com.example.filemanager.logic.exceptions.DeleteFileException;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.BufferedWriter;
@@ -68,18 +67,17 @@ public class CommandHistory {
         log.append(" : ").append((undo) ? "undo" : " do ");
         log.append(" : ").append(command.getID()).append('\n');
 
-        if (logSize > MAX_LOG_SIZE){
+        if (logSize > MAX_LOG_SIZE) {
             flushToFile();
         }
     }
 
-    public static void flushToFile(){
+    public static void flushToFile() {
         var file = new File(LOG_FILE_PATH);
 
-        try(var br = new BufferedWriter(new FileWriter(file, true))){
+        try (var br = new BufferedWriter(new FileWriter(file, true))) {
             br.write(log.toString());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("E" + e.getMessage());
         }
 

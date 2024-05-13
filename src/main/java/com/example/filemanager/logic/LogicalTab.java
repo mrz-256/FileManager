@@ -125,10 +125,9 @@ public class LogicalTab {
      */
     public void update() {
         try {
-            if (isInFindMode && currentFileToFind != null){
+            if (isInFindMode && currentFileToFind != null) {
                 executeCommand(FileCommandName.FIND, currentFileToFind);
-            }
-            else {
+            } else {
                 executeCommand(FileCommandName.LIST_ALL);
             }
         } catch (FileException ignored) {
@@ -141,10 +140,9 @@ public class LogicalTab {
      * because otherwise the loading is too slow.
      */
     public void updateTabDisplay() {
-        if (isInFindMode){
+        if (isInFindMode) {
             tab.setText("search \"" + currentFileToFind.getName() + "\"");
-        }
-        else{
+        } else {
             tab.setText(directory.getAbsolutePath());
         }
 
@@ -186,7 +184,7 @@ public class LogicalTab {
      * @throws FileException when invalid command is passed
      */
     public void executeCommand(FileCommandName command, File... params) throws FileException {
-        if (isInFindMode && !command.isUniversalSafe()){
+        if (isInFindMode && !command.isUniversalSafe()) {
             throw new InvalidLocationOfExecutionException("Can't perform operation " + command + " outside an directory.");
         }
         if (command == FileCommandName.UNDO) {
@@ -202,16 +200,15 @@ public class LogicalTab {
         if (files != null) {
             listedFiles = files;
 
-            if (to_execute.getID() == FileCommandName.FIND){
+            if (to_execute.getID() == FileCommandName.FIND) {
                 setFindMode(params[0]);
             }
 
             updateTabDisplay();
         } else {
-            if (isInFindMode){
+            if (isInFindMode) {
                 executeCommand(FileCommandName.FIND, currentFileToFind);
-            }
-            else{
+            } else {
                 executeCommand(FileCommandName.LIST_ALL);
             }
         }
@@ -251,6 +248,7 @@ public class LogicalTab {
 
     /**
      * Sets the tile of the javafx tab
+     *
      * @param title the text title
      */
     public void setTitle(String title) {
@@ -260,16 +258,17 @@ public class LogicalTab {
     /**
      * Return to normal directory mode
      */
-    public void clearFindMode(){
+    public void clearFindMode() {
         isInFindMode = false;
         currentFileToFind = null;
     }
 
     /**
      * Sets tab to toFind mode with provided toFind
+     *
      * @param toFind the file to toFind for now
      */
-    private void setFindMode(File toFind){
+    private void setFindMode(File toFind) {
         isInFindMode = true;
         currentFileToFind = toFind;
     }
@@ -277,7 +276,7 @@ public class LogicalTab {
     /**
      * @return if all commands can be executed in current state of the tab
      */
-    public boolean isSafeForUniversalCommands(){
+    public boolean isSafeForUniversalCommands() {
         return !isInFindMode;
     }
     //endregion

@@ -1,13 +1,12 @@
 package com.example.filemanager.ui_logic.controlmenu;
 
-import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
-import com.example.filemanager.logic.commands.FileCommandName;
-import com.example.filemanager.ui_logic.rename.RenameDialogueCreator;
 import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.LogicalTab;
+import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.FileException;
 import com.example.filemanager.ui_logic.controlmenu.properties.PropertiesDialogueCreator;
+import com.example.filemanager.ui_logic.rename.RenameDialogueCreator;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;

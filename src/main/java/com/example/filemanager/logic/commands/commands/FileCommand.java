@@ -2,8 +2,6 @@ package com.example.filemanager.logic.commands.commands;
 
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.FileCommandName;
-import com.example.filemanager.logic.exceptions.DeleteFileException;
-import com.example.filemanager.logic.exceptions.DuplicateFileException;
 import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;

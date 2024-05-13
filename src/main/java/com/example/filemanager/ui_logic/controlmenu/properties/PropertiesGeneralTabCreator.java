@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Objects;
 
 public class PropertiesGeneralTabCreator {
 
@@ -36,7 +35,7 @@ public class PropertiesGeneralTabCreator {
         contents.addRow(row++, new Label("Name:"), new Label(file.getName()));
         contents.addRow(row++, new Label("Location:"), new Label(file.getParent()));
         contents.addRow(row++, new Label("Type:"), new Label(FUtil.getFileType(file)));
-        if (file.isHidden()){
+        if (file.isHidden()) {
             contents.addRow(row++, new Label("Visibility:"), new Label("hidden file"));
         }
         contents.addRow(row++, new Label());

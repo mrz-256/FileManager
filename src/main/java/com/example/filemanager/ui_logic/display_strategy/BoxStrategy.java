@@ -2,7 +2,9 @@ package com.example.filemanager.ui_logic.display_strategy;
 
 import com.example.filemanager.logic.LogicalTab;
 import com.example.filemanager.ui_logic.images.IconButtonCreator;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 
 import java.io.File;

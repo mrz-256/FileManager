@@ -16,6 +16,7 @@ public class PropertiesChecksumTabCreator {
 
     /**
      * Adds a tab with checksums to the properties popup.
+     *
      * @param pane the tabpane
      * @param file the file whose properties are being checked
      */
@@ -41,7 +42,7 @@ public class PropertiesChecksumTabCreator {
         field.setPromptText("MD5 or SHA1 or SHA256 or SHA 512..");
         field.setOnAction((x) -> {
             var text = field.getText();
-            String type = switch (text.length()){
+            String type = switch (text.length()) {
                 case 32 -> "MD5";
                 case 40 -> "SHA1";
                 case 64 -> "SHA256";
@@ -55,7 +56,7 @@ public class PropertiesChecksumTabCreator {
                 return;
             }
 
-            if (text.equals(getChecksum(type, file))){
+            if (text.equals(getChecksum(type, file))) {
                 matchInfo.setText("Checksums do match.");
                 matchInfo.setStyle("-fx-border-color: #63ff63");
             } else {
