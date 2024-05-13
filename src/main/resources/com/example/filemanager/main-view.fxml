@@ -86,7 +86,7 @@
                             <content>
                                 <HBox>
                                     <children>
-                                        <TextField fx:id="findTextField" promptText="regex.." />
+                                        <TextField fx:id="findTextField" onAction="#onFindConfirm" promptText="regex.." />
                                         <ChoiceBox fx:id="findChoiceBox" onAction="#onFindChoice" prefWidth="150.0" value="search from here">
                                             <items>
                                                 <FXCollections fx:factory="observableArrayList">
@@ -106,6 +106,7 @@
                                 <HBox>
                                     <children>
                                         <TextField fx:id="filterTextField" onAction="#onFilterUpdated" promptText="regex filter.." xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
+                              <Button mnemonicParsing="false" onAction="#onFilterUpdated" text="filter" />
                                         <Button mnemonicParsing="false" onAction="#onClear" text="clear" />
                                     </children>
                                 </HBox>
