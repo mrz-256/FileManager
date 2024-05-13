@@ -44,7 +44,7 @@ public class SearchCommand extends FileCommand {
         que.add(start);
 
 
-        while (!que.isEmpty() && result.size() < 512) {
+        while (!que.isEmpty() && result.size() < context.config().maximalShownFiles) {
             var current = que.poll();
 
             // continue search deeper

@@ -90,8 +90,8 @@ public class LogicalTab {
     public void updateTabDisplay() {
         tab.setText(directory.getAbsolutePath());
 
-        if (listedFiles.size() > 512) {
-            listedFiles = (ArrayList<File>) listedFiles.subList(0, 512);
+        if (listedFiles.size() > configuration.maximalShownFiles) {
+            listedFiles = (ArrayList<File>) listedFiles.subList(0, configuration.maximalShownFiles);
         }
 
 

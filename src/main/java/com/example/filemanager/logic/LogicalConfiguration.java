@@ -13,6 +13,7 @@ import java.util.List;
 public class LogicalConfiguration {
     public SortStrategy sortStrategy;
     public boolean showHiddenFiles;
+    public int maximalShownFiles;
     public SearchStart searchStart;
     public boolean sortSmallestFirst;
 
@@ -21,15 +22,16 @@ public class LogicalConfiguration {
     }
 
 
-    public LogicalConfiguration(SortStrategy sortStrategy, boolean showHiddenFiles, boolean sortSmallestFirst, SearchStart searchStart) {
+    public LogicalConfiguration(SortStrategy sortStrategy, boolean showHiddenFiles, int maximalShownFiles, boolean sortSmallestFirst, SearchStart searchStart) {
         this.sortStrategy = sortStrategy;
         this.showHiddenFiles = showHiddenFiles;
+        this.maximalShownFiles = maximalShownFiles;
         this.sortSmallestFirst = sortSmallestFirst;
         this.searchStart = searchStart;
     }
 
     public static LogicalConfiguration defaultConfiguration() {
-        return new LogicalConfiguration(new NameStrategy(), false, true, SearchStart.SEARCH_FROM_HERE);
+        return new LogicalConfiguration(new NameStrategy(), false, 512, true, SearchStart.SEARCH_FROM_HERE);
     }
 
     public void apply(List<File> files) {
