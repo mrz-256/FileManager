@@ -24,6 +24,8 @@ public class PropertiesGeneralTabCreator {
     static void addGeneralTab(TabPane pane, File file) {
         var contents = new GridPane();
         var tab = new Tab();
+        int row = 0;
+
         tab.setText("General");
         tab.setContent(contents);
         tab.setClosable(false);
@@ -31,8 +33,15 @@ public class PropertiesGeneralTabCreator {
 
         contents.getColumnConstraints().add(new ColumnConstraints(150));
 
-        contents.addRow(0, new Label("Name:"), new Label(file.getName()));
-        contents.addRow(1, new Label("Location:"), new Label(file.getParent()));
+        contents.addRow(row++, new Label("Name:"), new Label(file.getName()));
+        contents.addRow(row++, new Label("Location:"), new Label(file.getParent()));
+        contents.addRow(row++, new Label("Type:"), new Label(FUtil.getFileType(file)));
+        if (file.isHidden()){
+            contents.addRow(row++, new Label("Visibility:"), new Label("hidden file"));
+        }
+        contents.addRow(row++, new Label());
+        contents.addRow(row++, new Label("Size:"), new Label(FUtil.optimizeSizeFormat(file.length()) + " (" + file.length() + "B)"));
+        contents.addRow(row++, new Label());
 
         BasicFileAttributes attr;
         try {
@@ -41,19 +50,15 @@ public class PropertiesGeneralTabCreator {
             return;
         }
 
-        contents.addRow(2, new Label("Type:"), new Label(FUtil.getFileType(file)));
-        contents.addRow(3, new Label());
-        contents.addRow(4, new Label("Size:"), new Label(FUtil.optimizeSizeFormat(file.length()) + " (" + file.length() + "B)"));
-        contents.addRow(5, new Label());
-        contents.addRow(6, new Label("Created:"), new Label(FUtil.simplifyDateTime(attr.creationTime().toString())));
-        contents.addRow(7, new Label("Modified:"), new Label(FUtil.simplifyDateTime(attr.lastModifiedTime().toString())));
-        contents.addRow(8, new Label("Accessed:"), new Label(FUtil.simplifyDateTime(attr.lastAccessTime().toString())));
+        contents.addRow(row++, new Label("Created:"), new Label(FUtil.simplifyDateTime(attr.creationTime().toString())));
+        contents.addRow(row++, new Label("Modified:"), new Label(FUtil.simplifyDateTime(attr.lastModifiedTime().toString())));
+        contents.addRow(row++, new Label("Accessed:"), new Label(FUtil.simplifyDateTime(attr.lastAccessTime().toString())));
 
         if (file.isDirectory()) {
-            contents.addRow(9, new Label());
+            contents.addRow(row++, new Label());
             var files = file.listFiles();
             int nfiles = (files != null) ? files.length : 0;
-            contents.addRow(10, new Label("Contains:"), new Label(nfiles + " files."));
+            contents.addRow(row++, new Label("Contains:"), new Label(nfiles + " files."));
         }
 
     }
