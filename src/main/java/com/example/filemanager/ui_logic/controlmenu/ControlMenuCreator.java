@@ -42,6 +42,7 @@ public class ControlMenuCreator {
      * @param file       the file
      */
     private static void fillControlMenu(ContextMenu menu, LogicalTab logicalTab, File file) {
+
         // all used menu items
         var copy = new MenuItem("copy");
         var copyPath = new MenuItem("copy path");
@@ -58,18 +59,14 @@ public class ControlMenuCreator {
         );
 
         //region action copy
-        copy.setOnAction((x) -> {
-            FUtil.storeFileToClipboard(file);
-        });
+        copy.setOnAction((x) -> FUtil.storeFileToClipboard(file));
 
-        copyPath.setOnAction((x) -> {
-            FUtil.storeTextToClipboard(file.getAbsolutePath());
-        });
+        copyPath.setOnAction((x) -> FUtil.storeTextToClipboard(file.getAbsolutePath()));
         //endregion
 
         //region affecting file
         cut.setOnAction((x) -> {
-            FUtil.storeFileToClipboard(file);
+            FUtil.storeTextToClipboard(file.getAbsolutePath());
 
             try {
                 logicalTab.executeCommand(FileCommandName.DELETE, file);
