@@ -46,7 +46,9 @@ public class CommandHistory {
      * Undoes last executed command that can be.
      */
     public static void undoLast() throws FileException {
-        if (executedCommands.empty()) return;
+        if (executedCommands.empty()) {
+            return;
+        }
 
         FileCommand command = executedCommands.pop();
         addLog(command, true);

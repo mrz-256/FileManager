@@ -6,23 +6,27 @@ import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
 import com.example.filemanager.logic.exceptions.DeleteFileException;
 import com.example.filemanager.logic.exceptions.DuplicateFileException;
-import com.example.filemanager.logic.exceptions.FileException;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * A command that deletes all files from context working[],
  * temporally stores them so that action can be undone.
  */
 public class DeleteFilesCommand extends FileCommand {
-    private final ArrayList<File> save;
-    private final ArrayList<File> original;
+    private final LinkedList<File> save;
+    private final LinkedList<File> original;
 
 
     public DeleteFilesCommand() {
-        save = new ArrayList<>();
-        original = new ArrayList<>();
+        save = new LinkedList<>();
+        original = new LinkedList<>();
     }
 
     /**
@@ -39,12 +43,20 @@ public class DeleteFilesCommand extends FileCommand {
 
 
         for (var file : context.working()) {
-            saveFile(file);
 
             try {
+                var tmp = File.createTempFile("save", ".temp");
+
+                if (file.isFile()){
+                    FUtil.copyFile(file, tmp);
+                    tmp.deleteOnExit();
+                    save.add(tmp);
+                    original.add(file);
+                }
+
                 FUtil.deepDelete(file);
             } catch (Exception e) {
-                error.append(e);
+                error.append(e.getMessage());
             }
 
         }
@@ -56,25 +68,10 @@ public class DeleteFilesCommand extends FileCommand {
         return null;
     }
 
-    private void saveFile(File file) {
-        try {
-            File tmp = File.createTempFile(file.getName(), null);
-
-            FUtil.deepCopy(file, tmp);
-            tmp.deleteOnExit();
-            save.add(tmp);
-            original.add(file);
-
-        } catch (Exception ignored) {
-        }
-    }
-
     @Override
     public void undo() throws DuplicateFileException {
         for (int i = 0; i < save.size(); i++) {
-            if (save.get(i) != null && original.get(i) != null) {
-                FUtil.deepCopy(save.get(i), original.get(i));
-            }
+            FUtil.deepCopy(save.get(i), original.get(i));
         }
     }
 

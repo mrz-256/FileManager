@@ -3,6 +3,7 @@ package com.example.filemanager.logic.commands;
 import com.example.filemanager.logic.LogicalConfig;
 import com.example.filemanager.logic.commands.commands.DeleteFilesCommand;
 import com.example.filemanager.logic.exceptions.FileException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -10,6 +11,11 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeleteFilesCommandTest {
+
+    @BeforeEach
+    void setUp() {
+        CommandHistory.initialize();
+    }
 
     @Test
     void test() throws FileException {
@@ -31,5 +37,7 @@ class DeleteFilesCommandTest {
         CommandHistory.undoLast();
 
         assertTrue(todelete.exists());
+
+        CommandHistory.flushToFile();
     }
 }

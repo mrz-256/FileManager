@@ -1,7 +1,6 @@
 package com.example.filemanager.logic;
 
 import com.example.filemanager.UIController;
-import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.commands.CommandContext;
 import com.example.filemanager.logic.commands.CommandHistory;
 import com.example.filemanager.logic.commands.FileCommandName;
@@ -20,7 +19,6 @@ import java.util.LinkedList;
 
 /**
  * A class representing a single tab withing file manager.
- * CommandHistory is a singleton common for all tabs.
  */
 public class LogicalTab {
     /**

@@ -78,7 +78,7 @@ public class ControlMenuCreator {
         delete.setOnAction((x) -> {
             try {
                 logicalTab.executeCommand(FileCommandName.DELETE, file);
-            } catch (FileException e) {
+            } catch (Exception e) {
                 var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Can't delete file: " + file, e.getMessage());
                 alert.show();
             }

@@ -8,7 +8,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.util.Pair;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
@@ -36,7 +35,7 @@ public class FUtil {
                     StandardCopyOption.COPY_ATTRIBUTES
             );
             return true;
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -51,11 +50,8 @@ public class FUtil {
     public static void deepCopy(File source, File destination) throws DuplicateFileException {
         var err = new StringBuilder();
 
-        // start of duplicated directory
-        var copy_root = FUtil.inventUniqueName(destination);
-
         Queue<Pair<File, File>> que = new LinkedList<>();
-        que.add(new Pair<>(source, copy_root));
+        que.add(new Pair<>(source, destination));
 
         while (!que.isEmpty()) {
             var current = que.poll();
@@ -69,7 +65,7 @@ public class FUtil {
                     err.append("Error copying file(").append(e.getMessage()).append("): ").append(current.getValue()).append('\n');
                 }
             } else {
-                if (!current.getValue().mkdirs()) {
+                if (!current.getValue().mkdir()) {
                     err.append("Error making subdirectory: ").append(current.getValue()).append('\n');
                     continue;
                 }
@@ -148,10 +144,9 @@ public class FUtil {
         String new_name;
 
         // if name has extension
-        if (name.matches("^.*\\..+$")){
+        if (name.matches("^.*\\..+$")) {
             new_name = name.replaceAll("^(.*)(\\..+)$", "$1 copy$2");
-        }
-        else {
+        } else {
             new_name = name + " copy";
         }
 
@@ -202,7 +197,6 @@ public class FUtil {
     public static File getHomeDirectory() {
         return new File(getHomePath());
     }
-
 
     /**
      * Transform numerical size in bytes into minimal string representation

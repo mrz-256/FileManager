@@ -3,6 +3,7 @@ package com.example.filemanager.logic.commands;
 import com.example.filemanager.logic.LogicalConfig;
 import com.example.filemanager.logic.commands.commands.NewFileCommand;
 import com.example.filemanager.logic.exceptions.FileException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -11,6 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NewFileCommandTest {
 
+    @BeforeEach
+    void setUp() {
+        CommandHistory.initialize();
+    }
 
     @Test
     void execute() throws FileException {
