@@ -13,8 +13,4 @@ public record TreeValue(File file){
     public static TreeItem<TreeValue> makeItem(File file){
         return new TreeItem<>(new TreeValue(file));
     }
-
-    public static TreeItem<TreeValue> makeItem(String path){
-        return new TreeItem<>(new TreeValue(new File(path)));
-    }
 }

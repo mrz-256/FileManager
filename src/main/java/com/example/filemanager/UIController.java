@@ -81,7 +81,7 @@ public class UIController {
 
         sortSmallestFirst.setSelected(true);
 
-        TreeViewBuilder.buildTreeView(treeView);
+        TreeViewBuilder.treeViewInit(treeView);
 
         updateCurrentTab();
     }
@@ -101,10 +101,6 @@ public class UIController {
 
     public static int getTabPaneWidth() {
         return (int) getInstance().tabPane.getWidth();
-    }
-
-    public static int getTabPaneHeight() {
-        return (int) getInstance().tabPane.getHeight();
     }
 
     /**

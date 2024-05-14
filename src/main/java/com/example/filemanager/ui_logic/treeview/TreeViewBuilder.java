@@ -1,5 +1,7 @@
 package com.example.filemanager.ui_logic.treeview;
 
+import com.example.filemanager.UIController;
+import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.sort_strategy.NameStrategy;
 import javafx.scene.control.TreeItem;
@@ -10,6 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreeViewBuilder {
+
+    public static void treeViewInit(TreeView<TreeValue> view){
+        buildTreeView(view);
+
+        view.setOnMouseClicked((x) -> {
+            var current = view.getSelectionModel().getSelectedItem().getValue().file();
+
+            UIUtil.tryMovingToDirectory(current);
+        });
+    }
 
     public static void buildTreeView(TreeView<TreeValue> view) {
         var item_root = new TreeItem<TreeValue>();

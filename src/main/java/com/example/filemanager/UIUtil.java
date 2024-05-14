@@ -39,36 +39,6 @@ public class UIUtil {
     }
 
     /**
-     * A helper function of the fillPlacesList() function.
-     * Adds a button leading to given directory to the list
-     *
-     * @param pane the list of the files to fill
-     * @param file the file to add
-     */
-    private static void addFileToPlacesList(VBox pane, File file) {
-        Button button = new Button();
-        button.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-content-display: top;" +
-                        "-fx-border-color: rgba(128,128,128,0.13);"
-        );
-        button.setText(file.getName());
-        button.setPrefWidth(200);
-        button.setAlignment(Pos.CENTER_LEFT);
-
-        button.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-                try {
-                    UIController.setDirectoryInCurrentTab(file);
-                } catch (Exception ignored) {
-                }
-            }
-        });
-
-        pane.getChildren().add(button);
-    }
-
-    /**
      * Creates an Alert of given type with given message.
      *
      * @param type   the type of alert
@@ -84,5 +54,16 @@ public class UIUtil {
         return dialogue;
     }
 
-
+    /**
+     * Either moves current directory in UIController to provided directory or shows Alert.
+     * @param directory the directory to move to in the current tab.
+     */
+    public static void tryMovingToDirectory(File directory){
+        try {
+            UIController.setDirectoryInCurrentTab(directory);
+        } catch (Exception e){
+            var alert = createAlert(Alert.AlertType.ERROR, "Failed moving to directory.", e.getMessage());
+            alert.show();
+        }
+    }
 }
