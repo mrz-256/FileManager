@@ -1,6 +1,5 @@
 package com.example.filemanager.ui_logic.treeview;
 
-import com.example.filemanager.UIController;
 import com.example.filemanager.UIUtil;
 import com.example.filemanager.logic.FUtil;
 import com.example.filemanager.logic.sort_strategy.NameStrategy;
@@ -11,10 +10,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class for building the tree view of file hierarchy.
+ */
 public class TreeViewBuilder {
 
+    /**
+     * Creates the tree-view for the first time and sets some other things.
+     * @param view the TreeView object
+     */
     public static void treeViewInit(TreeView<TreeValue> view){
-        buildTreeView(view);
+        rebuildTreeView(view);
 
         view.setOnMouseClicked((x) -> {
             var current = view.getSelectionModel().getSelectedItem().getValue().file();
@@ -23,7 +29,11 @@ public class TreeViewBuilder {
         });
     }
 
-    public static void buildTreeView(TreeView<TreeValue> view) {
+    /**
+     * Rebuilds the whole tree-view structure.
+     * @param view the view
+     */
+    public static void rebuildTreeView(TreeView<TreeValue> view) {
         var item_root = new TreeItem<TreeValue>();
         view.setRoot(item_root);
 
@@ -47,6 +57,10 @@ public class TreeViewBuilder {
         item_root.setExpanded(true);
     }
 
+    /**
+     * Adds a layer of subdirectories under the selected item
+     * @param item the item to add subdirectories into
+     */
     private static void treeViewAddLayer(TreeItem<TreeValue> item) {
         var directory = item.getValue().file();
         if (!directory.exists() || !directory.isDirectory()) {
