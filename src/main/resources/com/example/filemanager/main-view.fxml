@@ -5,7 +5,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <VBox id="root_vbox" maxWidth="700.0" prefHeight="675.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.filemanager.UIController">
     <children>
@@ -77,7 +76,7 @@
                 </SplitMenuButton>
             </items>
         </ToolBar>
-          <ToolBar fx:id="filepathView" prefHeight="40.0" style="-fx-border-color: transparent; -fx-padding: 0;" />
+        <ToolBar fx:id="filepathView" prefHeight="40.0" style="-fx-border-color: transparent; -fx-padding: 0;" />
         <TitledPane expanded="false" text="functions">
             <content>
                 <TabPane prefHeight="150.0" tabClosingPolicy="UNAVAILABLE">
@@ -106,7 +105,7 @@
                                 <HBox>
                                     <children>
                                         <TextField fx:id="filterTextField" onAction="#onFilterUpdated" promptText="regex filter.." xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
-                              <Button mnemonicParsing="false" onAction="#onFilterUpdated" text="filter" />
+                                        <Button mnemonicParsing="false" onAction="#onFilterUpdated" text="filter" />
                                         <Button mnemonicParsing="false" onAction="#onClear" text="clear" />
                                     </children>
                                 </HBox>
@@ -116,26 +115,15 @@
                 </TabPane>
             </content>
         </TitledPane>
-        <HBox id="main_hbox" prefHeight="625.0" prefWidth="1200.0" VBox.vgrow="ALWAYS">
-            <VBox fillWidth="false" maxWidth="200.0" minWidth="150" VBox.vgrow="ALWAYS">
-                <children>
-                    <Label prefWidth="200.0" style="-fx-border-color: grey; -fx-background-color: transparent;" text="Places">
-                        <font>
-                            <Font size="21.0" />
-                        </font>
-                    </Label>
-                    <ScrollPane hbarPolicy="NEVER" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                        <content>
-                            <VBox id="places_vbox" fx:id="places" prefWidth="200.0" />
-                        </content>
-                    </ScrollPane>
-                </children>
-            </VBox>
-            <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#onKeyTyped" onMouseClicked="#onTabPaneUpdate" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
-                <tabs>
+        <SplitPane dividerPositions="0.2" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <items>
+                  <TreeView fx:id="treeView" prefWidth="190.0" />
+                <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#onKeyTyped" onMouseClicked="#onTabPaneUpdate" prefHeight="429.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                    <tabs>
 
-                </tabs>
-            </TabPane>
-        </HBox>
+                    </tabs>
+                </TabPane>
+            </items>
+        </SplitPane>
     </children>
 </VBox>

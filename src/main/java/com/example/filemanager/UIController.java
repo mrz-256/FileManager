@@ -13,11 +13,12 @@ import com.example.filemanager.ui_logic.display_strategy.BoxStrategy;
 import com.example.filemanager.ui_logic.display_strategy.ListStrategy;
 import com.example.filemanager.ui_logic.newdirectory.NewDirectoryDialogueCreator;
 import com.example.filemanager.ui_logic.newfile.NewFileDialogueCreator;
+import com.example.filemanager.ui_logic.treeview.TreeValue;
+import com.example.filemanager.ui_logic.treeview.TreeViewBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -38,7 +39,7 @@ public class UIController {
     @FXML
     private TabPane tabPane;
     @FXML
-    private VBox places;
+    private TreeView<TreeValue> treeView;
 
     @FXML
     public TextField findTextField;
@@ -80,7 +81,7 @@ public class UIController {
 
         sortSmallestFirst.setSelected(true);
 
-        UIUtil.fillPlacesList(places);
+        TreeViewBuilder.buildTreeView(treeView);
 
         updateCurrentTab();
     }
@@ -100,6 +101,10 @@ public class UIController {
 
     public static int getTabPaneWidth() {
         return (int) getInstance().tabPane.getWidth();
+    }
+
+    public static int getTabPaneHeight() {
+        return (int) getInstance().tabPane.getHeight();
     }
 
     /**
