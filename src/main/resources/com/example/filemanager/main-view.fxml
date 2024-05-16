@@ -77,9 +77,9 @@
             </items>
         </ToolBar>
         <ToolBar fx:id="filepathView" prefHeight="40.0" style="-fx-border-color: transparent; -fx-padding: 0;" />
-        <TitledPane expanded="false" text="functions">
+        <TitledPane expanded="false" text="functions" VBox.vgrow="SOMETIMES">
             <content>
-                <TabPane prefHeight="150.0" tabClosingPolicy="UNAVAILABLE">
+                <TabPane tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                         <Tab text="find">
                             <content>
