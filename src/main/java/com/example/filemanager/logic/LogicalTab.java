@@ -15,6 +15,7 @@ import javafx.scene.control.Tab;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.regex.PatternSyntaxException;
 
 
 /**
@@ -173,7 +174,7 @@ public class LogicalTab {
     /**
      * Applies the filter to the currently listed files.
      */
-    public void applyFilter(String filter) {
+    public void applyFilter(String filter) throws PatternSyntaxException {
         listedFiles.removeIf(file -> !file.getName().matches(filter));
     }
 

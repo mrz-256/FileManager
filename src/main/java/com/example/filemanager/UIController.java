@@ -22,6 +22,7 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.File;
 import java.util.LinkedList;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * A class that holds all tabs and helper static methods for work with App
@@ -228,9 +229,15 @@ public class UIController {
     public void onFilterUpdated() {
         var tab = getCurrentLogicalTab();
         var title = tab.getTitle();
+        var pattern = filterTextField.getText();
 
-        tab.applyFilter(filterTextField.getText());
-        filterTextField.setText("");
+        try{
+            tab.applyFilter(pattern);
+        } catch (Exception e){
+            var alert = UIUtil.createAlert(Alert.AlertType.WARNING, "Failed filter", " Invalid pattern \""+ pattern + "\"");
+            alert.show();
+        }
+        filterTextField.clear();
 
         tab.updateTabDisplay();
         tab.setTitle("filtered " + title);
@@ -248,10 +255,15 @@ public class UIController {
         var tab = getCurrentLogicalTab();
         try {
             tab.executeCommand(FileCommandName.FIND, new File(value));
-        } catch (Exception e) {
-            var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed find.", e.getMessage());
+
+        }
+        catch (PatternSyntaxException e){
+            var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed find.", "Invalid syntax.");
             alert.show();
-        } // doesn't matter - nothing happens
+        } catch (Exception e) {
+            var alert = UIUtil.createAlert(Alert.AlertType.ERROR, "Failed find.",   e.getMessage());
+            alert.show();
+        }
     }
 
     @FXML
@@ -266,7 +278,7 @@ public class UIController {
     public void onFindChoice() {
         var tab = getCurrentLogicalTab();
 
-        tab.getConfig().searchStart = (findChoiceBox.getValue().equals("start from here"))
+        tab.getConfig().searchStart = (findChoiceBox.getValue().equals("search from here"))
                 ? LogicalConfig.SearchStart.SEARCH_FROM_HERE
                 : LogicalConfig.SearchStart.SEARCH_FROM_HOME;
     }
