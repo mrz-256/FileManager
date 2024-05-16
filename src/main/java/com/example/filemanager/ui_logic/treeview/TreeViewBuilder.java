@@ -23,9 +23,14 @@ public class TreeViewBuilder {
         rebuildTreeView(view);
 
         view.setOnMouseClicked((x) -> {
-            var current = view.getSelectionModel().getSelectedItem().getValue().file();
+            var current = view.getSelectionModel().getSelectedItem();
+            if (current == null){
+                return;
+            }
 
-            UIUtil.tryMovingToDirectory(current);
+            var file = current.getValue().file();
+
+            UIUtil.tryMovingToDirectory(file);
         });
     }
 
