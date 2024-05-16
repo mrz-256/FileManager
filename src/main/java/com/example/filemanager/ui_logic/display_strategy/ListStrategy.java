@@ -14,6 +14,9 @@ import javafx.scene.layout.GridPane;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * Lists files as a vertical list of items.
+ */
 public class ListStrategy implements DisplayStrategy {
 
     @Override

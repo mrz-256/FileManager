@@ -25,7 +25,8 @@ import java.util.LinkedList;
 import java.util.regex.PatternSyntaxException;
 
 /**
- * A class that holds all tabs and helper static methods for work with App
+ * A class that holds all tabs and helper static methods for work with App.
+ * Implemented as a singleton because FXML fields can't be set static.
  */
 public class UIController {
     @FXML
@@ -65,6 +66,10 @@ public class UIController {
     private static LinkedList<LogicalTab> tabs;
     private static final int MAX_TABS = 10;
 
+    /**
+     * Returns the singleton instance.
+     * @return the singleton instance
+     */
     public static UIController getInstance() {
         return instance;
     }
@@ -123,6 +128,9 @@ public class UIController {
         return tabs.get(index);
     }
 
+    /**
+     * @return the filepath ToolBar
+     */
     public static ToolBar getFilepathViewPane(){
         return getInstance().filepathView;
     }

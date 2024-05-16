@@ -29,6 +29,12 @@ public class ImageCache {
         }
     }
 
+    /**
+     * Either returns already loaded image or loads the image and then returns it
+     * @param uri the uri of the image
+     * @param size the size of the image (pixels)
+     * @return the image
+     */
     public static Image getImage(String uri, int size) {
         // if expected image size changed since last `get`, old images are now useless
         if (currentSize != size) {

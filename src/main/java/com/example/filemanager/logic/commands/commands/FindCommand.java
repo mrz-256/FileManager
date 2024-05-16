@@ -13,6 +13,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Searches recursively for file with pattern given with the name of the first file in `working` in context.
+ */
 public class FindCommand extends FileCommand {
 
     /**

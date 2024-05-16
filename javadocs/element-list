@@ -1,0 +1,17 @@
+module:com.example.filemanager
+com.example.filemanager
+com.example.filemanager.logic
+com.example.filemanager.logic.commands
+com.example.filemanager.logic.commands.commands
+com.example.filemanager.logic.exceptions
+com.example.filemanager.logic.sort_strategy
+com.example.filemanager.ui_logic.buttons
+com.example.filemanager.ui_logic.controlmenu
+com.example.filemanager.ui_logic.controlmenu.properties
+com.example.filemanager.ui_logic.display_strategy
+com.example.filemanager.ui_logic.images
+com.example.filemanager.ui_logic.newdirectory
+com.example.filemanager.ui_logic.newfile
+com.example.filemanager.ui_logic.pathview
+com.example.filemanager.ui_logic.rename
+com.example.filemanager.ui_logic.treeview

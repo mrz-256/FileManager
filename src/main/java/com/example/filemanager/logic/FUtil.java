@@ -128,8 +128,7 @@ public class FUtil {
 
     /**
      * Returns a new file with name which doesn't exist yet.
-     * Example: test-file.txt -> test-file(1).txt
-     * If test-file(1).txt already exists, it will be test-file(2).txt and so on.
+     * Example: "some-file.txt" -> "some-file copy.txt"
      * <br>
      * It's possible the name with incremented name already exists too, so recursion is necessary.
      *

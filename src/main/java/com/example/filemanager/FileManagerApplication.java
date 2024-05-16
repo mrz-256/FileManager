@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The main app.
+ */
 public class FileManagerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {

@@ -10,6 +10,9 @@ import com.example.filemanager.logic.exceptions.RenameFileException;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * Renames the first file in `working` in context to the name of the second file there.
+ */
 public class RenameFileCommand extends FileCommand {
     private File original;
     private File new_file;

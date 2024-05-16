@@ -39,6 +39,10 @@ public abstract class FileCommand {
     /**
      * Method to execute command. Returns null if the command itself doesn't look up any files, in case of list
      * and search, returns found files.
+     *
+     * @param context the context of the command
+     * @return (optionally) files found by the command. May often be null.
+     * @throws FileException on fail
      */
     public abstract ArrayList<File> execute(CommandContext context) throws FileException;
 

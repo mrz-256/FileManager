@@ -10,6 +10,9 @@ import javafx.scene.layout.GridPane;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * A display strategy which displays files as box icons.
+ */
 public class BoxStrategy implements DisplayStrategy {
 
     @Override

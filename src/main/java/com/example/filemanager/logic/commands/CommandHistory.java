@@ -20,7 +20,9 @@ public class CommandHistory {
     private static final int MAX_LOG_SIZE = 10;
     private static final String LOG_FILE_PATH = "src/main/resources/data/logs.txt";
 
-
+    /**
+     * Initializes command history with start time as the first log.
+     */
     public static void initialize() {
         log = new StringBuilder("##started : ").append(FUtil.simplifyDateTime(Instant.now().toString())).append("##\n");
         executedCommands = new Stack<>();
@@ -44,6 +46,8 @@ public class CommandHistory {
 
     /**
      * Undoes last executed command that can be.
+     *
+     * @throws FileException when undo fails
      */
     public static void undoLast() throws FileException {
         if (executedCommands.empty()) {
@@ -74,6 +78,9 @@ public class CommandHistory {
         }
     }
 
+    /**
+     * Flushes the current logs to the logfile.
+     */
     public static void flushToFile() {
         var file = new File(LOG_FILE_PATH);
 
