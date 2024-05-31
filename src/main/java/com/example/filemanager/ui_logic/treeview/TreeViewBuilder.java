@@ -17,14 +17,15 @@ public class TreeViewBuilder {
 
     /**
      * Creates the tree-view for the first time and sets some other things.
+     *
      * @param view the TreeView object
      */
-    public static void treeViewInit(TreeView<TreeValue> view){
+    public static void treeViewInit(TreeView<TreeValue> view) {
         rebuildTreeView(view);
 
         view.setOnMouseClicked((x) -> {
             var current = view.getSelectionModel().getSelectedItem();
-            if (current == null || current.getValue() == null){
+            if (current == null || current.getValue() == null) {
                 return;
             }
 
@@ -36,23 +37,22 @@ public class TreeViewBuilder {
 
     /**
      * Rebuilds the whole tree-view structure.
+     *
      * @param view the view
      */
     public static void rebuildTreeView(TreeView<TreeValue> view) {
         var item_root = new TreeItem<TreeValue>();
         view.setRoot(item_root);
 
+        // home directory
         if (System.getProperty("os.name").equals("Linux")) {
             item_root.setValue(new TreeValue(FUtil.getHomeDirectory()));
             treeViewAddLayer(item_root);
 
+        // disks(?) for other systems
         } else {
-            for (char c = 'A'; c <= 'Z'; c++) {
-                var file = new File(c + ":");
-                if (!file.exists() || !file.isDirectory()){
-                    continue;
-                }
-
+            File[] drives = File.listRoots();
+            for (var file : drives) {
                 var item = TreeValue.makeItem(file);
                 item_root.getChildren().add(item);
                 treeViewAddLayer(item);
@@ -64,6 +64,7 @@ public class TreeViewBuilder {
 
     /**
      * Adds a layer of subdirectories under the selected item
+     *
      * @param item the item to add subdirectories into
      */
     private static void treeViewAddLayer(TreeItem<TreeValue> item) {
@@ -92,8 +93,8 @@ public class TreeViewBuilder {
 
         // when item is for the first time expanded, prepare the next layer
         item.expandedProperty().addListener((x) -> {
-            for(var child : item.getChildren()){
-                if (child.getChildren().isEmpty()){
+            for (var child : item.getChildren()) {
+                if (child.getChildren().isEmpty()) {
                     treeViewAddLayer(child);
                 }
             }
