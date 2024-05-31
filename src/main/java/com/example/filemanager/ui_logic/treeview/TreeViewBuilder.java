@@ -24,7 +24,7 @@ public class TreeViewBuilder {
 
         view.setOnMouseClicked((x) -> {
             var current = view.getSelectionModel().getSelectedItem();
-            if (current == null){
+            if (current == null || current.getValue() == null){
                 return;
             }
 
@@ -50,7 +50,7 @@ public class TreeViewBuilder {
             for (char c = 'A'; c <= 'Z'; c++) {
                 var file = new File(c + ":");
                 if (!file.exists() || !file.isDirectory()){
-                    break;
+                    continue;
                 }
 
                 var item = TreeValue.makeItem(file);
